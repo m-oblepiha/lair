@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es5",
+    "noEmitOnError": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "baseUrl": "./src",
+    "paths": {}
+  }
+}
