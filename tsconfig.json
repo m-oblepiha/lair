@@ -7,6 +7,10 @@
     "esModuleInterop": true,
     "jsx": "react",
     "baseUrl": "./src",
-    "paths": {}
+    "paths": {
+      "redux/*": ["app/redux/*"]
+    },
+    "strictNullChecks": true,
+    "noImplicitAny": true
   }
 }
