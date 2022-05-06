@@ -1,2 +1,2 @@
 export { pick } from './pick';
-export { clipProbability, clipRelation } from './clip';
+export { selectPet } from './selectPet';

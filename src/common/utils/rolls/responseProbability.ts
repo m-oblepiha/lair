@@ -1,4 +1,4 @@
-import type { Effect, IPet } from 'common/types';
+import type { IPet } from 'common/types';
 import type {
   WakeupAct,
   AttackAct,
@@ -6,7 +6,8 @@ import type {
   HealAct,
   CaressAct,
 } from 'common/types/act';
-import { clipProbability } from 'common/utils';
+import type { DeathEffect } from 'common/types/effect';
+import { clipProbability } from 'common/utils/calcs';
 import { roll } from 'common/utils/rolls';
 
 const wakeupCaressProbability = (actor: IPet, act: WakeupAct) => {
@@ -75,15 +76,6 @@ const attackJoinProbability = (actor: IPet, act: AttackAct) => {
   );
 };
 
-const healDelightProbability = (actor: IPet, act: HealAct) => {
-  const { friendliness } = actor.attributes;
-  const rel = actor.relations[act.target];
-  const [a, b, c, d] = [2, 2, 1, -20];
-  return clipProbability(
-    (a * friendliness + b * rel + c * roll(1, 10) + d) / 10
-  );
-};
-
 const bullyCounterProbability = (actor: IPet, act: BullyAct) => {
   const { friendliness } = actor.attributes;
   const { morale } = actor.stats;
@@ -134,6 +126,15 @@ const bullyJoinProbability = (actor: IPet, act: BullyAct) => {
   );
 };
 
+const healDelightProbability = (actor: IPet, act: HealAct) => {
+  const { friendliness } = actor.attributes;
+  const rel = actor.relations[act.target];
+  const [a, b, c, d] = [2, 2, 1, -20];
+  return clipProbability(
+    (a * friendliness + b * rel + c * roll(1, 10) + d) / 10
+  );
+};
+
 const caressCounterProbability = (actor: IPet, act: CaressAct) => {
   const { friendliness } = actor.attributes;
   const { morale } = actor.stats;
@@ -161,7 +162,7 @@ const caressJoinProbability = (actor: IPet, act: CaressAct) => {
   );
 };
 
-const deathPanicProbability = (actor: IPet, effect: Effect) => {
+const deathPanicProbability = (actor: IPet, effect: DeathEffect) => {
   const { willpower } = actor.attributes;
   const rel = actor.relations[effect.target];
   const [a, b, c, d] = [-2, 2, 1, 0];

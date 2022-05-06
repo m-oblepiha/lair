@@ -14,9 +14,10 @@ const generateEffectMessage = ({ action }: EffectMessageSeed) => {
 };
 
 const generateResponseMessage = ({ action }: ResponseMessageSeed) => {
-  return `${action.actor.name} -> ${action.target?.name ?? 'self'}: ${
-    action.type
-  } ${action.value}`;
+  const { actor, act } = action;
+  return `${actor.name} -> ${act.target?.name ?? 'self'}: ${action.type} ${
+    'value' in action && action.value
+  }`;
 };
 
 const generateMessage = (seed: MessageSeed) => {

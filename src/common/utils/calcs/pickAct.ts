@@ -1,4 +1,6 @@
-import type { IPet, ActType } from 'common/types';
+import type { IPet } from 'common/types';
+import type { ActType } from 'common/types/act';
+import { acts } from 'redux/slices/petsSlice';
 import {
   sleepProbability,
   wakeupProbability,
@@ -8,13 +10,16 @@ import {
   bullyProbability,
   caressProbability,
   actValue,
+  distributeFood,
 } from 'common/utils/rolls';
-import { acts } from 'redux/slices/petsSlice';
-import { distributeFood } from 'common/utils/rolls/distributeFood';
+import { selectBestChoice } from './selectBestChoice';
 
 type Choice = { target?: IPet; type: ActType; probability: number };
 
-const pickAct = (actor: IPet, pets: IPet[]) => {
+const pickAct = (
+  actor: IPet,
+  pets: IPet[]
+): ReturnType<typeof acts[ActType]> | null => {
   const otherPets = pets.filter((pet) => pet.id !== actor.id);
 
   let choices: Choice[] = [];
@@ -51,12 +56,8 @@ const pickAct = (actor: IPet, pets: IPet[]) => {
     choices = selfActChoices.concat(actChoices);
   }
 
-  const realChoices = choices.filter((choice) => choice.probability > 0);
-  if (realChoices.length === 0) return null;
-
-  const bestChoice = choices.reduce((prev, next) =>
-    prev.probability > next.probability ? next : prev
-  );
+  const bestChoice = selectBestChoice(choices);
+  if (!bestChoice) return null;
 
   if (bestChoice.type === 'sleep') return acts.sleep({ actor: actor.id });
   if (bestChoice.type === 'wakeup') return acts.wakeup({ actor: actor.id });
@@ -74,7 +75,7 @@ const pickAct = (actor: IPet, pets: IPet[]) => {
           target: foodDistribution.target,
         },
       });
-    else return acts.supply({ actor: actor.id, value: value });
+    return acts.supply({ actor: actor.id, value: value });
   }
 
   return acts[bestChoice.type]({

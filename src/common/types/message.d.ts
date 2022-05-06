@@ -8,7 +8,10 @@ type TransformActToSeed<T> = T extends unknown
   : never;
 
 type TransformResponseToSeed<T> = T extends unknown
-  ? Omit<T, 'actor' | 'target'> & { actor: IPet; target?: IPet }
+  ? Omit<T, 'act' | 'actor'> & {
+      actor: IPet;
+      act: { actor?: IPet; target?: IPet };
+    }
   : never;
 
 type TransformEffectToSeed<T> = T extends unknown

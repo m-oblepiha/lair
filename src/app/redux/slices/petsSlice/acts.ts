@@ -9,9 +9,8 @@ import type {
   HealAct,
   CaressAct,
 } from 'common/types/act';
-import { changeRelation } from 'common/utils/calcs';
-import { clipRelation } from 'common/utils';
-import { selectPet } from '../utils';
+import { changeRelation, clipRelation } from 'common/utils/calcs';
+import { selectPet } from 'common/utils';
 
 const sleep = (
   state: IPet[],
@@ -34,12 +33,16 @@ const supply = (
   action: PayloadAction<Omit<SupplyAct, 'type'>>
 ) => {
   const pet = selectPet(state, action.payload.actor);
+
   const hunger = pet.stats.hunger - action.payload.value;
   pet.stats.hunger = hunger < 0 ? 0 : hunger;
+
   if (action.payload.distribution) {
     const target = selectPet(state, action.payload.distribution.target);
+
     const targetHunger = target.stats.hunger - 1;
     target.stats.hunger = targetHunger < 0 ? 0 : targetHunger;
+
     if (action.payload.distribution.type === 'steal') {
       pet.relations[target.id] = clipRelation(
         pet.relations[target.id] +
@@ -61,8 +64,10 @@ const attack = (
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.target);
+
   const health = target.stats.health - action.payload.value;
   target.stats.health = health < 0 ? 0 : health;
+
   target.relations[actor.id] = clipRelation(
     target.relations[actor.id] +
       changeRelation({
@@ -79,8 +84,10 @@ const bully = (
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.target);
+
   const morale = target.stats.morale - action.payload.value;
   target.stats.morale = morale < 0 ? 0 : morale;
+
   target.relations[actor.id] = clipRelation(
     target.relations[actor.id] +
       changeRelation({
@@ -94,8 +101,10 @@ const bully = (
 const heal = (state: IPet[], action: PayloadAction<Omit<HealAct, 'type'>>) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.target);
+
   const health = target.stats.health + action.payload.value;
   target.stats.health = health > 10 ? 10 : health;
+
   target.relations[actor.id] = clipRelation(
     target.relations[actor.id] +
       changeRelation({
@@ -112,8 +121,10 @@ const caress = (
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.target);
+
   const morale = target.stats.morale + action.payload.value;
   target.stats.morale = morale > 10 ? 10 : morale;
+
   target.relations[actor.id] = clipRelation(
     target.relations[actor.id] +
       changeRelation({

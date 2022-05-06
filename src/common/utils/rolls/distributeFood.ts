@@ -1,5 +1,5 @@
 import type { IPet } from 'common/types';
-import { clipProbability } from 'common/utils';
+import { clipProbability } from 'common/utils/calcs';
 import { roll } from 'common/utils/rolls';
 
 const supplyShareProbability = (

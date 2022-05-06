@@ -1,16 +1,16 @@
 import type { ID } from './pet';
 
-interface SleepAct {
+type SleepAct = {
   type: 'sleep';
   actor: ID;
-}
+};
 
-interface WakeupAct {
+type WakeupAct = {
   type: 'wakeup';
   actor: ID;
-}
+};
 
-interface SupplyAct {
+type SupplyAct = {
   type: 'supply';
   actor: ID;
   value: number;
@@ -18,35 +18,35 @@ interface SupplyAct {
     type: 'share' | 'steal';
     target: ID;
   };
-}
+};
 
-interface AttackAct {
+type AttackAct = {
   type: 'attack';
   actor: ID;
   target: ID;
   value: number;
-}
+};
 
-interface BullyAct {
+type BullyAct = {
   type: 'bully';
   actor: ID;
   target: ID;
   value: number;
-}
+};
 
-interface HealAct {
+type HealAct = {
   type: 'heal';
   actor: ID;
   target: ID;
   value: number;
-}
+};
 
-interface CaressAct {
+type CaressAct = {
   type: 'caress';
   actor: ID;
   target: ID;
   value: number;
-}
+};
 
 type Act =
   | SleepAct
@@ -67,3 +67,4 @@ export type {
   CaressAct,
   Act,
 };
+export type { ActType } from 'redux/slices/petsSlice/acts';
