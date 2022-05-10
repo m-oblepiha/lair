@@ -28,8 +28,9 @@ const calculatorsDictionary = {
 };
 
 const changeRelation = (args: Args) => {
-  if ('value' in args)
+  if ('value' in args) {
     return calculatorsDictionary[args.type](args.target, args.value);
+  }
   return calculatorsDictionary[args.type](args.target);
 };
 

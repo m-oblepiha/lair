@@ -1,6 +1,6 @@
+import type { MessageSeed } from 'common/types';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { generateMessage } from 'common/utils/textgen';
-import type { MessageSeed } from 'common/types';
 
 const initialState: string[] = [];
 

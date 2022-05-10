@@ -7,8 +7,8 @@ import type {
   TireEffect,
   StarveEffect,
 } from 'common/types/effect';
-import { roll } from 'common/utils/rolls';
 import { selectPet } from 'common/utils';
+import { roll } from 'common/utils/rolls';
 
 const summon = (
   state: IPet[],
@@ -88,7 +88,7 @@ const starve = {
   },
 };
 
-const effectDrafts = {
+const effectReducers = {
   summon,
   death,
   rest,
@@ -96,6 +96,6 @@ const effectDrafts = {
   starve,
 };
 
-type EffectType = keyof typeof effectDrafts;
+type EffectType = keyof typeof effectReducers;
 
-export { effectDrafts, type EffectType };
+export { effectReducers, type EffectType };

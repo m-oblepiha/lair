@@ -9,15 +9,15 @@ const generateActMessage = ({ action }: ActMessageSeed) => {
   return action.toString();
 };
 
-const generateEffectMessage = ({ action }: EffectMessageSeed) => {
-  return `${action.target?.name} <- ${action.type}`;
-};
-
 const generateResponseMessage = ({ action }: ResponseMessageSeed) => {
   const { actor, act } = action;
   return `${actor.name} -> ${act.target?.name ?? 'self'}: ${action.type} ${
     'value' in action && action.value
   }`;
+};
+
+const generateEffectMessage = ({ action }: EffectMessageSeed) => {
+  return `${action.target?.name} <- ${action.type}`;
 };
 
 const generateMessage = (seed: MessageSeed) => {

@@ -24,4 +24,3 @@ export {
   caressJoinProbability,
   deathPanicProbability,
 } from './responseProbability';
-export { distributeFood } from './distributeFood';

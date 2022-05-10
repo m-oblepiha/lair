@@ -9,8 +9,8 @@ import type {
   HealAct,
   CaressAct,
 } from 'common/types/act';
-import { changeRelation, clipRelation } from 'common/utils/calcs';
-import { selectPet } from 'common/utils';
+import { clipRelation, selectPet } from 'common/utils';
+import { changeRelation } from 'common/utils/calcs';
 
 const sleep = (
   state: IPet[],
@@ -135,8 +135,8 @@ const caress = (
   );
 };
 
-const actDrafts = { sleep, wakeup, supply, attack, bully, heal, caress };
+const actReducers = { sleep, wakeup, supply, attack, bully, heal, caress };
 
-type ActType = keyof typeof actDrafts;
+type ActType = keyof typeof actReducers;
 
-export { actDrafts, type ActType };
+export { actReducers, type ActType };

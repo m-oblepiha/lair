@@ -1,5 +1,5 @@
-import { nanoid } from '@reduxjs/toolkit';
 import type { IPet } from 'common/types';
+import { nanoid } from '@reduxjs/toolkit';
 import { generatePetName } from 'common/utils/textgen';
 import { roll } from './roll';
 

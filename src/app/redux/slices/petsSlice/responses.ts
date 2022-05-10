@@ -14,8 +14,8 @@ import type {
   CaressJoinResponse,
   DeathPanicResponse,
 } from 'common/types/response';
-import { changeRelation, clipRelation } from 'common/utils/calcs';
-import { selectPet } from 'common/utils';
+import { selectPet, clipRelation } from 'common/utils';
+import { changeRelation } from 'common/utils/calcs';
 
 const wakeup_caress = (
   state: IPet[],
@@ -265,7 +265,7 @@ const death_panic = (
   if (actor.stats.morale > 0) actor.stats.morale--;
 };
 
-const responseDrafts = {
+const responseReducers = {
   wakeup_caress,
   attack_panic,
   attack_counter,
@@ -280,6 +280,6 @@ const responseDrafts = {
   death_panic,
 };
 
-type ResponseType = keyof typeof responseDrafts;
+type ResponseType = keyof typeof responseReducers;
 
-export { responseDrafts, type ResponseType };
+export { responseReducers, type ResponseType };

@@ -39,19 +39,23 @@ const caressValue = (actor: IPet, target: IPet) => {
   return Math.round(regen);
 };
 
-const actValue = (
-  type: 'supply' | 'attack' | 'bully' | 'heal' | 'caress',
-  actor: IPet,
-  target?: IPet
-): number => {
-  return type === 'supply'
-    ? supplyValue(actor)
-    : {
-        attack: attackValue,
-        bully: bullyValue,
-        heal: healValue,
-        caress: caressValue,
-      }[type](actor, target as IPet);
-};
+type Args =
+  | [IPet, 'supply']
+  | [IPet, 'attack' | 'bully' | 'heal' | 'caress', IPet];
+
+function actValue(...[actor, type, target]: Args): number {
+  switch (type) {
+    case 'supply':
+      return supplyValue(actor);
+    case 'attack':
+      return attackValue(actor, target);
+    case 'bully':
+      return bullyValue(actor, target);
+    case 'heal':
+      return healValue(actor, target);
+    case 'caress':
+      return caressValue(actor, target);
+  }
+}
 
 export { actValue };

@@ -7,23 +7,37 @@ import type {
   CaressAct,
 } from 'common/types/act';
 import type { DeathEffect } from 'common/types/effect';
-import { clipProbability } from 'common/utils/calcs';
+import { clipProbability } from 'common/utils';
 import { roll } from 'common/utils/rolls';
 
 const wakeupCaressProbability = (actor: IPet, act: WakeupAct) => {
   const { friendliness } = actor.attributes;
   const { morale } = actor.stats;
   const rel = actor.relations[act.actor] ?? 0;
+
   return +(rel > 2 && friendliness + morale > 12);
 };
 
 const attackPanicProbability = (actor: IPet, act: AttackAct) => {
   const { willpower } = actor.attributes;
   const damage = act.value;
-  const [a, b, c, d] = [-3, 5, 1, 0];
-  return clipProbability(
-    (a * willpower + b * damage + c * roll(1, 10) + d) / 10
-  );
+
+  const COEFF = {
+    willpowerWeight: -3,
+    damageWeight: 5,
+    rollWeight: 1,
+    offset: 0,
+    divisor: 10,
+  };
+
+  const result =
+    (COEFF.willpowerWeight * willpower +
+      COEFF.damageWeight * damage +
+      COEFF.rollWeight * roll(1, 10) +
+      COEFF.offset) /
+    COEFF.divisor;
+
+  return clipProbability(result);
 };
 
 const attackCounterProbability = (actor: IPet, act: AttackAct) => {
@@ -31,16 +45,27 @@ const attackCounterProbability = (actor: IPet, act: AttackAct) => {
   const { morale } = actor.stats;
   const damage = act.value;
   const rel = actor.relations[act.actor];
-  const [a, b, c, d, e, f] = [-3, 1, 5, -2, 1, 0];
-  return clipProbability(
-    (a * friendliness +
-      b * morale +
-      c * damage +
-      d * rel +
-      e * roll(1, 10) +
-      f) /
-      10
-  );
+
+  const COEFF = {
+    friendlinessWeight: -3,
+    moraleWeight: 1,
+    damageWeight: 5,
+    relWeight: -2,
+    rollWeight: 1,
+    offset: 0,
+    divisor: 10,
+  };
+
+  const result =
+    (COEFF.friendlinessWeight * friendliness +
+      COEFF.moraleWeight * morale +
+      COEFF.damageWeight * damage +
+      COEFF.relWeight * rel +
+      COEFF.rollWeight * roll(1, 10) +
+      COEFF.offset) /
+    COEFF.divisor;
+
+  return clipProbability(result);
 };
 
 const attackAvengeProbability = (actor: IPet, act: AttackAct) => {
@@ -48,16 +73,27 @@ const attackAvengeProbability = (actor: IPet, act: AttackAct) => {
   const { morale } = actor.stats;
   const relActor = actor.relations[act.actor] ?? 0;
   const relTarget = actor.relations[act.target] ?? 0;
-  const [a, b, c, d, e, f] = [-4, 5, 1, 5, 1, -35];
-  return clipProbability(
-    (a * relActor +
-      b * relTarget +
-      c * morale +
-      d * damage +
-      e * roll(1, 10) +
-      f) /
-      5
-  );
+
+  const COEFF = {
+    relActorWeight: -4,
+    relTargetWeight: 5,
+    moraleWeight: 1,
+    damageWeight: 5,
+    rollWeight: 1,
+    offset: -35,
+    divisor: 5,
+  };
+
+  const result =
+    (COEFF.relActorWeight * relActor +
+      COEFF.relTargetWeight * relTarget +
+      COEFF.moraleWeight * morale +
+      COEFF.damageWeight * damage +
+      COEFF.rollWeight * roll(1, 10) +
+      COEFF.offset) /
+    COEFF.divisor;
+
+  return clipProbability(result);
 };
 
 const attackJoinProbability = (actor: IPet, act: AttackAct) => {
@@ -65,15 +101,27 @@ const attackJoinProbability = (actor: IPet, act: AttackAct) => {
   const { morale } = actor.stats;
   const relActor = actor.relations[act.actor] ?? 0;
   const relTarget = actor.relations[act.target] ?? 0;
-  const [a, b, c, d, e] = [-5, 2, -5, 1, -1];
-  return clipProbability(
-    (a * friendliness +
-      b * relActor +
-      c * relTarget +
-      d * roll(1, 10) +
-      e * morale) /
-      10
-  );
+
+  const COEFF = {
+    friendlinessWeight: -5,
+    relActorWeight: 2,
+    relTargetWeight: -5,
+    rollWeight: 1,
+    moraleWeight: -1,
+    offset: 0,
+    divisor: 10,
+  };
+
+  const result =
+    (COEFF.friendlinessWeight * friendliness +
+      COEFF.relActorWeight * relActor +
+      COEFF.relTargetWeight * relTarget +
+      COEFF.rollWeight * roll(1, 10) +
+      COEFF.moraleWeight * morale +
+      COEFF.offset) /
+    COEFF.divisor;
+
+  return clipProbability(result);
 };
 
 const bullyCounterProbability = (actor: IPet, act: BullyAct) => {
@@ -81,16 +129,27 @@ const bullyCounterProbability = (actor: IPet, act: BullyAct) => {
   const { morale } = actor.stats;
   const damage = act.value;
   const rel = actor.relations[act.actor];
-  const [a, b, c, d, e, f] = [-3, 1, 5, -2, 1, 0];
-  return clipProbability(
-    (a * friendliness +
-      b * morale +
-      c * damage +
-      d * rel +
-      e * roll(1, 10) +
-      f) /
-      10
-  );
+
+  const COEFF = {
+    friendlinessWeight: -3,
+    moraleWeight: 1,
+    damageWeight: 5,
+    relWeight: -2,
+    rollWeight: 1,
+    offset: 0,
+    divisor: 10,
+  };
+
+  const result =
+    (COEFF.friendlinessWeight * friendliness +
+      COEFF.moraleWeight * morale +
+      COEFF.damageWeight * damage +
+      COEFF.relWeight * rel +
+      COEFF.rollWeight * roll(1, 10) +
+      COEFF.offset) /
+    COEFF.divisor;
+
+  return clipProbability(result);
 };
 
 const bullyAvengeProbability = (actor: IPet, act: BullyAct) => {
@@ -98,16 +157,27 @@ const bullyAvengeProbability = (actor: IPet, act: BullyAct) => {
   const { morale } = actor.stats;
   const relActor = actor.relations[act.actor] ?? 0;
   const relTarget = actor.relations[act.target] ?? 0;
-  const [a, b, c, d, e, f] = [-4, 5, 1, 5, 1, -35];
-  return clipProbability(
-    (a * relActor +
-      b * relTarget +
-      c * morale +
-      d * damage +
-      e * roll(1, 10) +
-      f) /
-      5
-  );
+
+  const COEFF = {
+    relActorWeight: -4,
+    relTargetWeight: 5,
+    moraleWeight: 1,
+    damageWeight: 5,
+    rollWeight: 1,
+    offset: -35,
+    divisor: 5,
+  };
+
+  const result =
+    (COEFF.relActorWeight * relActor +
+      COEFF.relTargetWeight * relTarget +
+      COEFF.moraleWeight * morale +
+      COEFF.damageWeight * damage +
+      COEFF.rollWeight * roll(1, 10) +
+      COEFF.offset) /
+    COEFF.divisor;
+
+  return clipProbability(result);
 };
 
 const bullyJoinProbability = (actor: IPet, act: BullyAct) => {
@@ -115,34 +185,74 @@ const bullyJoinProbability = (actor: IPet, act: BullyAct) => {
   const { morale } = actor.stats;
   const relActor = actor.relations[act.actor] ?? 0;
   const relTarget = actor.relations[act.target] ?? 0;
-  const [a, b, c, d, e] = [-5, 2, -5, 1, -1];
-  return clipProbability(
-    (a * friendliness +
-      b * relActor +
-      c * relTarget +
-      d * roll(1, 10) +
-      e * morale) /
-      10
-  );
+
+  const COEFF = {
+    friendlinessWeight: -5,
+    relActorWeight: 2,
+    relTargetWeight: -5,
+    rollWeight: 1,
+    moraleWeight: -1,
+    offset: 0,
+    divisor: 10,
+  };
+
+  const result =
+    (COEFF.friendlinessWeight * friendliness +
+      COEFF.relActorWeight * relActor +
+      COEFF.relTargetWeight * relTarget +
+      COEFF.rollWeight * roll(1, 10) +
+      COEFF.moraleWeight * morale +
+      COEFF.offset) /
+    COEFF.divisor;
+
+  return clipProbability(result);
 };
 
 const healDelightProbability = (actor: IPet, act: HealAct) => {
   const { friendliness } = actor.attributes;
   const rel = actor.relations[act.target];
-  const [a, b, c, d] = [2, 2, 1, -20];
-  return clipProbability(
-    (a * friendliness + b * rel + c * roll(1, 10) + d) / 10
-  );
+
+  const COEFF = {
+    friendlinessWeight: 2,
+    relWeight: 2,
+    rollWeight: 1,
+    offset: -20,
+    divisor: 10,
+  };
+
+  const result =
+    (COEFF.friendlinessWeight * friendliness +
+      COEFF.relWeight * rel +
+      COEFF.rollWeight * roll(1, 10) +
+      COEFF.offset) /
+    COEFF.divisor;
+
+  return clipProbability(result);
 };
 
 const caressCounterProbability = (actor: IPet, act: CaressAct) => {
   const { friendliness } = actor.attributes;
   const { morale } = actor.stats;
   const rel = actor.relations[act.actor];
-  const [a, b, c, d, e] = [2, 1, 2, 1, -30];
-  return clipProbability(
-    (a * friendliness + b * morale + c * rel + d * roll(1, 10) + e) / 8
-  );
+
+  const COEFF = {
+    friendlinessWeight: 2,
+    moraleWeight: 1,
+    relWeight: 2,
+    rollWeight: 1,
+    offset: -30,
+    divisor: 8,
+  };
+
+  const result =
+    (COEFF.friendlinessWeight * friendliness +
+      COEFF.moraleWeight * morale +
+      COEFF.relWeight * rel +
+      COEFF.rollWeight * roll(1, 10) +
+      COEFF.offset) /
+    COEFF.divisor;
+
+  return clipProbability(result);
 };
 
 const caressJoinProbability = (actor: IPet, act: CaressAct) => {
@@ -150,23 +260,49 @@ const caressJoinProbability = (actor: IPet, act: CaressAct) => {
   const { morale } = actor.stats;
   const relActor = actor.relations[act.actor] ?? 0;
   const relTarget = actor.relations[act.target] ?? 0;
-  const [a, b, c, d, e, f] = [3, 1, 1, 1, 1, -45];
-  return clipProbability(
-    (a * friendliness +
-      b * morale +
-      c * relActor +
-      d * relTarget +
-      e * roll(1, 10) +
-      f) /
-      10
-  );
+
+  const COEFF = {
+    friendlinessWeight: -3,
+    moraleWeight: 1,
+    relActorWeight: 1,
+    relTargetWeight: 1,
+    rollWeight: 1,
+    offset: -45,
+    divisor: 10,
+  };
+
+  const result =
+    (COEFF.friendlinessWeight * friendliness +
+      COEFF.relActorWeight * relActor +
+      COEFF.relTargetWeight * relTarget +
+      COEFF.rollWeight * roll(1, 10) +
+      COEFF.moraleWeight * morale +
+      COEFF.offset) /
+    COEFF.divisor;
+
+  return clipProbability(result);
 };
 
 const deathPanicProbability = (actor: IPet, effect: DeathEffect) => {
   const { willpower } = actor.attributes;
   const rel = actor.relations[effect.target];
-  const [a, b, c, d] = [-2, 2, 1, 0];
-  return clipProbability((a * willpower + b * rel + c * roll(1, 10) + d) / 10);
+
+  const COEFF = {
+    willpowerWeight: -2,
+    relWeight: 2,
+    rollWeight: 1,
+    offset: 0,
+    divisor: 10,
+  };
+
+  const result =
+    (COEFF.willpowerWeight * willpower +
+      COEFF.relWeight * rel +
+      COEFF.rollWeight * roll(1, 10) +
+      COEFF.offset) /
+    COEFF.divisor;
+
+  return clipProbability(result);
 };
 
 export {
