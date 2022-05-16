@@ -12,26 +12,17 @@ import type {
 import { clipRelation, selectPet } from 'common/utils';
 import { changeRelation } from 'common/utils/calcs';
 
-const sleep = (
-  state: IPet[],
-  action: PayloadAction<Omit<SleepAct, 'type'>>
-) => {
+const sleep = (state: IPet[], action: PayloadAction<SleepAct>) => {
   const pet = selectPet(state, action.payload.actor);
   pet.stats.isAwake = false;
 };
 
-const wakeup = (
-  state: IPet[],
-  action: PayloadAction<Omit<WakeupAct, 'type'>>
-) => {
+const wakeup = (state: IPet[], action: PayloadAction<WakeupAct>) => {
   const pet = selectPet(state, action.payload.actor);
   pet.stats.isAwake = true;
 };
 
-const supply = (
-  state: IPet[],
-  action: PayloadAction<Omit<SupplyAct, 'type'>>
-) => {
+const supply = (state: IPet[], action: PayloadAction<SupplyAct>) => {
   const pet = selectPet(state, action.payload.actor);
 
   const hunger = pet.stats.hunger - action.payload.value;
@@ -58,10 +49,7 @@ const supply = (
   }
 };
 
-const attack = (
-  state: IPet[],
-  action: PayloadAction<Omit<AttackAct, 'type'>>
-) => {
+const attack = (state: IPet[], action: PayloadAction<AttackAct>) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.target);
 
@@ -78,10 +66,7 @@ const attack = (
   );
 };
 
-const bully = (
-  state: IPet[],
-  action: PayloadAction<Omit<BullyAct, 'type'>>
-) => {
+const bully = (state: IPet[], action: PayloadAction<BullyAct>) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.target);
 
@@ -98,7 +83,7 @@ const bully = (
   );
 };
 
-const heal = (state: IPet[], action: PayloadAction<Omit<HealAct, 'type'>>) => {
+const heal = (state: IPet[], action: PayloadAction<HealAct>) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.target);
 
@@ -115,10 +100,7 @@ const heal = (state: IPet[], action: PayloadAction<Omit<HealAct, 'type'>>) => {
   );
 };
 
-const caress = (
-  state: IPet[],
-  action: PayloadAction<Omit<CaressAct, 'type'>>
-) => {
+const caress = (state: IPet[], action: PayloadAction<CaressAct>) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.target);
 
@@ -136,7 +118,7 @@ const caress = (
 };
 
 const actReducers = { sleep, wakeup, supply, attack, bully, heal, caress };
-
+const actTypes = Object.keys(actReducers) as ActType[];
 type ActType = keyof typeof actReducers;
 
-export { actReducers, type ActType };
+export { actReducers, actTypes, type ActType };

@@ -11,12 +11,12 @@ const timeSlice = createSlice({
   name: 'time',
   initialState,
   reducers: {
-    increment: ({ day, phase }) =>
+    timePass: ({ day, phase }) =>
       phase === 4 ? { day: day++, phase: 1 } : { day, phase: phase++ as Phase },
   },
 });
 
 const timeReducer = timeSlice.reducer;
-const { increment } = timeSlice.actions;
+const { timePass } = timeSlice.actions;
 
-export { timeReducer, increment };
+export { timeReducer, timePass };

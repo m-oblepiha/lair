@@ -1,34 +1,31 @@
-import type {
-  MessageSeed,
-  ActMessageSeed,
-  ResponseMessageSeed,
-  EffectMessageSeed,
-} from 'common/types/message';
+import type { IPet, Act, Response, Effect } from 'common/types';
+import type { SummonEffect, DeathEffect } from 'common/types/effect';
+import { actTypes } from 'redux/slices/petsSlice/acts';
+import { responseTypes } from 'redux/slices/petsSlice/responses';
+import { effectTypes } from 'redux/slices/petsSlice/effects';
+import { readonlyArrayIncludes } from 'common/utils/readonlyArrayIncludes';
+import { actMessage } from './actMessage';
+import { responseMessage } from './responseMessage';
+import { effectMessage } from './effectMessage';
 
-const generateActMessage = ({ action }: ActMessageSeed) => {
-  return action.toString();
+const isAct = (action: Act | Response | Effect): action is Act => {
+  return readonlyArrayIncludes(actTypes, action.type);
+};
+const isResponse = (action: Act | Response | Effect): action is Response => {
+  return readonlyArrayIncludes(responseTypes, action.type);
+};
+const isEffect = (action: Act | Response | Effect): action is Effect => {
+  return readonlyArrayIncludes(effectTypes, action.type);
 };
 
-const generateResponseMessage = ({ action }: ResponseMessageSeed) => {
-  const { actor, act } = action;
-  return `${actor.name} -> ${act.target?.name ?? 'self'}: ${action.type} ${
-    'value' in action && action.value
-  }`;
-};
-
-const generateEffectMessage = ({ action }: EffectMessageSeed) => {
-  return `${action.target?.name} <- ${action.type}`;
-};
-
-const generateMessage = (seed: MessageSeed) => {
-  switch (seed.type) {
-    case 'act':
-      return generateActMessage(seed);
-    case 'response':
-      return generateResponseMessage(seed);
-    case 'effect':
-      return generateEffectMessage(seed);
-  }
+const generateMessage = (
+  pets: IPet[],
+  action: Act | Response | SummonEffect | DeathEffect
+): string => {
+  if (isAct(action)) return actMessage(pets, action);
+  if (isResponse(action)) return responseMessage(pets, action);
+  if (isEffect(action)) return effectMessage(pets, action);
+  return action; // never
 };
 
 export { generateMessage };

@@ -38,6 +38,7 @@ const pickWakeupResponse = (
   if (!bestChoice) return null;
 
   return responses.wakeup_caress({
+    type: 'wakeup_caress',
     actor: actor.id,
     act,
     value: actValue(actor, 'caress', selectPet(pets, act.actor)),
@@ -57,21 +58,28 @@ const pickAttackResponse = (
 
   switch (bestChoice.type) {
     case 'attack_panic':
-      return responses.attack_panic({ actor: actor.id, act });
+      return responses.attack_panic({
+        type: 'attack_panic',
+        actor: actor.id,
+        act,
+      });
     case 'attack_counter':
       return responses.attack_counter({
+        type: 'attack_counter',
         actor: actor.id,
         act,
         value: actValue(actor, 'attack', selectPet(pets, act.actor)),
       });
     case 'attack_avenge':
       return responses.attack_avenge({
+        type: 'attack_avenge',
         actor: actor.id,
         act,
         value: actValue(actor, 'attack', selectPet(pets, act.actor)),
       });
     case 'attack_join':
       return responses.attack_join({
+        type: 'attack_join',
         actor: actor.id,
         act,
         value: actValue(actor, 'attack', selectPet(pets, act.target)),
@@ -93,18 +101,21 @@ const pickBullyResponse = (
   switch (bestChoice.type) {
     case 'bully_counter':
       return responses.bully_counter({
+        type: 'bully_counter',
         actor: actor.id,
         act,
         value: actValue(actor, 'bully', selectPet(pets, act.actor)),
       });
     case 'bully_avenge':
       return responses.bully_avenge({
+        type: 'bully_avenge',
         actor: actor.id,
         act,
         value: actValue(actor, 'bully', selectPet(pets, act.actor)),
       });
     case 'bully_join':
       return responses.bully_join({
+        type: 'bully_join',
         actor: actor.id,
         act,
         value: actValue(actor, 'bully', selectPet(pets, act.target)),
@@ -124,6 +135,7 @@ const pickHealResponse = (
   if (!bestChoice) return null;
 
   return responses.heal_delight({
+    type: 'heal_delight',
     actor: actor.id,
     act,
   });
@@ -143,12 +155,14 @@ const pickCaressResponse = (
   switch (bestChoice.type) {
     case 'caress_counter':
       return responses.caress_counter({
+        type: 'caress_counter',
         actor: actor.id,
         act,
         value: actValue(actor, 'caress', selectPet(pets, act.actor)),
       });
     case 'caress_join':
       return responses.caress_join({
+        type: 'caress_join',
         actor: actor.id,
         act,
         value: actValue(actor, 'caress', selectPet(pets, act.target)),

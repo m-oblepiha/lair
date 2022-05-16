@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { IPet } from 'common/types';
 
-import { actReducers, type ActType } from './acts';
-import { effectReducers, type EffectType } from './effects';
-import { responseReducers, type ResponseType } from './responses';
+import { actReducers, actTypes } from './acts';
+import { effectReducers, effectTypes } from './effects';
+import { responseReducers, responseTypes } from './responses';
 
 import { pick } from 'common/utils';
 
@@ -21,16 +21,8 @@ const petsSlice = createSlice({
 
 const petsReducer = petsSlice.reducer;
 
-const acts = pick(petsSlice.actions, Object.keys(actReducers) as ActType[]);
-
-const responses = pick(
-  petsSlice.actions,
-  Object.keys(responseReducers) as ResponseType[]
-);
-
-const effects = pick(
-  petsSlice.actions,
-  Object.keys(effectReducers) as EffectType[]
-);
+const acts = pick(petsSlice.actions, actTypes);
+const responses = pick(petsSlice.actions, responseTypes);
+const effects = pick(petsSlice.actions, effectTypes);
 
 export { petsReducer, acts, responses, effects };

@@ -1,16 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { effects } from './petsSlice';
+
 const initialState: number = 10;
 
 const heartsSlice = createSlice({
   name: 'hearts',
   initialState,
-  reducers: {
-    decrement: (state) => state--,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(effects.death, (state) => state--);
   },
 });
 
 const heartsReducer = heartsSlice.reducer;
-const { decrement } = heartsSlice.actions;
 
-export { heartsReducer, decrement };
+export { heartsReducer };

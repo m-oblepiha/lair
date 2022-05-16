@@ -19,7 +19,7 @@ import { changeRelation } from 'common/utils/calcs';
 
 const wakeup_caress = (
   state: IPet[],
-  action: PayloadAction<Omit<WakeupCaressResponse, 'type'>>
+  action: PayloadAction<WakeupCaressResponse>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.act.actor);
@@ -39,7 +39,7 @@ const wakeup_caress = (
 
 const attack_panic = (
   state: IPet[],
-  action: PayloadAction<Omit<AttackPanicResponse, 'type'>>
+  action: PayloadAction<AttackPanicResponse>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   if (actor.stats.morale > 0) actor.stats.morale--;
@@ -47,7 +47,7 @@ const attack_panic = (
 
 const attack_counter = (
   state: IPet[],
-  action: PayloadAction<Omit<AttackCounterResponse, 'type'>>
+  action: PayloadAction<AttackCounterResponse>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.act.actor);
@@ -67,7 +67,7 @@ const attack_counter = (
 
 const attack_avenge = (
   state: IPet[],
-  action: PayloadAction<Omit<AttackAvengeResponse, 'type'>>
+  action: PayloadAction<AttackAvengeResponse>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const actActor = selectPet(state, action.payload.act.actor);
@@ -97,7 +97,7 @@ const attack_avenge = (
 
 const attack_join = (
   state: IPet[],
-  action: PayloadAction<Omit<AttackJoinResponse, 'type'>>
+  action: PayloadAction<AttackJoinResponse>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const actActor = selectPet(state, action.payload.act.actor);
@@ -126,7 +126,7 @@ const attack_join = (
 
 const bully_counter = (
   state: IPet[],
-  action: PayloadAction<Omit<BullyCounterResponse, 'type'>>
+  action: PayloadAction<BullyCounterResponse>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.act.actor);
@@ -146,7 +146,7 @@ const bully_counter = (
 
 const bully_avenge = (
   state: IPet[],
-  action: PayloadAction<Omit<BullyAvengeResponse, 'type'>>
+  action: PayloadAction<BullyAvengeResponse>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const actActor = selectPet(state, action.payload.act.actor);
@@ -176,7 +176,7 @@ const bully_avenge = (
 
 const bully_join = (
   state: IPet[],
-  action: PayloadAction<Omit<BullyJoinResponse, 'type'>>
+  action: PayloadAction<BullyJoinResponse>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const actActor = selectPet(state, action.payload.act.actor);
@@ -205,7 +205,7 @@ const bully_join = (
 
 const heal_delight = (
   state: IPet[],
-  action: PayloadAction<Omit<HealDelightResponse, 'type'>>
+  action: PayloadAction<HealDelightResponse>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   if (actor.stats.morale < 10) actor.stats.morale++;
@@ -213,7 +213,7 @@ const heal_delight = (
 
 const caress_counter = (
   state: IPet[],
-  action: PayloadAction<Omit<CaressCounterResponse, 'type'>>
+  action: PayloadAction<CaressCounterResponse>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.act.actor);
@@ -233,7 +233,7 @@ const caress_counter = (
 
 const caress_join = (
   state: IPet[],
-  action: PayloadAction<Omit<CaressJoinResponse, 'type'>>
+  action: PayloadAction<CaressJoinResponse>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const actActor = selectPet(state, action.payload.act.actor);
@@ -259,7 +259,7 @@ const caress_join = (
 
 const death_panic = (
   state: IPet[],
-  action: PayloadAction<Omit<DeathPanicResponse, 'type'>>
+  action: PayloadAction<DeathPanicResponse>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   if (actor.stats.morale > 0) actor.stats.morale--;
@@ -281,5 +281,6 @@ const responseReducers = {
 };
 
 type ResponseType = keyof typeof responseReducers;
+const responseTypes = Object.keys(responseReducers) as ResponseType[];
 
-export { responseReducers, type ResponseType };
+export { responseReducers, responseTypes, type ResponseType };

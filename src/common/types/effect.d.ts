@@ -17,12 +17,14 @@ type RestEffect = {
 
 type TireEffect = {
   type: 'tire';
-  target: ID;
 };
 
 type StarveEffect = {
   type: 'starve';
-  target: ID;
+};
+
+type AgeEffect = {
+  type: 'age';
 };
 
 type Effect =
@@ -30,7 +32,8 @@ type Effect =
   | DeathEffect
   | RestEffect
   | TireEffect
-  | StarveEffect;
+  | StarveEffect
+  | AgeEffect;
 
 export type {
   SummonEffect,
@@ -38,6 +41,7 @@ export type {
   RestEffect,
   TireEffect,
   StarveEffect,
+  AgeEffect,
   Effect,
 };
 export type { EffectType } from 'redux/slices/petsSlice/effects';
