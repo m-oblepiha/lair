@@ -20,8 +20,8 @@ const wakeupCaressCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof wakeupCaress>
 ) => {
-  const actor = selectPet(state, action.payload.actor);
-  const target = selectPet(state, action.payload.act.actor);
+  const actor = selectPet(state, action.payload.actor.id);
+  const target = selectPet(state, action.payload.act.actor.id);
 
   const morale = target.stats.morale + action.payload.value;
   target.stats.morale = morale > 10 ? 10 : morale;
@@ -41,7 +41,7 @@ const attackPanicCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof attackPanic>
 ) => {
-  const actor = selectPet(state, action.payload.actor);
+  const actor = selectPet(state, action.payload.actor.id);
   if (actor.stats.morale > 0) actor.stats.morale--;
 };
 const attackPanicCase = [attackPanic, attackPanicCaseReducer] as const;
@@ -50,8 +50,8 @@ const attackCounterCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof attackCounter>
 ) => {
-  const actor = selectPet(state, action.payload.actor);
-  const target = selectPet(state, action.payload.act.actor);
+  const actor = selectPet(state, action.payload.actor.id);
+  const target = selectPet(state, action.payload.act.actor.id);
 
   const health = target.stats.health - action.payload.value;
   target.stats.health = health < 0 ? 0 : health;
@@ -71,9 +71,9 @@ const attackAvengeCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof attackAvenge>
 ) => {
-  const actor = selectPet(state, action.payload.actor);
-  const actActor = selectPet(state, action.payload.act.actor);
-  const actTarget = selectPet(state, action.payload.act.target);
+  const actor = selectPet(state, action.payload.actor.id);
+  const actActor = selectPet(state, action.payload.act.actor.id);
+  const actTarget = selectPet(state, action.payload.act.target.id);
 
   const health = actActor.stats.health - action.payload.value;
   actActor.stats.health = health < 0 ? 0 : health;
@@ -102,9 +102,9 @@ const attackJoinCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof attackJoin>
 ) => {
-  const actor = selectPet(state, action.payload.actor);
-  const actActor = selectPet(state, action.payload.act.actor);
-  const actTarget = selectPet(state, action.payload.act.target);
+  const actor = selectPet(state, action.payload.actor.id);
+  const actActor = selectPet(state, action.payload.act.actor.id);
+  const actTarget = selectPet(state, action.payload.act.target.id);
 
   const health = actTarget.stats.health - action.payload.value;
   actTarget.stats.health = health < 0 ? 0 : health;
@@ -132,8 +132,8 @@ const bullyCounterCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof bullyCounter>
 ) => {
-  const actor = selectPet(state, action.payload.actor);
-  const target = selectPet(state, action.payload.act.actor);
+  const actor = selectPet(state, action.payload.actor.id);
+  const target = selectPet(state, action.payload.act.actor.id);
 
   const morale = target.stats.morale - action.payload.value;
   target.stats.morale = morale < 0 ? 0 : morale;
@@ -153,9 +153,9 @@ const bullyAvengeCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof bullyAvenge>
 ) => {
-  const actor = selectPet(state, action.payload.actor);
-  const actActor = selectPet(state, action.payload.act.actor);
-  const actTarget = selectPet(state, action.payload.act.target);
+  const actor = selectPet(state, action.payload.actor.id);
+  const actActor = selectPet(state, action.payload.act.actor.id);
+  const actTarget = selectPet(state, action.payload.act.target.id);
 
   const morale = actActor.stats.morale - action.payload.value;
   actActor.stats.morale = morale < 0 ? 0 : morale;
@@ -184,9 +184,9 @@ const bullyJoinCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof bullyJoin>
 ) => {
-  const actor = selectPet(state, action.payload.actor);
-  const actActor = selectPet(state, action.payload.act.actor);
-  const actTarget = selectPet(state, action.payload.act.target);
+  const actor = selectPet(state, action.payload.actor.id);
+  const actActor = selectPet(state, action.payload.act.actor.id);
+  const actTarget = selectPet(state, action.payload.act.target.id);
 
   const morale = actTarget.stats.morale - action.payload.value;
   actTarget.stats.morale = morale < 0 ? 0 : morale;
@@ -214,7 +214,7 @@ const healDelightCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof healDelight>
 ) => {
-  const actor = selectPet(state, action.payload.actor);
+  const actor = selectPet(state, action.payload.actor.id);
   if (actor.stats.morale < 10) actor.stats.morale++;
 };
 const healDelightCase = [healDelight, healDelightCaseReducer] as const;
@@ -223,8 +223,8 @@ const caressCounterCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof caressCounter>
 ) => {
-  const actor = selectPet(state, action.payload.actor);
-  const target = selectPet(state, action.payload.act.actor);
+  const actor = selectPet(state, action.payload.actor.id);
+  const target = selectPet(state, action.payload.act.actor.id);
 
   const morale = target.stats.morale + action.payload.value;
   target.stats.morale = morale > 10 ? 10 : morale;
@@ -244,9 +244,9 @@ const caressJoinCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof caressJoin>
 ) => {
-  const actor = selectPet(state, action.payload.actor);
-  const actActor = selectPet(state, action.payload.act.actor);
-  const actTarget = selectPet(state, action.payload.act.target);
+  const actor = selectPet(state, action.payload.actor.id);
+  const actActor = selectPet(state, action.payload.act.actor.id);
+  const actTarget = selectPet(state, action.payload.act.target.id);
 
   const morale = actTarget.stats.morale + action.payload.value;
   actTarget.stats.morale = morale > 10 ? 10 : morale;
@@ -271,7 +271,7 @@ const deathPanicCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof deathPanic>
 ) => {
-  const actor = selectPet(state, action.payload.actor);
+  const actor = selectPet(state, action.payload.actor.id);
   if (actor.stats.morale > 0) actor.stats.morale--;
 };
 const deathPanicCase = [deathPanic, deathPanicCaseReducer] as const;

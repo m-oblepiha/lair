@@ -1,4 +1,3 @@
-import type { IPet } from 'common/types';
 import type { ResponseAction } from 'redux/types';
 import type {
   WakeupCaressResponse,
@@ -14,145 +13,112 @@ import type {
   CaressJoinResponse,
   DeathPanicResponse,
 } from 'common/types/response';
-import { selectPet } from 'common/utils/selectPet';
 
-const wakeupCaressResponseMessage = (
-  pets: IPet[],
-  response: WakeupCaressResponse
-) => {
-  const actor = selectPet(pets, response.actor);
-  const actActor = selectPet(pets, response.act.actor);
-  return `${actor.name} подходит поближе и няшкает сонного ${actActor.name}. +${response.value} морали.`;
+const wakeupCaressResponseMessage = ({
+  actor,
+  act,
+  value,
+}: WakeupCaressResponse) => {
+  return `${actor.name} подходит поближе и няшкает сонного ${act.actor.name}. +${value} морали.`;
 };
 
-const attackPanicResponseMessage = (
-  pets: IPet[],
-  response: AttackPanicResponse
-) => {
-  const actor = selectPet(pets, response.actor);
-  const actTarget = selectPet(pets, response.act.target);
-  return `${actor.name} напуган жестокостью ${actTarget.name}...`;
+const attackPanicResponseMessage = ({ actor, act }: AttackPanicResponse) => {
+  return `${actor.name} напуган жестокостью ${act.target.name}...`;
 };
 
-const attackCounterResponseMessage = (
-  pets: IPet[],
-  response: AttackCounterResponse
-) => {
-  const actor = selectPet(pets, response.actor);
-  const actActor = selectPet(pets, response.act.actor);
-  return `${actor.name} отбивается, нанося ${actActor.name} ${response.value} урона.`;
+const attackCounterResponseMessage = ({
+  actor,
+  act,
+  value,
+}: AttackCounterResponse) => {
+  return `${actor.name} отбивается, нанося ${act.actor.name} ${value} урона.`;
 };
 
-const attackAvengeResponseMessage = (
-  pets: IPet[],
-  response: AttackAvengeResponse
-) => {
-  const actor = selectPet(pets, response.actor);
-  const actActor = selectPet(pets, response.act.actor);
-  const actTarget = selectPet(pets, response.act.target);
-  return `${actor.name} бросается на помощь ${actTarget.name}, нанося ${actActor.name} ${response.value} урона!`;
+const attackAvengeResponseMessage = ({
+  actor,
+  act,
+  value,
+}: AttackAvengeResponse) => {
+  return `${actor.name} бросается на помощь ${act.target.name}, нанося ${act.actor.name} ${value} урона!`;
 };
 
-const attackJoinResponseMessage = (
-  pets: IPet[],
-  response: AttackJoinResponse
-) => {
-  const actor = selectPet(pets, response.actor);
-  const actTarget = selectPet(pets, response.act.target);
-  return `${actor.name} в крысу кусает ${actTarget.name} за хвост на ${response.value} урона.`;
+const attackJoinResponseMessage = ({
+  actor,
+  act,
+  value,
+}: AttackJoinResponse) => {
+  return `${actor.name} в крысу кусает ${act.target.name} за хвост на ${value} урона.`;
 };
 
-const bullyCounterResponseMessage = (
-  pets: IPet[],
-  response: BullyCounterResponse
-) => {
-  const actor = selectPet(pets, response.actor);
-  const actActor = selectPet(pets, response.act.actor);
-  return `${actor.name} рычит в ответ, пугая ${actActor.name} на -${response.value} морали.`;
+const bullyCounterResponseMessage = ({
+  actor,
+  act,
+  value,
+}: BullyCounterResponse) => {
+  return `${actor.name} рычит в ответ, пугая ${act.actor.name} на -${value} морали.`;
 };
 
-const bullyAvengeResponseMessage = (
-  pets: IPet[],
-  response: BullyAvengeResponse
-) => {
-  const actor = selectPet(pets, response.actor);
-  const actActor = selectPet(pets, response.act.actor);
-  return `${actor.name} издалека шугает ${actActor.name}, заставляя того отложить -${response.value} морали...`;
+const bullyAvengeResponseMessage = ({
+  actor,
+  act,
+  value,
+}: BullyAvengeResponse) => {
+  return `${actor.name} издалека шугает ${act.actor.name}, заставляя того отложить -${value} морали...`;
 };
 
-const bullyJoinResponseMessage = (
-  pets: IPet[],
-  response: BullyJoinResponse
-) => {
-  const actor = selectPet(pets, response.actor);
-  const actTarget = selectPet(pets, response.act.target);
-  return `${actor.name} громко шипит, глядя ${actTarget.name} в глаза, отчего тот пугается еще больше. -${response.value} морали.`;
+const bullyJoinResponseMessage = ({ actor, act, value }: BullyJoinResponse) => {
+  return `${actor.name} громко шипит, глядя ${act.target.name} в глаза, отчего тот пугается еще больше. -${value} морали.`;
 };
 
-const healDelightResponseMessage = (
-  pets: IPet[],
-  response: HealDelightResponse
-) => {
-  const actor = selectPet(pets, response.actor);
+const healDelightResponseMessage = ({ actor }: HealDelightResponse) => {
   return `${actor.name} не может сдержать слез умиления, глядя на такую благодать.`;
 };
 
-const caressCounterResponseMessage = (
-  pets: IPet[],
-  response: CaressCounterResponse
-) => {
-  const actor = selectPet(pets, response.actor);
-  const actActor = selectPet(pets, response.act.actor);
-  return `${actor.name} резко няшкает в ответ! +${response.value} морали для ${actActor.name}.`;
+const caressCounterResponseMessage = ({
+  actor,
+  act,
+  value,
+}: CaressCounterResponse) => {
+  return `${actor.name} резко няшкает в ответ! +${value} морали для ${act.actor.name}.`;
 };
 
-const caressJoinResponseMessage = (
-  pets: IPet[],
-  response: CaressJoinResponse
-) => {
-  const actor = selectPet(pets, response.actor);
-  const actActor = selectPet(pets, response.act.actor);
-  const actTarget = selectPet(pets, response.act.target);
-  return `${actor.name} тоже не стоит в стороне, слегка поглаживая ${actTarget.name} вместе с ${actActor.name}`;
+const caressJoinResponseMessage = ({ actor, act }: CaressJoinResponse) => {
+  return `${actor.name} тоже не стоит в стороне, слегка поглаживая ${act.target.name} вместе с ${act.actor.name}`;
 };
 
-const deathPanicResponseMessage = (
-  pets: IPet[],
-  response: DeathPanicResponse
-) => {
-  const actor = selectPet(pets, response.actor);
+const deathPanicResponseMessage = ({ actor }: DeathPanicResponse) => {
   return `${actor.name} в шоке от его смерти...`;
 };
 
-const responseMessage = (
-  pets: IPet[],
-  { type, payload: response }: ResponseAction
-): string => {
+const responseMessage = ({
+  type,
+  payload: response,
+}: ResponseAction): string => {
   switch (type) {
     case 'wakeupCaress':
-      return wakeupCaressResponseMessage(pets, response);
+      return wakeupCaressResponseMessage(response);
     case 'attackPanic':
-      return attackPanicResponseMessage(pets, response);
+      return attackPanicResponseMessage(response);
     case 'attackCounter':
-      return attackCounterResponseMessage(pets, response);
+      return attackCounterResponseMessage(response);
     case 'attackAvenge':
-      return attackAvengeResponseMessage(pets, response);
+      return attackAvengeResponseMessage(response);
     case 'attackJoin':
-      return attackJoinResponseMessage(pets, response);
+      return attackJoinResponseMessage(response);
     case 'bullyCounter':
-      return bullyCounterResponseMessage(pets, response);
+      return bullyCounterResponseMessage(response);
     case 'bullyAvenge':
-      return bullyAvengeResponseMessage(pets, response);
+      return bullyAvengeResponseMessage(response);
     case 'bullyJoin':
-      return bullyJoinResponseMessage(pets, response);
+      return bullyJoinResponseMessage(response);
     case 'healDelight':
-      return healDelightResponseMessage(pets, response);
+      return healDelightResponseMessage(response);
     case 'caressCounter':
-      return caressCounterResponseMessage(pets, response);
+      return caressCounterResponseMessage(response);
     case 'caressJoin':
-      return caressJoinResponseMessage(pets, response);
+      return caressJoinResponseMessage(response);
     case 'deathPanic':
-      return deathPanicResponseMessage(pets, response);
+      return deathPanicResponseMessage(response);
   }
 };
 

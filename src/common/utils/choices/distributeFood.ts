@@ -76,12 +76,12 @@ const distributeFood = (pets: IPet[], actor: IPet, value: number) => {
   const otherPets = pets.filter((pet) => pet.id !== actor.id);
   const choices = otherPets.flatMap((pet) => [
     {
-      target: pet.id,
+      target: pet,
       type: 'steal' as const,
       probability: supplyStealProbability(pet, actor, value),
     },
     {
-      target: pet.id,
+      target: pet,
       type: 'share' as const,
       probability: supplyShareProbability(actor, pet, value),
     },

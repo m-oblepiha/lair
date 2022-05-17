@@ -104,43 +104,43 @@ function responseChoice(...[actor, type, act]: ResponseChoiceArgs): {
       return {
         type,
         probability:
-          actor.id === act.target ? attackPanicProbability(actor, act) : 0,
+          actor.id === act.target.id ? attackPanicProbability(actor, act) : 0,
       };
     case 'attackCounter':
       return {
         type,
         probability:
-          actor.id === act.target ? attackCounterProbability(actor, act) : 0,
+          actor.id === act.target.id ? attackCounterProbability(actor, act) : 0,
       };
     case 'attackAvenge':
       return {
         type,
         probability:
-          actor.id === act.target ? 0 : attackAvengeProbability(actor, act),
+          actor.id === act.target.id ? 0 : attackAvengeProbability(actor, act),
       };
     case 'attackJoin':
       return {
         type,
         probability:
-          actor.id === act.target ? 0 : attackJoinProbability(actor, act),
+          actor.id === act.target.id ? 0 : attackJoinProbability(actor, act),
       };
     case 'bullyCounter':
       return {
         type,
         probability:
-          actor.id === act.target ? bullyCounterProbability(actor, act) : 0,
+          actor.id === act.target.id ? bullyCounterProbability(actor, act) : 0,
       };
     case 'bullyAvenge':
       return {
         type,
         probability:
-          actor.id === act.target ? 0 : bullyAvengeProbability(actor, act),
+          actor.id === act.target.id ? 0 : bullyAvengeProbability(actor, act),
       };
     case 'bullyJoin':
       return {
         type,
         probability:
-          actor.id === act.target ? 0 : bullyJoinProbability(actor, act),
+          actor.id === act.target.id ? 0 : bullyJoinProbability(actor, act),
       };
     case 'healDelight':
       return { type, probability: healDelightProbability(actor, act) };
@@ -148,13 +148,13 @@ function responseChoice(...[actor, type, act]: ResponseChoiceArgs): {
       return {
         type,
         probability:
-          actor.id === act.target ? caressCounterProbability(actor, act) : 0,
+          actor.id === act.target.id ? caressCounterProbability(actor, act) : 0,
       };
     case 'caressJoin':
       return {
         type,
         probability:
-          actor.id === act.target ? 0 : caressJoinProbability(actor, act),
+          actor.id === act.target.id ? 0 : caressJoinProbability(actor, act),
       };
   }
 }

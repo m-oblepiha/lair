@@ -1,11 +1,11 @@
-import type { ID, IPet } from './';
+import type { IPet } from './';
 
 type SummonInteraction = {
   target: IPet;
 };
 
 type DeathInteraction = {
-  target: ID;
+  target: IPet;
 };
 
 export type { SummonInteraction, DeathInteraction };

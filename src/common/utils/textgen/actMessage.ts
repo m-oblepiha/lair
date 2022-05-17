@@ -1,4 +1,3 @@
-import type { IPet } from 'common/types';
 import type { ActAction } from 'redux/types';
 import type {
   SleepAct,
@@ -9,22 +8,19 @@ import type {
   HealAct,
   CaressAct,
 } from 'common/types/act';
-import { selectPet } from 'common/utils/selectPet';
 
-const sleepActMessage = (pets: IPet[], act: SleepAct) => {
-  const actor = selectPet(pets, act.actor);
+const sleepActMessage = ({ actor }: SleepAct) => {
   return `${actor.name} уснул.`;
 };
 
-const wakeupActMessage = (pets: IPet[], act: WakeupAct) => {
-  const actor = selectPet(pets, act.actor);
+const wakeupActMessage = ({ actor }: WakeupAct) => {
   return `${actor.name} проснулся.`;
 };
 
-const supplyActMessage = (pets: IPet[], act: SupplyAct) => {
-  const actor = selectPet(pets, act.actor);
+const supplyActMessage = (act: SupplyAct) => {
+  const actor = act.actor;
   if (act.distribution) {
-    const target = selectPet(pets, act.distribution.target);
+    const target = act.distribution.target;
     switch (act.distribution.type) {
       case 'steal':
         return `${actor.name} добыл ${act.value} еды, но ${target.name} украл у него кусочек!`;
@@ -35,49 +31,38 @@ const supplyActMessage = (pets: IPet[], act: SupplyAct) => {
   return `${actor.name} добыл ${act.value} еды.`;
 };
 
-const attackActMessage = (pets: IPet[], act: AttackAct) => {
-  const actor = selectPet(pets, act.actor);
-  const target = selectPet(pets, act.target);
-  return `${actor.name} атакует ${target.name}, нанося ${act.value} урона!`;
+const attackActMessage = ({ actor, target, value }: AttackAct) => {
+  return `${actor.name} атакует ${target.name}, нанося ${value} урона!`;
 };
 
-const bullyActMessage = (pets: IPet[], act: BullyAct) => {
-  const actor = selectPet(pets, act.actor);
-  const target = selectPet(pets, act.target);
-  return `${actor.name} рычит на ${target.name}. ${target.name} теряет ${act.value} морали.`;
+const bullyActMessage = ({ actor, target, value }: BullyAct) => {
+  return `${actor.name} рычит на ${target.name}. ${target.name} теряет ${value} морали.`;
 };
 
-const healActMessage = (pets: IPet[], act: HealAct) => {
-  const actor = selectPet(pets, act.actor);
-  const target = selectPet(pets, act.target);
-  return `${actor.name} зализывает раны ${target.name}, восстанавливая ему ${act.value} здоровья!`;
+const healActMessage = ({ actor, target, value }: HealAct) => {
+  return `${actor.name} зализывает раны ${target.name}, восстанавливая ему ${value} здоровья!`;
 };
 
-const caressActMessage = (pets: IPet[], act: CaressAct) => {
-  const actor = selectPet(pets, act.actor);
-  const target = selectPet(pets, act.target);
-  return `${actor.name} няшкает ${target.name}. +${act.value} морали!`;
+const caressActMessage = ({ actor, target, value }: CaressAct) => {
+  return `${actor.name} няшкает ${target.name}. +${value} морали!`;
 };
 
-const actMessage = (
-  pets: IPet[],
-  { type, payload: act }: ActAction
-): string => {
+const actMessage = ({ type, payload: act }: ActAction): string => {
   switch (type) {
     case 'sleep':
-      return sleepActMessage(pets, act);
+      return sleepActMessage(act);
     case 'wakeup':
-      return wakeupActMessage(pets, act);
+      return wakeupActMessage(act);
     case 'supply':
-      return supplyActMessage(pets, act);
+      return supplyActMessage(act);
     case 'attack':
-      return attackActMessage(pets, act);
+      return attackActMessage(act);
     case 'bully':
-      return bullyActMessage(pets, act);
+      return bullyActMessage(act);
     case 'heal':
-      return healActMessage(pets, act);
+      return healActMessage(act);
     case 'caress':
-      return caressActMessage(pets, act);
+      return caressActMessage(act);
   }
 };
 

@@ -40,9 +40,9 @@ const pickWakeupResponse = (actor: IPet, act: WakeupAct, pets: IPet[]) => {
   if (!bestChoice) return null;
 
   return wakeupCaress({
-    actor: actor.id,
+    actor,
     act,
-    value: actValue(actor, 'caress', selectPet(pets, act.actor)),
+    value: actValue(actor, 'caress', selectPet(pets, act.actor.id)),
   });
 };
 
@@ -56,26 +56,26 @@ const pickAttackResponse = (actor: IPet, act: AttackAct, pets: IPet[]) => {
   switch (bestChoice.type) {
     case 'attackPanic':
       return attackPanic({
-        actor: actor.id,
+        actor,
         act,
       });
     case 'attackCounter':
       return attackCounter({
-        actor: actor.id,
+        actor,
         act,
-        value: actValue(actor, 'attack', selectPet(pets, act.actor)),
+        value: actValue(actor, 'attack', selectPet(pets, act.actor.id)),
       });
     case 'attackAvenge':
       return attackAvenge({
-        actor: actor.id,
+        actor,
         act,
-        value: actValue(actor, 'attack', selectPet(pets, act.actor)),
+        value: actValue(actor, 'attack', selectPet(pets, act.actor.id)),
       });
     case 'attackJoin':
       return attackJoin({
-        actor: actor.id,
+        actor,
         act,
-        value: actValue(actor, 'attack', selectPet(pets, act.target)),
+        value: actValue(actor, 'attack', selectPet(pets, act.target.id)),
       });
   }
 };
@@ -90,26 +90,26 @@ const pickBullyResponse = (actor: IPet, act: BullyAct, pets: IPet[]) => {
   switch (bestChoice.type) {
     case 'bullyCounter':
       return bullyCounter({
-        actor: actor.id,
+        actor,
         act,
-        value: actValue(actor, 'bully', selectPet(pets, act.actor)),
+        value: actValue(actor, 'bully', selectPet(pets, act.actor.id)),
       });
     case 'bullyAvenge':
       return bullyAvenge({
-        actor: actor.id,
+        actor,
         act,
-        value: actValue(actor, 'bully', selectPet(pets, act.actor)),
+        value: actValue(actor, 'bully', selectPet(pets, act.actor.id)),
       });
     case 'bullyJoin':
       return bullyJoin({
-        actor: actor.id,
+        actor,
         act,
-        value: actValue(actor, 'bully', selectPet(pets, act.target)),
+        value: actValue(actor, 'bully', selectPet(pets, act.target.id)),
       });
   }
 };
 
-const pickHealResponse = (actor: IPet, act: HealAct, pets: IPet[]) => {
+const pickHealResponse = (actor: IPet, act: HealAct) => {
   const choices = healResponseTypes.map((type) =>
     responseChoice(actor, type, act)
   );
@@ -117,7 +117,7 @@ const pickHealResponse = (actor: IPet, act: HealAct, pets: IPet[]) => {
   if (!bestChoice) return null;
 
   return healDelight({
-    actor: actor.id,
+    actor,
     act,
   });
 };
@@ -132,15 +132,15 @@ const pickCaressResponse = (actor: IPet, act: CaressAct, pets: IPet[]) => {
   switch (bestChoice.type) {
     case 'caressCounter':
       return caressCounter({
-        actor: actor.id,
+        actor,
         act,
-        value: actValue(actor, 'caress', selectPet(pets, act.actor)),
+        value: actValue(actor, 'caress', selectPet(pets, act.actor.id)),
       });
     case 'caressJoin':
       return caressJoin({
-        actor: actor.id,
+        actor,
         act,
-        value: actValue(actor, 'caress', selectPet(pets, act.target)),
+        value: actValue(actor, 'caress', selectPet(pets, act.target.id)),
       });
   }
 };
@@ -158,7 +158,7 @@ const pickResponse = (
     case 'bully':
       return pickBullyResponse(actor, act, pets);
     case 'heal':
-      return pickHealResponse(actor, act, pets);
+      return pickHealResponse(actor, act);
     case 'caress':
       return pickCaressResponse(actor, act, pets);
     default:

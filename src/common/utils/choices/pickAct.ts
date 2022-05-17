@@ -37,9 +37,9 @@ const pickAct = (actor: IPet, pets: IPet[]) => {
 
   switch (bestChoice.type) {
     case 'sleep':
-      return sleep({ actor: actor.id });
+      return sleep({ actor });
     case 'wakeup':
-      return wakeup({ actor: actor.id });
+      return wakeup({ actor });
     case 'supply':
       const foodDistribution = distributeFood(
         pets,
@@ -48,7 +48,7 @@ const pickAct = (actor: IPet, pets: IPet[]) => {
       );
       if (foodDistribution)
         return supply({
-          actor: actor.id,
+          actor,
           value: actValue(actor, 'supply') - 1,
           distribution: {
             type: foodDistribution.type,
@@ -56,31 +56,31 @@ const pickAct = (actor: IPet, pets: IPet[]) => {
           },
         });
       return supply({
-        actor: actor.id,
+        actor,
         value: actValue(actor, 'supply'),
       });
     case 'attack':
       return attack({
-        actor: actor.id,
-        target: bestChoice.target.id,
+        actor,
+        target: bestChoice.target,
         value: actValue(actor, 'attack', bestChoice.target),
       });
     case 'bully':
       return bully({
-        actor: actor.id,
-        target: bestChoice.target.id,
+        actor,
+        target: bestChoice.target,
         value: actValue(actor, 'bully', bestChoice.target),
       });
     case 'heal':
       return heal({
-        actor: actor.id,
-        target: bestChoice.target.id,
+        actor,
+        target: bestChoice.target,
         value: actValue(actor, 'heal', bestChoice.target),
       });
     case 'caress':
       return caress({
-        actor: actor.id,
-        target: bestChoice.target.id,
+        actor,
+        target: bestChoice.target,
         value: actValue(actor, 'caress', bestChoice.target),
       });
   }

@@ -15,7 +15,7 @@ const pickDeathResponse = (actor: IPet, effect: DeathInteraction) => {
 
   if (!bestChoice) return null;
   return deathPanic({
-    actor: actor.id,
+    actor,
     act: effect,
   });
 };

@@ -7,17 +7,17 @@ import { pickResponse } from 'common/utils/choices';
 const respondToAct =
   (pets: IPet[], act: ActAction): Thunk<Promise<void>> =>
   async (dispatch) => {
-    let respondents = pets.filter((pet) => pet.id !== act.payload.actor);
+    let respondents = pets.filter((pet) => pet.id !== act.payload.actor.id);
 
     if ('target' in act.payload) {
       await new Promise((resolve) => setTimeout(resolve, 200));
       const actTarget = act.payload.target;
-      const target = selectPet(pets, actTarget);
+      const target = selectPet(pets, actTarget.id);
       const targetResponse = pickResponse(target, act, pets);
       if (targetResponse) {
         dispatch(targetResponse);
       }
-      respondents = respondents.filter((pet) => pet.id !== actTarget);
+      respondents = respondents.filter((pet) => pet.id !== actTarget.id);
     }
 
     for (const pet of respondents) {

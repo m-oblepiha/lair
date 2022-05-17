@@ -1,7 +1,7 @@
-import type { ID, IPet } from './';
+import type { IPet } from './';
 
 type RestEffect = {
-  target: ID;
+  target: IPet;
 };
 
 export type { RestEffect };

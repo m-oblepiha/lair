@@ -1,43 +1,43 @@
-import type { ID } from './';
+import type { IPet } from './';
 
 type SleepAct = {
-  actor: ID;
+  actor: IPet;
 };
 
 type WakeupAct = {
-  actor: ID;
+  actor: IPet;
 };
 
 type SupplyAct = {
-  actor: ID;
+  actor: IPet;
   value: number;
   distribution?: {
     type: 'share' | 'steal';
-    target: ID;
+    target: IPet;
   };
 };
 
 type AttackAct = {
-  actor: ID;
-  target: ID;
+  actor: IPet;
+  target: IPet;
   value: number;
 };
 
 type BullyAct = {
-  actor: ID;
-  target: ID;
+  actor: IPet;
+  target: IPet;
   value: number;
 };
 
 type HealAct = {
-  actor: ID;
-  target: ID;
+  actor: IPet;
+  target: IPet;
   value: number;
 };
 
 type CaressAct = {
-  actor: ID;
-  target: ID;
+  actor: IPet;
+  target: IPet;
   value: number;
 };
 

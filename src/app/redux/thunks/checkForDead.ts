@@ -9,7 +9,7 @@ const checkForDead = (): Thunk => (dispatch, getState) => {
 
   for (const pet of pets) {
     if (pet.stats.health === 0) {
-      const deathAction = death({ target: pet.id });
+      const deathAction = death({ target: pet });
       deaths.push(deathAction.payload);
       dispatch(deathAction);
     }

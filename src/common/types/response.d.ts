@@ -1,74 +1,74 @@
-import type { ID } from './';
+import type { IPet } from './';
 import type { WakeupAct, AttackAct, BullyAct, HealAct, CaressAct } from './act';
-import type { DeathEffect } from './effect';
+import type { DeathInteraction } from './interaction';
 
 type WakeupCaressResponse = {
-  actor: ID;
+  actor: IPet;
   act: WakeupAct;
   value: number;
 };
 
 type AttackPanicResponse = {
-  actor: ID;
+  actor: IPet;
   act: AttackAct;
 };
 
 type AttackCounterResponse = {
-  actor: ID;
+  actor: IPet;
   act: AttackAct;
   value: number;
 };
 
 type AttackAvengeResponse = {
-  actor: ID;
+  actor: IPet;
   act: AttackAct;
   value: number;
 };
 
 type AttackJoinResponse = {
-  actor: ID;
+  actor: IPet;
   act: AttackAct;
   value: number;
 };
 
 type BullyCounterResponse = {
-  actor: ID;
+  actor: IPet;
   act: BullyAct;
   value: number;
 };
 
 type BullyAvengeResponse = {
-  actor: ID;
+  actor: IPet;
   act: BullyAct;
   value: number;
 };
 
 type BullyJoinResponse = {
-  actor: ID;
+  actor: IPet;
   act: BullyAct;
   value: number;
 };
 
 type HealDelightResponse = {
-  actor: ID;
+  actor: IPet;
   act: HealAct;
 };
 
 type CaressCounterResponse = {
-  actor: ID;
+  actor: IPet;
   act: CaressAct;
   value: number;
 };
 
 type CaressJoinResponse = {
-  actor: ID;
+  actor: IPet;
   act: CaressAct;
   value: number;
 };
 
 type DeathPanicResponse = {
-  actor: ID;
-  act: DeathEffect;
+  actor: IPet;
+  act: DeathInteraction;
 };
 
 export type {

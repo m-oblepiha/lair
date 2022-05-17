@@ -3,7 +3,7 @@ import { rest, tire, starve, age } from 'redux/actions';
 import { selectPet } from 'common/utils';
 
 const restCaseReducer = (state: IPet[], action: ReturnType<typeof rest>) => {
-  const pet = selectPet(state, action.payload.target);
+  const pet = selectPet(state, action.payload.target.id);
   if (!pet) return;
 
   const { fatigue, morale, hunger, health } = pet.stats;
