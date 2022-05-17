@@ -1,3 +1,4 @@
+import type { AnyAction } from '@reduxjs/toolkit';
 import type {
   SleepAct,
   WakeupAct,
@@ -21,5 +22,12 @@ const actActions = [sleep, wakeup, supply, attack, bully, heal, caress];
 type ActAction = ReturnType<typeof actActions[number]>;
 type ActType = ActAction['type'];
 
+const isAct = (action: AnyAction): action is ActAction => {
+  for (const act of actActions) {
+    if (action?.type === act.type) return true;
+  }
+  return false;
+};
+
 export type { ActType, ActAction };
-export { sleep, wakeup, supply, attack, bully, heal, caress };
+export { isAct, sleep, wakeup, supply, attack, bully, heal, caress };

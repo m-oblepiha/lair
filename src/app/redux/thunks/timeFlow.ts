@@ -1,6 +1,5 @@
 import type { Thunk } from 'redux/types';
 import { timePass, tire, starve, age } from 'redux/actions';
-import { checkForDead } from './checkForDead';
 
 const timeFlow = (): Thunk => (dispatch, getState) => {
   dispatch(timePass());
@@ -10,7 +9,7 @@ const timeFlow = (): Thunk => (dispatch, getState) => {
   if ([2, 4].includes(time.phase)) dispatch(starve());
   if (time.phase === 1) dispatch(age());
 
-  dispatch(checkForDead());
+  // dispatch(checkForDead());
 };
 
 export { timeFlow };

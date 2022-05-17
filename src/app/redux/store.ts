@@ -1,4 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import {
+  responseMiddleware,
+  recordsMiddleware,
+  abortMiddleware,
+} from './middleware';
 
 import {
   heartsReducer,
@@ -7,6 +12,13 @@ import {
   petsReducer,
 } from 'redux/reducers';
 
+const rootReducer = combineReducers({
+  hearts: heartsReducer,
+  time: timeReducer,
+  records: recordsReducer,
+  pets: petsReducer,
+});
+
 const store = configureStore({
   reducer: {
     hearts: heartsReducer,
@@ -14,6 +26,11 @@ const store = configureStore({
     records: recordsReducer,
     pets: petsReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware()
+      .concat(abortMiddleware)
+      .concat(responseMiddleware)
+      .concat(recordsMiddleware),
 });
 
-export { store };
+export { store, rootReducer };

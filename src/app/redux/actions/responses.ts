@@ -1,3 +1,4 @@
+import type { AnyAction } from '@reduxjs/toolkit';
 import type {
   WakeupCaressResponse,
   AttackPanicResponse,
@@ -68,8 +69,16 @@ const responseActions = [
 type ResponseAction = ReturnType<typeof responseActions[number]>;
 type ResponseType = ResponseAction['type'];
 
+const isResponse = (action: AnyAction): action is ResponseAction => {
+  for (const response of responseActions) {
+    if (action?.type === response.type) return true;
+  }
+  return false;
+};
+
 export type { ResponseType, ResponseAction };
 export {
+  isResponse,
   wakeupCaress,
   attackPanic,
   attackCounter,

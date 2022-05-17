@@ -4,24 +4,24 @@ import type {
   DeathInteraction,
 } from 'common/types/interaction';
 
-const summonEffectMessage = ({ target }: SummonInteraction) => {
+const summonInteractionMessage = ({ target }: SummonInteraction) => {
   return `В логово призван ${target.name}.`;
 };
 
-const deathEffectMessage = ({ target }: DeathInteraction) => {
+const deathInteractionMessage = ({ target }: DeathInteraction) => {
   return `${target.name} тихо скулит и, наконец, затихает...`;
 };
 
-const effectMessage = ({
+const interactionMessage = ({
   type,
   payload: effect,
 }: InteractionAction): string => {
   switch (type) {
     case 'pets/summon':
-      return summonEffectMessage(effect);
+      return summonInteractionMessage(effect);
     case 'pets/death':
-      return deathEffectMessage(effect);
+      return deathInteractionMessage(effect);
   }
 };
 
-export { effectMessage };
+export { interactionMessage };

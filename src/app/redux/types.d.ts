@@ -1,11 +1,15 @@
-import type { AnyAction } from 'redux';
-import type { ThunkAction } from 'redux-thunk';
-import { store } from './store';
+import type {
+  AnyAction,
+  ThunkAction,
+  ThunkDispatch,
+  Dispatch,
+} from '@reduxjs/toolkit';
+import { rootReducer } from './store';
 
-type RootState = ReturnType<typeof store.getState>;
-type AppDispatch = typeof store.dispatch;
-
-type Action<T extends string, U> = { type: T; payload: U };
+type RootState = ReturnType<typeof rootReducer>;
+// type AppDispatch = typeof store.dispatch;
+type AppDispatch = ThunkDispatch<RootState, unknown, AnyAction> &
+  Dispatch<AnyAction>;
 
 type Thunk<ReturnType = void> = ThunkAction<
   ReturnType,
@@ -14,8 +18,12 @@ type Thunk<ReturnType = void> = ThunkAction<
   AnyAction
 >;
 
-export type { RootState, AppDispatch, Action, Thunk };
+export type { RootState, AppDispatch, Thunk };
 
 export type { ActType, ActAction } from 'redux/actions/acts';
 export type { ResponseType, ResponseAction } from 'redux/actions/responses';
 export type { EffectType, EffectAction } from 'redux/actions/effects';
+export type {
+  InteractionType,
+  InteractionAction,
+} from 'redux/actions/interactions';

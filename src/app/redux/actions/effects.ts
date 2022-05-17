@@ -1,3 +1,4 @@
+import type { AnyAction } from '@reduxjs/toolkit';
 import type { RestEffect } from 'common/types/effect';
 import { createAction } from '@reduxjs/toolkit';
 import { roll } from 'common/utils/rolls';
@@ -15,5 +16,12 @@ const effectActions = [rest, tire, starve, age];
 type EffectAction = ReturnType<typeof effectActions[number]>;
 type EffectType = EffectAction['type'];
 
+const isEffect = (action: AnyAction): action is EffectAction => {
+  for (const effect of effectActions) {
+    if (action?.type === effect.type) return true;
+  }
+  return false;
+};
+
 export type { EffectType, EffectAction };
-export { rest, tire, starve, age };
+export { isEffect, rest, tire, starve, age };
