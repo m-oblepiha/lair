@@ -1,25 +1,24 @@
-import type { PayloadAction } from '@reduxjs/toolkit';
 import type { IPet } from 'common/types';
-import type {
-  WakeupCaressResponse,
-  AttackPanicResponse,
-  AttackCounterResponse,
-  AttackAvengeResponse,
-  AttackJoinResponse,
-  BullyCounterResponse,
-  BullyAvengeResponse,
-  BullyJoinResponse,
-  HealDelightResponse,
-  CaressCounterResponse,
-  CaressJoinResponse,
-  DeathPanicResponse,
-} from 'common/types/response';
+import {
+  wakeupCaress,
+  attackPanic,
+  attackCounter,
+  attackAvenge,
+  attackJoin,
+  bullyCounter,
+  bullyAvenge,
+  bullyJoin,
+  healDelight,
+  caressCounter,
+  caressJoin,
+  deathPanic,
+} from 'redux/actions';
 import { selectPet, clipRelation } from 'common/utils';
 import { changeRelation } from 'common/utils/calcs';
 
-const wakeup_caress = (
+const wakeupCaressCaseReducer = (
   state: IPet[],
-  action: PayloadAction<WakeupCaressResponse>
+  action: ReturnType<typeof wakeupCaress>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.act.actor);
@@ -36,18 +35,20 @@ const wakeup_caress = (
       })
   );
 };
+const wakeupCaressCase = [wakeupCaress, wakeupCaressCaseReducer] as const;
 
-const attack_panic = (
+const attackPanicCaseReducer = (
   state: IPet[],
-  action: PayloadAction<AttackPanicResponse>
+  action: ReturnType<typeof attackPanic>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   if (actor.stats.morale > 0) actor.stats.morale--;
 };
+const attackPanicCase = [attackPanic, attackPanicCaseReducer] as const;
 
-const attack_counter = (
+const attackCounterCaseReducer = (
   state: IPet[],
-  action: PayloadAction<AttackCounterResponse>
+  action: ReturnType<typeof attackCounter>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.act.actor);
@@ -64,10 +65,11 @@ const attack_counter = (
       })
   );
 };
+const attackCounterCase = [attackCounter, attackCounterCaseReducer] as const;
 
-const attack_avenge = (
+const attackAvengeCaseReducer = (
   state: IPet[],
-  action: PayloadAction<AttackAvengeResponse>
+  action: ReturnType<typeof attackAvenge>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const actActor = selectPet(state, action.payload.act.actor);
@@ -94,10 +96,11 @@ const attack_avenge = (
       })
   );
 };
+const attackAvengeCase = [attackAvenge, attackAvengeCaseReducer] as const;
 
-const attack_join = (
+const attackJoinCaseReducer = (
   state: IPet[],
-  action: PayloadAction<AttackJoinResponse>
+  action: ReturnType<typeof attackJoin>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const actActor = selectPet(state, action.payload.act.actor);
@@ -123,10 +126,11 @@ const attack_join = (
       })
   );
 };
+const attackJoinCase = [attackJoin, attackJoinCaseReducer] as const;
 
-const bully_counter = (
+const bullyCounterCaseReducer = (
   state: IPet[],
-  action: PayloadAction<BullyCounterResponse>
+  action: ReturnType<typeof bullyCounter>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.act.actor);
@@ -143,10 +147,11 @@ const bully_counter = (
       })
   );
 };
+const bullyCounterCase = [bullyCounter, bullyCounterCaseReducer] as const;
 
-const bully_avenge = (
+const bullyAvengeCaseReducer = (
   state: IPet[],
-  action: PayloadAction<BullyAvengeResponse>
+  action: ReturnType<typeof bullyAvenge>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const actActor = selectPet(state, action.payload.act.actor);
@@ -173,10 +178,11 @@ const bully_avenge = (
       })
   );
 };
+const bullyAvengeCase = [bullyAvenge, bullyAvengeCaseReducer] as const;
 
-const bully_join = (
+const bullyJoinCaseReducer = (
   state: IPet[],
-  action: PayloadAction<BullyJoinResponse>
+  action: ReturnType<typeof bullyJoin>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const actActor = selectPet(state, action.payload.act.actor);
@@ -202,18 +208,20 @@ const bully_join = (
       })
   );
 };
+const bullyJoinCase = [bullyJoin, bullyJoinCaseReducer] as const;
 
-const heal_delight = (
+const healDelightCaseReducer = (
   state: IPet[],
-  action: PayloadAction<HealDelightResponse>
+  action: ReturnType<typeof healDelight>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   if (actor.stats.morale < 10) actor.stats.morale++;
 };
+const healDelightCase = [healDelight, healDelightCaseReducer] as const;
 
-const caress_counter = (
+const caressCounterCaseReducer = (
   state: IPet[],
-  action: PayloadAction<CaressCounterResponse>
+  action: ReturnType<typeof caressCounter>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.act.actor);
@@ -230,10 +238,11 @@ const caress_counter = (
       })
   );
 };
+const caressCounterCase = [caressCounter, caressCounterCaseReducer] as const;
 
-const caress_join = (
+const caressJoinCaseReducer = (
   state: IPet[],
-  action: PayloadAction<CaressJoinResponse>
+  action: ReturnType<typeof caressJoin>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   const actActor = selectPet(state, action.payload.act.actor);
@@ -256,31 +265,28 @@ const caress_join = (
       changeRelation({ target: actTarget, type: 'join' })
   );
 };
+const caressJoinCase = [caressJoin, caressJoinCaseReducer] as const;
 
-const death_panic = (
+const deathPanicCaseReducer = (
   state: IPet[],
-  action: PayloadAction<DeathPanicResponse>
+  action: ReturnType<typeof deathPanic>
 ) => {
   const actor = selectPet(state, action.payload.actor);
   if (actor.stats.morale > 0) actor.stats.morale--;
 };
+const deathPanicCase = [deathPanic, deathPanicCaseReducer] as const;
 
-const responseReducers = {
-  wakeup_caress,
-  attack_panic,
-  attack_counter,
-  attack_avenge,
-  attack_join,
-  bully_counter,
-  bully_avenge,
-  bully_join,
-  heal_delight,
-  caress_counter,
-  caress_join,
-  death_panic,
+export {
+  wakeupCaressCase,
+  attackPanicCase,
+  attackCounterCase,
+  attackAvengeCase,
+  attackJoinCase,
+  bullyCounterCase,
+  bullyAvengeCase,
+  bullyJoinCase,
+  healDelightCase,
+  caressCounterCase,
+  caressJoinCase,
+  deathPanicCase,
 };
-
-type ResponseType = keyof typeof responseReducers;
-const responseTypes = Object.keys(responseReducers) as ResponseType[];
-
-export { responseReducers, responseTypes, type ResponseType };

@@ -6,7 +6,7 @@ import type {
   HealAct,
   WakeupAct,
 } from 'common/types/act';
-import type { ResponseType } from 'common/types/response';
+import type { ResponseType } from 'redux/types';
 import {
   wakeupCaressProbability,
   attackCounterProbability,
@@ -21,7 +21,7 @@ import {
   caressJoinProbability,
 } from 'common/utils/rolls/responseProbability';
 
-const wakeupResponseTypes = ['wakeup_caress'] as const;
+const wakeupResponseTypes = ['wakeupCaress'] as const;
 type WakeupChoiceResponseType = typeof wakeupResponseTypes[number];
 type WakeupChoiceArgs = [
   actor: IPet,
@@ -30,10 +30,10 @@ type WakeupChoiceArgs = [
 ];
 
 const attackResponseTypes = [
-  'attack_panic',
-  'attack_counter',
-  'attack_avenge',
-  'attack_join',
+  'attackPanic',
+  'attackCounter',
+  'attackAvenge',
+  'attackJoin',
 ] as const;
 type AttackChoiceResponseType = typeof attackResponseTypes[number];
 type AttackChoiceArgs = [
@@ -43,9 +43,9 @@ type AttackChoiceArgs = [
 ];
 
 const bullyResponseTypes = [
-  'bully_counter',
-  'bully_avenge',
-  'bully_join',
+  'bullyCounter',
+  'bullyAvenge',
+  'bullyJoin',
 ] as const;
 type BullyChoiceResponseType = typeof bullyResponseTypes[number];
 type BullyChoiceArgs = [
@@ -54,11 +54,11 @@ type BullyChoiceArgs = [
   act: BullyAct
 ];
 
-const healResponseTypes = ['heal_delight'] as const;
+const healResponseTypes = ['healDelight'] as const;
 type HealChoiceResponseType = typeof healResponseTypes[number];
 type HealChoiceArgs = [actor: IPet, type: HealChoiceResponseType, act: HealAct];
 
-const caressResponseTypes = ['caress_counter', 'caress_join'] as const;
+const caressResponseTypes = ['caressCounter', 'caressJoin'] as const;
 type CaressChoiceResponseType = typeof caressResponseTypes[number];
 type CaressChoiceArgs = [
   actor: IPet,
@@ -94,63 +94,63 @@ function responseChoice(...[actor, type, act]: CaressChoiceArgs): {
   probability: number;
 };
 function responseChoice(...[actor, type, act]: ResponseChoiceArgs): {
-  type: Exclude<ResponseType, 'death_panic'>;
+  type: Exclude<ResponseType, 'deathPanic'>;
   probability: number;
 } {
   switch (type) {
-    case 'wakeup_caress':
+    case 'wakeupCaress':
       return { type, probability: wakeupCaressProbability(actor, act) };
-    case 'attack_panic':
+    case 'attackPanic':
       return {
         type,
         probability:
           actor.id === act.target ? attackPanicProbability(actor, act) : 0,
       };
-    case 'attack_counter':
+    case 'attackCounter':
       return {
         type,
         probability:
           actor.id === act.target ? attackCounterProbability(actor, act) : 0,
       };
-    case 'attack_avenge':
+    case 'attackAvenge':
       return {
         type,
         probability:
           actor.id === act.target ? 0 : attackAvengeProbability(actor, act),
       };
-    case 'attack_join':
+    case 'attackJoin':
       return {
         type,
         probability:
           actor.id === act.target ? 0 : attackJoinProbability(actor, act),
       };
-    case 'bully_counter':
+    case 'bullyCounter':
       return {
         type,
         probability:
           actor.id === act.target ? bullyCounterProbability(actor, act) : 0,
       };
-    case 'bully_avenge':
+    case 'bullyAvenge':
       return {
         type,
         probability:
           actor.id === act.target ? 0 : bullyAvengeProbability(actor, act),
       };
-    case 'bully_join':
+    case 'bullyJoin':
       return {
         type,
         probability:
           actor.id === act.target ? 0 : bullyJoinProbability(actor, act),
       };
-    case 'heal_delight':
+    case 'healDelight':
       return { type, probability: healDelightProbability(actor, act) };
-    case 'caress_counter':
+    case 'caressCounter':
       return {
         type,
         probability:
           actor.id === act.target ? caressCounterProbability(actor, act) : 0,
       };
-    case 'caress_join':
+    case 'caressJoin':
       return {
         type,
         probability:
@@ -159,13 +159,6 @@ function responseChoice(...[actor, type, act]: ResponseChoiceArgs): {
   }
 }
 
-export type {
-  WakeupChoiceResponseType,
-  AttackChoiceResponseType,
-  BullyChoiceResponseType,
-  HealChoiceResponseType,
-  CaressChoiceResponseType,
-};
 export {
   responseChoice,
   wakeupResponseTypes,

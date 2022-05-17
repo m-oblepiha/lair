@@ -1,28 +1,35 @@
-import type { PayloadAction } from '@reduxjs/toolkit';
 import type { IPet } from 'common/types';
-import type {
-  SleepAct,
-  WakeupAct,
-  SupplyAct,
-  AttackAct,
-  BullyAct,
-  HealAct,
-  CaressAct,
-} from 'common/types/act';
+import {
+  sleep,
+  wakeup,
+  supply,
+  attack,
+  bully,
+  heal,
+  caress,
+} from 'redux/actions';
 import { clipRelation, selectPet } from 'common/utils';
 import { changeRelation } from 'common/utils/calcs';
 
-const sleep = (state: IPet[], action: PayloadAction<SleepAct>) => {
+const sleepCaseReducer = (state: IPet[], action: ReturnType<typeof sleep>) => {
   const pet = selectPet(state, action.payload.actor);
   pet.stats.isAwake = false;
 };
+const sleepCase = [sleep, sleepCaseReducer] as const;
 
-const wakeup = (state: IPet[], action: PayloadAction<WakeupAct>) => {
+const wakeupCaseReducer = (
+  state: IPet[],
+  action: ReturnType<typeof wakeup>
+) => {
   const pet = selectPet(state, action.payload.actor);
   pet.stats.isAwake = true;
 };
+const wakeupCase = [wakeup, wakeupCaseReducer] as const;
 
-const supply = (state: IPet[], action: PayloadAction<SupplyAct>) => {
+const supplyCaseReducer = (
+  state: IPet[],
+  action: ReturnType<typeof supply>
+) => {
   const pet = selectPet(state, action.payload.actor);
 
   const hunger = pet.stats.hunger - action.payload.value;
@@ -48,8 +55,12 @@ const supply = (state: IPet[], action: PayloadAction<SupplyAct>) => {
     }
   }
 };
+const supplyCase = [supply, supplyCaseReducer] as const;
 
-const attack = (state: IPet[], action: PayloadAction<AttackAct>) => {
+const attackCaseReducer = (
+  state: IPet[],
+  action: ReturnType<typeof attack>
+) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.target);
 
@@ -65,8 +76,9 @@ const attack = (state: IPet[], action: PayloadAction<AttackAct>) => {
       })
   );
 };
+const attackCase = [attack, attackCaseReducer] as const;
 
-const bully = (state: IPet[], action: PayloadAction<BullyAct>) => {
+const bullyCaseReducer = (state: IPet[], action: ReturnType<typeof bully>) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.target);
 
@@ -82,8 +94,9 @@ const bully = (state: IPet[], action: PayloadAction<BullyAct>) => {
       })
   );
 };
+const bullyCase = [bully, bullyCaseReducer] as const;
 
-const heal = (state: IPet[], action: PayloadAction<HealAct>) => {
+const healCaseReducer = (state: IPet[], action: ReturnType<typeof heal>) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.target);
 
@@ -99,8 +112,12 @@ const heal = (state: IPet[], action: PayloadAction<HealAct>) => {
       })
   );
 };
+const healCase = [heal, healCaseReducer] as const;
 
-const caress = (state: IPet[], action: PayloadAction<CaressAct>) => {
+const caressCaseReducer = (
+  state: IPet[],
+  action: ReturnType<typeof caress>
+) => {
   const actor = selectPet(state, action.payload.actor);
   const target = selectPet(state, action.payload.target);
 
@@ -116,9 +133,14 @@ const caress = (state: IPet[], action: PayloadAction<CaressAct>) => {
       })
   );
 };
+const caressCase = [caress, caressCaseReducer] as const;
 
-const actReducers = { sleep, wakeup, supply, attack, bully, heal, caress };
-const actTypes = Object.keys(actReducers) as ActType[];
-type ActType = keyof typeof actReducers;
-
-export { actReducers, actTypes, type ActType };
+export {
+  sleepCase,
+  wakeupCase,
+  supplyCase,
+  attackCase,
+  bullyCase,
+  healCase,
+  caressCase,
+};

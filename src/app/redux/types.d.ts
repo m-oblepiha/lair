@@ -15,3 +15,7 @@ type Thunk<ReturnType = void> = ThunkAction<
 >;
 
 export type { RootState, AppDispatch, Action, Thunk };
+
+export type { ActType, ActAction } from 'redux/actions/acts';
+export type { ResponseType, ResponseAction } from 'redux/actions/responses';
+export type { EffectType, EffectAction } from 'redux/actions/effects';

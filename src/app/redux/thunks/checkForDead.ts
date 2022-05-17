@@ -1,19 +1,17 @@
 import type { Thunk } from 'redux/types';
-import type { DeathEffect } from 'common/types/effect';
-import { effects } from 'redux/slices/petsSlice';
+import type { DeathInteraction } from 'common/types/interaction';
+import { death } from 'redux/actions';
 import { pickDeathResponse } from 'common/utils/choices';
-import { addRecord } from './addRecord';
 
 const checkForDead = (): Thunk => (dispatch, getState) => {
   const { pets } = getState();
-  const deaths: DeathEffect[] = [];
+  const deaths: DeathInteraction[] = [];
 
   for (const pet of pets) {
     if (pet.stats.health === 0) {
-      const death = effects.death({ type: 'death', target: pet.id });
-      deaths.push(death.payload);
-      dispatch(death);
-      dispatch(addRecord(death.payload));
+      const deathAction = death({ target: pet.id });
+      deaths.push(deathAction.payload);
+      dispatch(deathAction);
     }
   }
 
@@ -28,7 +26,6 @@ const checkForDead = (): Thunk => (dispatch, getState) => {
 
   realResponses.forEach((response) => {
     dispatch(response);
-    dispatch(addRecord(response.payload));
   });
 };
 

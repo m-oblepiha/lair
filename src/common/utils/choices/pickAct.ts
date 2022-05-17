@@ -1,15 +1,19 @@
 import type { IPet } from 'common/types';
-import type { ActType } from 'common/types/act';
-import { acts } from 'redux/slices/petsSlice';
+import {
+  sleep,
+  wakeup,
+  supply,
+  attack,
+  bully,
+  heal,
+  caress,
+} from 'redux/actions';
 import { actValue } from 'common/utils/rolls';
 import { actChoice } from './actChoice';
 import { distributeFood } from './distributeFood';
 import { selectBestChoice } from './selectBestChoice';
 
-const pickAct = (
-  actor: IPet,
-  pets: IPet[]
-): ReturnType<typeof acts[ActType]> | null => {
+const pickAct = (actor: IPet, pets: IPet[]) => {
   const otherPets = pets.filter((pet) => pet.id !== actor.id);
 
   const wakeupChoice = [actChoice(actor, 'wakeup')];
@@ -33,9 +37,9 @@ const pickAct = (
 
   switch (bestChoice.type) {
     case 'sleep':
-      return acts.sleep({ type: 'sleep', actor: actor.id });
+      return sleep({ actor: actor.id });
     case 'wakeup':
-      return acts.wakeup({ type: 'wakeup', actor: actor.id });
+      return wakeup({ actor: actor.id });
     case 'supply':
       const foodDistribution = distributeFood(
         pets,
@@ -43,8 +47,7 @@ const pickAct = (
         actValue(actor, 'supply')
       );
       if (foodDistribution)
-        return acts.supply({
-          type: 'supply',
+        return supply({
           actor: actor.id,
           value: actValue(actor, 'supply') - 1,
           distribution: {
@@ -52,35 +55,30 @@ const pickAct = (
             target: foodDistribution.target,
           },
         });
-      return acts.supply({
-        type: 'supply',
+      return supply({
         actor: actor.id,
         value: actValue(actor, 'supply'),
       });
     case 'attack':
-      return acts.attack({
-        type: 'attack',
+      return attack({
         actor: actor.id,
         target: bestChoice.target.id,
         value: actValue(actor, 'attack', bestChoice.target),
       });
     case 'bully':
-      return acts.bully({
-        type: 'bully',
+      return bully({
         actor: actor.id,
         target: bestChoice.target.id,
         value: actValue(actor, 'bully', bestChoice.target),
       });
     case 'heal':
-      return acts.heal({
-        type: 'heal',
+      return heal({
         actor: actor.id,
         target: bestChoice.target.id,
         value: actValue(actor, 'heal', bestChoice.target),
       });
     case 'caress':
-      return acts.caress({
-        type: 'caress',
+      return caress({
         actor: actor.id,
         target: bestChoice.target.id,
         value: actValue(actor, 'caress', bestChoice.target),

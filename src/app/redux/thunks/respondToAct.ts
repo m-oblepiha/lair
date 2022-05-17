@@ -1,23 +1,23 @@
 import type { Thunk } from 'redux/types';
-import type { IPet, Act } from 'common/types';
+import type { IPet } from 'common/types';
+import type { ActAction } from 'redux/types';
 import { selectPet } from 'common/utils';
 import { pickResponse } from 'common/utils/choices';
-import { addRecord } from './addRecord';
 
 const respondToAct =
-  (pets: IPet[], act: Act): Thunk<Promise<void>> =>
+  (pets: IPet[], act: ActAction): Thunk<Promise<void>> =>
   async (dispatch) => {
-    let respondents = pets.filter((pet) => pet.id !== act.actor);
+    let respondents = pets.filter((pet) => pet.id !== act.payload.actor);
 
-    if ('target' in act) {
+    if ('target' in act.payload) {
       await new Promise((resolve) => setTimeout(resolve, 200));
-      const target = selectPet(pets, act.target);
+      const actTarget = act.payload.target;
+      const target = selectPet(pets, actTarget);
       const targetResponse = pickResponse(target, act, pets);
       if (targetResponse) {
         dispatch(targetResponse);
-        dispatch(addRecord(targetResponse.payload));
       }
-      respondents = respondents.filter((pet) => pet.id !== act.target);
+      respondents = respondents.filter((pet) => pet.id !== actTarget);
     }
 
     for (const pet of respondents) {
@@ -25,7 +25,6 @@ const respondToAct =
       const response = pickResponse(pet, act, pets);
       if (response) {
         dispatch(response);
-        dispatch(addRecord(response.payload));
       }
     }
   };

@@ -1,4 +1,24 @@
-export type { ID, IPet } from './pet';
-export type { Act } from './act';
-export type { Response } from './response';
-export type { Effect } from './effect';
+type ID = string;
+
+type IPet = {
+  id: ID;
+  name: string;
+  attributes: {
+    supply: number;
+    vitality: number;
+    willpower: number;
+    maxAge: number;
+    friendliness: number;
+  };
+  stats: {
+    fatigue: number;
+    hunger: number;
+    health: number;
+    morale: number;
+    age: number;
+    isAwake: boolean;
+  };
+  relations: { [key: ID]: number };
+};
+
+export type { ID, IPet };

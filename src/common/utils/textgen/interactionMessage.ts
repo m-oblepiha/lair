@@ -1,23 +1,27 @@
 import type { IPet } from 'common/types';
-import type { SummonEffect, DeathEffect } from 'common/types/effect';
+import type { InteractionAction } from 'redux/actions/interactions';
+import type {
+  SummonInteraction,
+  DeathInteraction,
+} from 'common/types/interaction';
 import { selectPet } from 'common/utils/selectPet';
 
-const summonEffectMessage = (pets: IPet[], effect: SummonEffect) => {
+const summonEffectMessage = (effect: SummonInteraction) => {
   return `В логово призван ${effect.target.name}.`;
 };
 
-const deathEffectMessage = (pets: IPet[], effect: DeathEffect) => {
+const deathEffectMessage = (pets: IPet[], effect: DeathInteraction) => {
   const target = selectPet(pets, effect.target);
   return `${target.name} тихо скулит и, наконец, затихает...`;
 };
 
 const effectMessage = (
   pets: IPet[],
-  effect: SummonEffect | DeathEffect
+  { type, payload: effect }: InteractionAction
 ): string => {
-  switch (effect.type) {
+  switch (type) {
     case 'summon':
-      return summonEffectMessage(pets, effect);
+      return summonEffectMessage(effect);
     case 'death':
       return deathEffectMessage(pets, effect);
   }

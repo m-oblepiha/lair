@@ -1,5 +1,5 @@
 import type { IPet } from 'common/types';
-import type { ActType } from 'common/types/act';
+import type { ActType } from 'redux/types';
 import {
   sleepProbability,
   wakeupProbability,

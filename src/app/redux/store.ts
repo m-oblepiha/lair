@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { heartsReducer } from './slices/heartsSlice';
-import { timeReducer } from './slices/timeSlice';
-import { recordsReducer } from './slices/recordsSlice';
-import { petsReducer } from './slices/petsSlice';
+import {
+  heartsReducer,
+  timeReducer,
+  recordsReducer,
+  petsReducer,
+} from 'redux/reducers';
 
 const store = configureStore({
   reducer: {

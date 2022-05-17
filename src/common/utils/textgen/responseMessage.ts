@@ -1,6 +1,6 @@
 import type { IPet } from 'common/types';
+import type { ResponseAction } from 'redux/types';
 import type {
-  Response,
   WakeupCaressResponse,
   AttackPanicResponse,
   AttackCounterResponse,
@@ -124,31 +124,34 @@ const deathPanicResponseMessage = (
   return `${actor.name} в шоке от его смерти...`;
 };
 
-const responseMessage = (pets: IPet[], response: Response): string => {
-  switch (response.type) {
-    case 'wakeup_caress':
+const responseMessage = (
+  pets: IPet[],
+  { type, payload: response }: ResponseAction
+): string => {
+  switch (type) {
+    case 'wakeupCaress':
       return wakeupCaressResponseMessage(pets, response);
-    case 'attack_panic':
+    case 'attackPanic':
       return attackPanicResponseMessage(pets, response);
-    case 'attack_counter':
+    case 'attackCounter':
       return attackCounterResponseMessage(pets, response);
-    case 'attack_avenge':
+    case 'attackAvenge':
       return attackAvengeResponseMessage(pets, response);
-    case 'attack_join':
+    case 'attackJoin':
       return attackJoinResponseMessage(pets, response);
-    case 'bully_counter':
+    case 'bullyCounter':
       return bullyCounterResponseMessage(pets, response);
-    case 'bully_avenge':
+    case 'bullyAvenge':
       return bullyAvengeResponseMessage(pets, response);
-    case 'bully_join':
+    case 'bullyJoin':
       return bullyJoinResponseMessage(pets, response);
-    case 'heal_delight':
+    case 'healDelight':
       return healDelightResponseMessage(pets, response);
-    case 'caress_counter':
+    case 'caressCounter':
       return caressCounterResponseMessage(pets, response);
-    case 'caress_join':
+    case 'caressJoin':
       return caressJoinResponseMessage(pets, response);
-    case 'death_panic':
+    case 'deathPanic':
       return deathPanicResponseMessage(pets, response);
   }
 };

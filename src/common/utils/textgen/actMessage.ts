@@ -1,6 +1,6 @@
 import type { IPet } from 'common/types';
+import type { ActAction } from 'redux/types';
 import type {
-  Act,
   SleepAct,
   WakeupAct,
   SupplyAct,
@@ -59,8 +59,11 @@ const caressActMessage = (pets: IPet[], act: CaressAct) => {
   return `${actor.name} няшкает ${target.name}. +${act.value} морали!`;
 };
 
-const actMessage = (pets: IPet[], act: Act): string => {
-  switch (act.type) {
+const actMessage = (
+  pets: IPet[],
+  { type, payload: act }: ActAction
+): string => {
+  switch (type) {
     case 'sleep':
       return sleepActMessage(pets, act);
     case 'wakeup':

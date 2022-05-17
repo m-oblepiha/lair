@@ -6,7 +6,7 @@ import type {
   HealAct,
   CaressAct,
 } from 'common/types/act';
-import type { DeathEffect } from 'common/types/effect';
+import type { DeathInteraction } from 'common/types/interaction';
 import { clipProbability } from 'common/utils';
 import { roll } from 'common/utils/rolls';
 
@@ -283,7 +283,7 @@ const caressJoinProbability = (actor: IPet, act: CaressAct) => {
   return clipProbability(result);
 };
 
-const deathPanicProbability = (actor: IPet, effect: DeathEffect) => {
+const deathPanicProbability = (actor: IPet, effect: DeathInteraction) => {
   const { willpower } = actor.attributes;
   const rel = actor.relations[effect.target];
 
