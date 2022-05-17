@@ -54,24 +54,24 @@ const pickAttackResponse = (actor: IPet, act: AttackAct, pets: IPet[]) => {
   if (!bestChoice) return null;
 
   switch (bestChoice.type) {
-    case 'attackPanic':
+    case 'pets/attackPanic':
       return attackPanic({
         actor,
         act,
       });
-    case 'attackCounter':
+    case 'pets/attackCounter':
       return attackCounter({
         actor,
         act,
         value: actValue(actor, 'attack', selectPet(pets, act.actor.id)),
       });
-    case 'attackAvenge':
+    case 'pets/attackAvenge':
       return attackAvenge({
         actor,
         act,
         value: actValue(actor, 'attack', selectPet(pets, act.actor.id)),
       });
-    case 'attackJoin':
+    case 'pets/attackJoin':
       return attackJoin({
         actor,
         act,
@@ -88,19 +88,19 @@ const pickBullyResponse = (actor: IPet, act: BullyAct, pets: IPet[]) => {
   if (!bestChoice) return null;
 
   switch (bestChoice.type) {
-    case 'bullyCounter':
+    case 'pets/bullyCounter':
       return bullyCounter({
         actor,
         act,
         value: actValue(actor, 'bully', selectPet(pets, act.actor.id)),
       });
-    case 'bullyAvenge':
+    case 'pets/bullyAvenge':
       return bullyAvenge({
         actor,
         act,
         value: actValue(actor, 'bully', selectPet(pets, act.actor.id)),
       });
-    case 'bullyJoin':
+    case 'pets/bullyJoin':
       return bullyJoin({
         actor,
         act,
@@ -130,13 +130,13 @@ const pickCaressResponse = (actor: IPet, act: CaressAct, pets: IPet[]) => {
   if (!bestChoice) return null;
 
   switch (bestChoice.type) {
-    case 'caressCounter':
+    case 'pets/caressCounter':
       return caressCounter({
         actor,
         act,
         value: actValue(actor, 'caress', selectPet(pets, act.actor.id)),
       });
-    case 'caressJoin':
+    case 'pets/caressJoin':
       return caressJoin({
         actor,
         act,
@@ -151,15 +151,15 @@ const pickResponse = (
   pets: IPet[]
 ) => {
   switch (type) {
-    case 'wakeup':
+    case 'pets/wakeup':
       return pickWakeupResponse(actor, act, pets);
-    case 'attack':
+    case 'pets/attack':
       return pickAttackResponse(actor, act, pets);
-    case 'bully':
+    case 'pets/bully':
       return pickBullyResponse(actor, act, pets);
-    case 'heal':
+    case 'pets/heal':
       return pickHealResponse(actor, act);
-    case 'caress':
+    case 'pets/caress':
       return pickCaressResponse(actor, act, pets);
     default:
       return null;

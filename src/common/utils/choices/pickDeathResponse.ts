@@ -7,7 +7,7 @@ import { selectBestChoice } from './selectBestChoice';
 const pickDeathResponse = (actor: IPet, effect: DeathInteraction) => {
   const choices = [
     {
-      type: 'deathPanic' as const,
+      type: 'pets/deathPanic' as const,
       probability: deathPanicProbability(actor, effect),
     },
   ];

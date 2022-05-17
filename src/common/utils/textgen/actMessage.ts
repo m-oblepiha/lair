@@ -49,19 +49,19 @@ const caressActMessage = ({ actor, target, value }: CaressAct) => {
 
 const actMessage = ({ type, payload: act }: ActAction): string => {
   switch (type) {
-    case 'sleep':
+    case 'pets/sleep':
       return sleepActMessage(act);
-    case 'wakeup':
+    case 'pets/wakeup':
       return wakeupActMessage(act);
-    case 'supply':
+    case 'pets/supply':
       return supplyActMessage(act);
-    case 'attack':
+    case 'pets/attack':
       return attackActMessage(act);
-    case 'bully':
+    case 'pets/bully':
       return bullyActMessage(act);
-    case 'heal':
+    case 'pets/heal':
       return healActMessage(act);
-    case 'caress':
+    case 'pets/caress':
       return caressActMessage(act);
   }
 };

@@ -10,13 +10,13 @@ import {
   caressProbability,
 } from 'common/utils/rolls/actProbability';
 
-type SleepActChoiceArgs = [actor: IPet, type: 'sleep'];
-type WakeupActChoiceArgs = [actor: IPet, type: 'wakeup'];
-type SupplyActChoiceArgs = [actor: IPet, type: 'supply'];
-type AttackActChoiceArgs = [actor: IPet, type: 'attack', target: IPet];
-type BullyActChoiceArgs = [actor: IPet, type: 'bully', target: IPet];
-type HealActChoiceArgs = [actor: IPet, type: 'heal', target: IPet];
-type CaressActChoiceArgs = [actor: IPet, type: 'caress', target: IPet];
+type SleepActChoiceArgs = [actor: IPet, type: 'pets/sleep'];
+type WakeupActChoiceArgs = [actor: IPet, type: 'pets/wakeup'];
+type SupplyActChoiceArgs = [actor: IPet, type: 'pets/supply'];
+type AttackActChoiceArgs = [actor: IPet, type: 'pets/attack', target: IPet];
+type BullyActChoiceArgs = [actor: IPet, type: 'pets/bully', target: IPet];
+type HealActChoiceArgs = [actor: IPet, type: 'pets/heal', target: IPet];
+type CaressActChoiceArgs = [actor: IPet, type: 'pets/caress', target: IPet];
 
 type ActChoiceArgs =
   | SleepActChoiceArgs
@@ -28,34 +28,34 @@ type ActChoiceArgs =
   | CaressActChoiceArgs;
 
 function actChoice(...[actor, type]: SleepActChoiceArgs): {
-  type: 'sleep';
+  type: 'pets/sleep';
   probability: number;
 };
 function actChoice(...[actor, type]: WakeupActChoiceArgs): {
-  type: 'wakeup';
+  type: 'pets/wakeup';
   probability: number;
 };
 function actChoice(...[actor, type]: SupplyActChoiceArgs): {
-  type: 'supply';
+  type: 'pets/supply';
   probability: number;
 };
 function actChoice(...[actor, type, target]: AttackActChoiceArgs): {
-  type: 'attack';
+  type: 'pets/attack';
   probability: number;
   target: IPet;
 };
 function actChoice(...[actor, type, target]: BullyActChoiceArgs): {
-  type: 'bully';
+  type: 'pets/bully';
   probability: number;
   target: IPet;
 };
 function actChoice(...[actor, type, target]: HealActChoiceArgs): {
-  type: 'heal';
+  type: 'pets/heal';
   probability: number;
   target: IPet;
 };
 function actChoice(...[actor, type, target]: CaressActChoiceArgs): {
-  type: 'caress';
+  type: 'pets/caress';
   probability: number;
   target: IPet;
 };
@@ -65,19 +65,19 @@ function actChoice(...[actor, type, target]: ActChoiceArgs): {
   target?: IPet;
 } {
   switch (type) {
-    case 'sleep':
+    case 'pets/sleep':
       return { type, probability: sleepProbability(actor) };
-    case 'wakeup':
+    case 'pets/wakeup':
       return { type, probability: wakeupProbability(actor) };
-    case 'supply':
+    case 'pets/supply':
       return { type, probability: supplyProbability(actor) };
-    case 'attack':
+    case 'pets/attack':
       return { type, probability: attackProbability(actor, target), target };
-    case 'bully':
+    case 'pets/bully':
       return { type, probability: bullyProbability(actor, target), target };
-    case 'heal':
+    case 'pets/heal':
       return { type, probability: healProbability(actor, target), target };
-    case 'caress':
+    case 'pets/caress':
       return { type, probability: caressProbability(actor, target), target };
   }
 }

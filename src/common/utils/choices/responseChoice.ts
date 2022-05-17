@@ -21,7 +21,7 @@ import {
   caressJoinProbability,
 } from 'common/utils/rolls/responseProbability';
 
-const wakeupResponseTypes = ['wakeupCaress'] as const;
+const wakeupResponseTypes = ['pets/wakeupCaress'] as const;
 type WakeupChoiceResponseType = typeof wakeupResponseTypes[number];
 type WakeupChoiceArgs = [
   actor: IPet,
@@ -30,10 +30,10 @@ type WakeupChoiceArgs = [
 ];
 
 const attackResponseTypes = [
-  'attackPanic',
-  'attackCounter',
-  'attackAvenge',
-  'attackJoin',
+  'pets/attackPanic',
+  'pets/attackCounter',
+  'pets/attackAvenge',
+  'pets/attackJoin',
 ] as const;
 type AttackChoiceResponseType = typeof attackResponseTypes[number];
 type AttackChoiceArgs = [
@@ -43,9 +43,9 @@ type AttackChoiceArgs = [
 ];
 
 const bullyResponseTypes = [
-  'bullyCounter',
-  'bullyAvenge',
-  'bullyJoin',
+  'pets/bullyCounter',
+  'pets/bullyAvenge',
+  'pets/bullyJoin',
 ] as const;
 type BullyChoiceResponseType = typeof bullyResponseTypes[number];
 type BullyChoiceArgs = [
@@ -54,11 +54,11 @@ type BullyChoiceArgs = [
   act: BullyAct
 ];
 
-const healResponseTypes = ['healDelight'] as const;
+const healResponseTypes = ['pets/healDelight'] as const;
 type HealChoiceResponseType = typeof healResponseTypes[number];
 type HealChoiceArgs = [actor: IPet, type: HealChoiceResponseType, act: HealAct];
 
-const caressResponseTypes = ['caressCounter', 'caressJoin'] as const;
+const caressResponseTypes = ['pets/caressCounter', 'pets/caressJoin'] as const;
 type CaressChoiceResponseType = typeof caressResponseTypes[number];
 type CaressChoiceArgs = [
   actor: IPet,
@@ -94,63 +94,63 @@ function responseChoice(...[actor, type, act]: CaressChoiceArgs): {
   probability: number;
 };
 function responseChoice(...[actor, type, act]: ResponseChoiceArgs): {
-  type: Exclude<ResponseType, 'deathPanic'>;
+  type: Exclude<ResponseType, 'pets/deathPanic'>;
   probability: number;
 } {
   switch (type) {
-    case 'wakeupCaress':
+    case 'pets/wakeupCaress':
       return { type, probability: wakeupCaressProbability(actor, act) };
-    case 'attackPanic':
+    case 'pets/attackPanic':
       return {
         type,
         probability:
           actor.id === act.target.id ? attackPanicProbability(actor, act) : 0,
       };
-    case 'attackCounter':
+    case 'pets/attackCounter':
       return {
         type,
         probability:
           actor.id === act.target.id ? attackCounterProbability(actor, act) : 0,
       };
-    case 'attackAvenge':
+    case 'pets/attackAvenge':
       return {
         type,
         probability:
           actor.id === act.target.id ? 0 : attackAvengeProbability(actor, act),
       };
-    case 'attackJoin':
+    case 'pets/attackJoin':
       return {
         type,
         probability:
           actor.id === act.target.id ? 0 : attackJoinProbability(actor, act),
       };
-    case 'bullyCounter':
+    case 'pets/bullyCounter':
       return {
         type,
         probability:
           actor.id === act.target.id ? bullyCounterProbability(actor, act) : 0,
       };
-    case 'bullyAvenge':
+    case 'pets/bullyAvenge':
       return {
         type,
         probability:
           actor.id === act.target.id ? 0 : bullyAvengeProbability(actor, act),
       };
-    case 'bullyJoin':
+    case 'pets/bullyJoin':
       return {
         type,
         probability:
           actor.id === act.target.id ? 0 : bullyJoinProbability(actor, act),
       };
-    case 'healDelight':
+    case 'pets/healDelight':
       return { type, probability: healDelightProbability(actor, act) };
-    case 'caressCounter':
+    case 'pets/caressCounter':
       return {
         type,
         probability:
           actor.id === act.target.id ? caressCounterProbability(actor, act) : 0,
       };
-    case 'caressJoin':
+    case 'pets/caressJoin':
       return {
         type,
         probability:

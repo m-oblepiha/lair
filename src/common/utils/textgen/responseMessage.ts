@@ -95,29 +95,29 @@ const responseMessage = ({
   payload: response,
 }: ResponseAction): string => {
   switch (type) {
-    case 'wakeupCaress':
+    case 'pets/wakeupCaress':
       return wakeupCaressResponseMessage(response);
-    case 'attackPanic':
+    case 'pets/attackPanic':
       return attackPanicResponseMessage(response);
-    case 'attackCounter':
+    case 'pets/attackCounter':
       return attackCounterResponseMessage(response);
-    case 'attackAvenge':
+    case 'pets/attackAvenge':
       return attackAvengeResponseMessage(response);
-    case 'attackJoin':
+    case 'pets/attackJoin':
       return attackJoinResponseMessage(response);
-    case 'bullyCounter':
+    case 'pets/bullyCounter':
       return bullyCounterResponseMessage(response);
-    case 'bullyAvenge':
+    case 'pets/bullyAvenge':
       return bullyAvengeResponseMessage(response);
-    case 'bullyJoin':
+    case 'pets/bullyJoin':
       return bullyJoinResponseMessage(response);
-    case 'healDelight':
+    case 'pets/healDelight':
       return healDelightResponseMessage(response);
-    case 'caressCounter':
+    case 'pets/caressCounter':
       return caressCounterResponseMessage(response);
-    case 'caressJoin':
+    case 'pets/caressJoin':
       return caressJoinResponseMessage(response);
-    case 'deathPanic':
+    case 'pets/deathPanic':
       return deathPanicResponseMessage(response);
   }
 };

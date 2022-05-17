@@ -17,9 +17,9 @@ const effectMessage = ({
   payload: effect,
 }: InteractionAction): string => {
   switch (type) {
-    case 'summon':
+    case 'pets/summon':
       return summonEffectMessage(effect);
-    case 'death':
+    case 'pets/death':
       return deathEffectMessage(effect);
   }
 };
