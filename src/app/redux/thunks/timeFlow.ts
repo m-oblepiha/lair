@@ -1,7 +1,7 @@
-import type { Thunk } from 'redux/types';
+import type { AppDispatch, AppGetState } from 'redux/types';
 import { timePass, tire, starve, age } from 'redux/actions';
 
-const timeFlow = (): Thunk => (dispatch, getState) => {
+const timeFlow = () => (dispatch: AppDispatch, getState: AppGetState) => {
   dispatch(timePass());
   const { time } = getState();
 

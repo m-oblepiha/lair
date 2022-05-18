@@ -11,6 +11,7 @@
       "redux/*": ["app/redux/*"]
     },
     "strictNullChecks": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "noErrorTruncation": true
   }
 }

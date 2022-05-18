@@ -1,20 +1,25 @@
 import type { Middleware } from '@reduxjs/toolkit';
-import type { RootState, AppDispatch } from 'redux/types';
+import type { RootState, TypedDispatch, ActAction } from 'redux/types';
 import { death } from 'redux/actions';
 import { isAct } from 'redux/actions/acts';
+import { checkForDead } from 'redux/thunks/checkForDead';
 import { respondToAct } from './respondToAct';
 import { respondToDeath } from './respondToDeath';
 
-const responseMiddleware: Middleware<{}, RootState, AppDispatch> =
-  ({ dispatch, getState }) =>
+const responseMiddleware: Middleware<
+  (action: ActAction) => AbortController,
+  RootState,
+  TypedDispatch
+> =
+  ({ dispatch }) =>
   (next) =>
   (action) => {
     const act = next(action);
-    const { pets } = getState();
-    if (death.match(action)) dispatch(respondToDeath(pets, action));
+    if (death.match(action)) dispatch(respondToDeath(action));
     if (isAct(action)) {
+      dispatch(checkForDead());
       const controller = new AbortController();
-      dispatch(respondToAct(pets, action, controller.signal));
+      dispatch(respondToAct(action, controller.signal));
       return controller;
     }
     return act;

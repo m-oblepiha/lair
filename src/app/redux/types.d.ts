@@ -1,24 +1,14 @@
-import type {
-  AnyAction,
-  ThunkAction,
-  ThunkDispatch,
-  Dispatch,
-} from '@reduxjs/toolkit';
-import { rootReducer } from './store';
+import type { AnyAction, ThunkDispatch, Dispatch } from '@reduxjs/toolkit';
+import { store, rootReducer } from './store';
 
 type RootState = ReturnType<typeof rootReducer>;
-// type AppDispatch = typeof store.dispatch;
-type AppDispatch = ThunkDispatch<RootState, unknown, AnyAction> &
+type TypedDispatch = ThunkDispatch<RootState, unknown, AnyAction> &
   Dispatch<AnyAction>;
 
-type Thunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  AnyAction
->;
+type AppDispatch = typeof store.dispatch;
+type AppGetState = typeof store.getState;
 
-export type { RootState, AppDispatch, Thunk };
+export type { RootState, AppDispatch, AppGetState, TypedDispatch };
 
 export type { ActType, ActAction } from 'redux/actions/acts';
 export type { ResponseType, ResponseAction } from 'redux/actions/responses';

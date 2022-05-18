@@ -23,7 +23,9 @@ const store = configureStore({
     pets: petsReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(responseMiddleware).concat(recordsMiddleware),
+    getDefaultMiddleware()
+      .prepend(responseMiddleware)
+      .concat(recordsMiddleware),
 });
 
 export { store, rootReducer };

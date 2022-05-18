@@ -1,11 +1,11 @@
-import type { Thunk } from 'redux/types';
-import type { IPet } from 'common/types';
+import type { AppDispatch, AppGetState } from 'redux/types';
 import { death } from 'redux/actions';
 import { pickDeathResponse } from 'common/utils/choices';
 
 const respondToDeath =
-  (pets: IPet[], action: ReturnType<typeof death>): Thunk =>
-  (dispatch) => {
+  (action: ReturnType<typeof death>) =>
+  (dispatch: AppDispatch, getState: AppGetState) => {
+    const { pets } = getState();
     const responses = pets.map((pet) => pickDeathResponse(pet, action.payload));
 
     const realResponses = responses.filter(
