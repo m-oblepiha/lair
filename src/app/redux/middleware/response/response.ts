@@ -12,7 +12,11 @@ const responseMiddleware: Middleware<{}, RootState, AppDispatch> =
     const act = next(action);
     const { pets } = getState();
     if (death.match(action)) dispatch(respondToDeath(pets, action));
-    if (isAct(action)) dispatch(respondToAct(pets, action));
+    if (isAct(action)) {
+      const controller = new AbortController();
+      dispatch(respondToAct(pets, action, controller.signal));
+      return controller;
+    }
     return act;
   };
 

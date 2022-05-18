@@ -5,8 +5,10 @@ import { selectPet } from 'common/utils';
 import { pickResponse } from 'common/utils/choices';
 
 const respondToAct =
-  (pets: IPet[], act: ActAction): Thunk<Promise<void>> =>
+  (pets: IPet[], act: ActAction, signal: AbortSignal): Thunk<Promise<void>> =>
   async (dispatch) => {
+    if (signal.aborted) return;
+
     let respondents = pets.filter((pet) => pet.id !== act.payload.actor.id);
 
     if ('target' in act.payload) {
@@ -21,6 +23,8 @@ const respondToAct =
     }
 
     for (const pet of respondents) {
+      if (signal.aborted) return;
+
       await new Promise((resolve) => setTimeout(resolve, 200));
       const response = pickResponse(pet, act, pets);
       if (response) {
