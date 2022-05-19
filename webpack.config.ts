@@ -5,6 +5,9 @@ import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+
+const CircularDependencyPlugin = require('circular-dependency-plugin');
 
 const isProd = process.env.mode === 'prod';
 
@@ -71,6 +74,10 @@ const config: Configuration = {
       title: 'LAIR',
       template: join(__dirname, 'src/assets/index.html'),
     }),
+    new CircularDependencyPlugin({
+      exclude: /node_modules/,
+    }),
+    new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
     ...(isProd
       ? [
           new MiniCssExtractPlugin({
@@ -99,6 +106,10 @@ const config: Configuration = {
     compress: true,
     hot: true,
     port: 9000,
+  },
+  stats: {
+    preset: 'minimal',
+    chunks: true,
   },
 };
 

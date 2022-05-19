@@ -10,7 +10,7 @@
         "options": { "customMatcher": "\\.scss$" }
       }
     ],
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
     "target": "es5",
     "noEmitOnError": true,
@@ -19,5 +19,11 @@
     "strictNullChecks": true,
     "noImplicitAny": true,
     "noErrorTruncation": true
-  }
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
+  "include": ["src", "./webpack.config.ts", "./global.d.ts"]
 }

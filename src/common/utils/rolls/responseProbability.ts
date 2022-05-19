@@ -8,7 +8,7 @@ import type {
 } from 'common/types/act';
 import type { DeathInteraction } from 'common/types/interaction';
 import { clipProbability } from 'common/utils';
-import { roll } from 'common/utils/rolls';
+import { roll } from './roll';
 
 const wakeupCaressProbability = (actor: IPet, act: WakeupAct) => {
   const { friendliness } = actor.attributes;

@@ -1,5 +1,5 @@
 import type { IPet } from 'common/types';
-import { roll } from 'common/utils/rolls';
+import { roll } from './roll';
 
 const supplyValue = (actor: IPet) => {
   const { health, hunger } = actor.stats;

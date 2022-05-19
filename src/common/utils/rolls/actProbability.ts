@@ -1,6 +1,6 @@
 import type { IPet } from 'common/types';
 import { clipProbability } from 'common/utils';
-import { roll } from 'common/utils/rolls';
+import { roll } from './roll';
 
 const sleepProbability = (actor: IPet) => {
   const { fatigue } = actor.stats;
