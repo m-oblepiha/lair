@@ -1,15 +1,21 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "redux/*": ["app/redux/*"]
+    },
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": { "customMatcher": "\\.scss$" }
+      }
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "target": "es5",
     "noEmitOnError": true,
     "esModuleInterop": true,
     "jsx": "react",
-    "baseUrl": "./src",
-    "paths": {
-      "redux/*": ["app/redux/*"]
-    },
     "strictNullChecks": true,
     "noImplicitAny": true,
     "noErrorTruncation": true
