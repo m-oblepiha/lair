@@ -1,12 +1,14 @@
-const { join } = require('path');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+import type { Configuration } from 'webpack';
+import 'webpack-dev-server';
+import { join } from 'path';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const isProd = process.env.mode === 'prod';
 
-module.exports = () => ({
+const config: Configuration = {
   mode: isProd ? 'production' : 'development',
   entry: {
     core: join(__dirname, 'src/index.tsx'),
@@ -69,16 +71,15 @@ module.exports = () => ({
       title: 'LAIR',
       template: join(__dirname, 'src/assets/index.html'),
     }),
-  ].concat(
-    isProd
+    ...(isProd
       ? [
           new MiniCssExtractPlugin({
             filename: '[name].css',
             chunkFilename: join('chunks', '[id]', '[id].css'),
           }),
         ]
-      : []
-  ),
+      : []),
+  ],
   optimization: {
     minimizer: [
       new TerserPlugin({
@@ -99,4 +100,6 @@ module.exports = () => ({
     hot: true,
     port: 9000,
   },
-});
+};
+
+export default config;

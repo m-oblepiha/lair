@@ -10,7 +10,7 @@
         "options": { "customMatcher": "\\.scss$" }
       }
     ],
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
     "noEmitOnError": true,
