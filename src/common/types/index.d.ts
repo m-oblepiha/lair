@@ -1,8 +1,11 @@
+import type { Avatar } from './avatar';
+
 type ID = string;
 
 type IPet = {
   id: ID;
   name: string;
+  avatar: Avatar;
   attributes: {
     supply: number;
     vitality: number;

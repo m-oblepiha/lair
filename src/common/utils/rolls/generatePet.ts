@@ -1,6 +1,7 @@
 import type { IPet } from 'common/types';
 import { nanoid } from '@reduxjs/toolkit';
 import { generatePetName } from 'common/utils/textgen';
+import { avatars } from 'common/types/avatar';
 import { roll } from './roll';
 
 const generatePet = (): IPet => {
@@ -8,6 +9,7 @@ const generatePet = (): IPet => {
   return {
     id,
     name: generatePetName(id),
+    avatar: avatars[roll(0, 9)],
     stats: {
       isAwake: true,
       fatigue: roll(0, 10),
