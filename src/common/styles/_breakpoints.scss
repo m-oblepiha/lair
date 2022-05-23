@@ -1,0 +1,35 @@
+@mixin landscape-s {
+  @media (min-width: 48rem) and (min-height: 35rem) {
+    @content;
+  }
+}
+
+@mixin landscape-m {
+  @media (min-width: 64rem) and (min-height: 43rem) {
+    @content;
+  }
+}
+
+@mixin landscape-l {
+  @media (min-width: 80rem) and (min-height: 55rem) {
+    @content;
+  }
+}
+
+@mixin portrait-s {
+  @media (min-width: 35rem) and (min-height: 48rem) and (orientation: portrait) {
+    @content;
+  }
+}
+
+@mixin portrait-m {
+  @media (min-width: 43rem) and (min-height: 64rem) and (orientation: portrait) {
+    @content;
+  }
+}
+
+@mixin portrait-l {
+  @media (min-width: 55rem) and (min-height: 80rem) and (orientation: portrait) {
+    @content;
+  }
+}

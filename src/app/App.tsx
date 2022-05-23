@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { store } from 'redux/store';
 import { Provider } from 'react-redux';
-import './style.global.scss';
+import classes from './App.scss';
 
 import { Loader } from 'common/components';
 import EntryRoute from 'routes/entry/EntryRoute';
@@ -13,13 +13,15 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <MemoryRouter>
-        <Suspense fallback={<Loader />}>
-          <Routes>
-            <Route path="/" element={<EntryRoute />} />
-            <Route path="pet" element={<PetRoute />} />
-            <Route path="lair" element={<LairRoute />} />
-          </Routes>
-        </Suspense>
+        <div className={classes.container}>
+          <Suspense fallback={<Loader />}>
+            <Routes>
+              <Route path="/" element={<EntryRoute />} />
+              <Route path="pet" element={<PetRoute />} />
+              <Route path="lair" element={<LairRoute />} />
+            </Routes>
+          </Suspense>
+        </div>
       </MemoryRouter>
     </Provider>
   );

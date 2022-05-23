@@ -1,0 +1,41 @@
+@use 'breakpoints';
+@use 'colors';
+@import 'fonts';
+
+body {
+  background-color: colors.$background;
+  font-family: 'Press Start 2';
+  background-image: url('/assets/fox.png');
+  background-position: center;
+}
+
+.container {
+  background-color: colors.$main;
+  min-width: 20rem;
+  width: min(35rem, 100vw);
+  height: max(28rem, 100vh);
+  @include breakpoints.landscape-s {
+    width: 48rem;
+    height: 35rem;
+  }
+  @include breakpoints.landscape-m {
+    width: 64rem;
+    height: 43rem;
+  }
+  @include breakpoints.landscape-l {
+    width: 80rem;
+    height: 55rem;
+  }
+  @include breakpoints.portrait-s {
+    width: 35rem;
+    height: 48rem;
+  }
+  @include breakpoints.portrait-m {
+    width: 43rem;
+    height: 64rem;
+  }
+  @include breakpoints.portrait-l {
+    width: 55rem;
+    height: 80rem;
+  }
+}

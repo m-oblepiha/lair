@@ -43,7 +43,19 @@ const config: Configuration = {
               importLoaders: 1,
             },
           },
-          'sass-loader',
+          {
+            loader: 'resolve-url-loader',
+            options: {},
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+              sassOptions: {
+                includePaths: [join(__dirname, 'src/common/styles')],
+              },
+            },
+          },
         ],
         exclude: /\.global\.scss$/,
       },
@@ -51,17 +63,38 @@ const config: Configuration = {
         test: /\.global.scss$/,
         use: [
           isProd ? MiniCssExtractPlugin.loader : 'style-loader',
-          'css-loader',
-          'sass-loader',
+          {
+            loader: 'css-loader',
+            options: {},
+          },
+          {
+            loader: 'resolve-url-loader',
+            options: {},
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+              sassOptions: {
+                includePaths: [join(__dirname, 'src/common/styles')],
+              },
+            },
+          },
         ],
       },
       {
-        test: /\.(png|jpe?g|gif|md|ico|svg)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-          },
-        ],
+        test: /\.(png|jpe?g)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/images/[name].[ext]',
+        },
+      },
+      {
+        test: /\.woff2$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/fonts/[name].[ext]',
+        },
       },
     ],
   },
@@ -73,11 +106,12 @@ const config: Configuration = {
     new HtmlWebpackPlugin({
       title: 'LAIR',
       template: join(__dirname, 'src/assets/index.html'),
+      favicon: join(__dirname, 'src/assets/favicon.png'),
     }),
     new CircularDependencyPlugin({
       exclude: /node_modules/,
     }),
-    new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
+    // new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
     ...(isProd
       ? [
           new MiniCssExtractPlugin({
