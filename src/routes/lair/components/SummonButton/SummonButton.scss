@@ -1,0 +1,17 @@
+@use 'placeholders';
+@use 'colors';
+
+.button {
+  @extend %button;
+
+  font-size: 2em;
+
+  width: 12em;
+  height: 2em;
+  padding-top: 0.5em;
+
+  grid-area: summon;
+
+  background-color: colors.$main;
+  line-height: 1em;
+}

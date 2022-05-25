@@ -1,35 +1,35 @@
 @mixin landscape-s {
-  @media (min-width: 48rem) and (min-height: 35rem) {
+  @media (min-width: 48em) and (min-height: 35em) and (orientation: landscape) {
     @content;
   }
 }
 
 @mixin landscape-m {
-  @media (min-width: 64rem) and (min-height: 43rem) {
+  @media (min-width: 64em) and (min-height: 43em) and (orientation: landscape) {
     @content;
   }
 }
 
 @mixin landscape-l {
-  @media (min-width: 80rem) and (min-height: 55rem) {
+  @media (min-width: 80em) and (min-height: 55em) and (orientation: landscape) {
     @content;
   }
 }
 
 @mixin portrait-s {
-  @media (min-width: 35rem) and (min-height: 48rem) and (orientation: portrait) {
+  @media (min-width: 35em) and (min-height: 48em) and (orientation: portrait) {
     @content;
   }
 }
 
 @mixin portrait-m {
-  @media (min-width: 43rem) and (min-height: 64rem) and (orientation: portrait) {
+  @media (min-width: 43em) and (min-height: 64em) and (orientation: portrait) {
     @content;
   }
 }
 
 @mixin portrait-l {
-  @media (min-width: 55rem) and (min-height: 80rem) and (orientation: portrait) {
+  @media (min-width: 55em) and (min-height: 80em) and (orientation: portrait) {
     @content;
   }
 }

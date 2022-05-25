@@ -1,7 +1,67 @@
+@use 'breakpoints';
+@use 'placeholders';
+@use 'colors';
+
 .container {
-  display: flex;
-  flex-direction: column;
+  font-size: 1em;
+
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  grid-template-columns: 6fr 4fr;
+  grid-template-rows: 4em 1fr 4em;
+  grid-template-areas: 'time time' 'chat chat' 'petsButton health';
+
+  @include breakpoints.portrait-s {
+    font-size: 1em;
+  }
+  @include breakpoints.portrait-m {
+    font-size: 1em;
+  }
+  @include breakpoints.portrait-l {
+    font-size: 1em;
+  }
+  @include breakpoints.landscape-s {
+    font-size: 0.75em;
+    grid-template-columns: 24em 1fr;
+    grid-template-rows: 4em 1fr 4em;
+    grid-template-areas: 'petList time time' 'petList chat chat' 'summon health health';
+  }
+  @include breakpoints.landscape-m {
+    font-size: 1em;
+  }
+  @include breakpoints.landscape-l {
+    font-size: 1em;
+  }
 }
-.hello {
-  font-size: 20px;
+
+.petsButton {
+  @extend %button;
+
+  font-size: 2em;
+
+  width: 100%;
+  height: 2em;
+  padding-top: 0.5em;
+
+  grid-area: petsButton;
+
+  display: block;
+  @include breakpoints.landscape-s {
+    display: none;
+  }
+  @include breakpoints.portrait-s {
+  }
+
+  line-height: 1em;
+}
+
+.summonButton {
+  display: none;
+  @include breakpoints.landscape-s {
+    display: block;
+  }
 }

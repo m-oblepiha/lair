@@ -4,8 +4,8 @@ import { timePass } from 'redux/actions';
 type Phase = 1 | 2 | 3 | 4;
 
 const initialState: { day: number; phase: Phase } = {
-  day: 0,
-  phase: 1,
+  day: 1,
+  phase: 2,
 };
 
 const timeReducer = createReducer(initialState, (builder) => {

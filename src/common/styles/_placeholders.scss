@@ -1,0 +1,23 @@
+@use 'colors';
+
+%clickable {
+  outline: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+%button {
+  @extend %clickable;
+
+  background-color: transparent;
+  color: colors.$font;
+
+  &:hover,
+  &:focus {
+    color: colors.$primary;
+  }
+  &:disabled {
+    color: rgba(colors.$font, 0.3);
+    cursor: auto;
+  }
+}

@@ -1,0 +1,75 @@
+@use 'breakpoints';
+@use 'placeholders';
+@use 'colors';
+@use 'sass:math';
+
+.container {
+  font-size: 1em;
+
+  position: absolute;
+  z-index: 100;
+
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  grid-area: petScreen;
+  grid-template-rows: 1fr 4em;
+  grid-template-areas: 'pets pets' 'return summon';
+  @include breakpoints.landscape-s {
+    display: none;
+  }
+
+  background-color: colors.$main;
+}
+
+.pets {
+  padding: 0;
+
+  grid-area: pets;
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  place-items: center;
+
+  border-bottom: 0.5em solid colors.$borders;
+}
+
+.returnButton {
+  @extend %button;
+
+  font-size: 1.5em;
+
+  width: 100%;
+  height: math.div(8em, 3);
+  padding-top: math.div(2em, 3);
+
+  grid-area: return;
+
+  border-right: 0.25em solid colors.$borders;
+  background-color: colors.$main;
+  color: colors.$font;
+
+  line-height: 1em;
+
+  @include breakpoints.portrait-s {
+    height: math.div(8em, 3);
+    padding-top: math.div(2em, 3);
+
+    border-right: math.div(1em, 3) solid colors.$borders;
+  }
+}
+
+.summonButton {
+  font-size: 1.5em;
+
+  width: 100%;
+  height: math.div(8em, 3);
+  padding-top: math.div(2em, 3);
+
+  @include breakpoints.portrait-s {
+    font-size: 1.5em;
+
+    height: 2.5em;
+    padding-top: 0.625em;
+  }
+}

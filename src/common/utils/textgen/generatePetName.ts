@@ -1,3 +1,3 @@
-const generatePetName = (id: string) => `Вырбырдль №${id}`;
+const generatePetName = (id: string) => `Вырбыр${id}`;
 
 export { generatePetName };

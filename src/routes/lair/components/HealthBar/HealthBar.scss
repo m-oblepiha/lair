@@ -1,0 +1,67 @@
+@use 'breakpoints';
+@use 'placeholders';
+@use 'colors';
+
+.container {
+  width: 100%;
+  height: 4em;
+  padding: 0 1em;
+
+  grid-area: health;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+
+  border-left: 0.5em solid colors.$borders;
+
+  user-select: none;
+}
+
+.heartsLong {
+  width: 24em;
+
+  display: none;
+  justify-content: space-between;
+  @include breakpoints.landscape-s {
+    display: flex;
+  }
+  @include breakpoints.portrait-l {
+    display: flex;
+  }
+}
+
+.heartsShort {
+  width: 2em;
+
+  display: flex;
+  @include breakpoints.landscape-s {
+    display: none;
+  }
+  @include breakpoints.portrait-l {
+    display: none;
+  }
+}
+
+.heartIcon {
+  width: 2em;
+  height: 2em;
+
+  filter: brightness(0) saturate(100%) invert(50%) sepia(67%) saturate(3157%)
+    hue-rotate(334deg) brightness(107%) contrast(101%);
+}
+
+.brokenHeartIcon {
+  width: 2em;
+  height: 2em;
+
+  filter: opacity(30%);
+}
+
+.count {
+  font-size: 2em;
+
+  margin-left: 0.5em;
+  padding-top: 0.5em;
+
+  line-height: 1em;
+}

@@ -1,0 +1,27 @@
+@use 'breakpoints';
+@use 'placeholders';
+@use 'colors';
+
+.container {
+  font-size: 1em;
+
+  height: 100%;
+  padding: 0.5em;
+
+  grid-area: chat;
+  display: flex;
+  flex-direction: column-reverse;
+
+  border-top: 0.5em solid colors.$borders;
+  border-bottom: 0.5em solid colors.$borders;
+
+  overflow: scroll;
+
+  @include breakpoints.landscape-s {
+    border-left: 0.5em solid colors.$borders;
+  }
+}
+.message {
+  color: colors.$font;
+  text-align: right;
+}

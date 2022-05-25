@@ -1,13 +1,30 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useReducer } from 'react';
+import {
+  Chat,
+  HealthBar,
+  PetList,
+  PetScreen,
+  SummonButton,
+  TimeBar,
+} from './components';
 import classes from './LairRoute.scss';
 
 const LairRoute: React.FC = () => {
+  const [isPetScreenShown, setIsPetScreenShown] = useReducer(
+    (state: boolean) => !state,
+    false
+  );
   return (
     <div className={classes.container}>
-      <p className={classes.hello}>Это экран логова</p>
-      <Link to="/pet">Перейти на экран питомца</Link>
-      <Link to="/">Перейти на стартовый экран</Link>
+      <HealthBar />
+      {isPetScreenShown && <PetScreen close={setIsPetScreenShown} />}
+      <button className={classes.petsButton} onClick={setIsPetScreenShown}>
+        {'ПИТОМЦЫ'}
+      </button>
+      <PetList />
+      <SummonButton extraClassname={classes.summonButton} />
+      <Chat />
+      <TimeBar />
     </div>
   );
 };

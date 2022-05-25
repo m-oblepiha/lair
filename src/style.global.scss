@@ -1,6 +1,7 @@
 * {
   margin: 0;
   box-sizing: border-box;
+  font-family: 'Press Start 2';
 }
 
 #app {
@@ -8,4 +9,11 @@
   min-height: 100vh;
   width: max(100vw, 20rem);
   place-content: center;
+}
+
+button {
+  outline: none;
+  border: none;
+  user-select: none;
+  cursor: pointer;
 }

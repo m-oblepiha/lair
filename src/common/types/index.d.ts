@@ -1,4 +1,4 @@
-import type { Avatar } from './avatar';
+import type { Avatar } from 'assets/images/avatars';
 
 type ID = string;
 
