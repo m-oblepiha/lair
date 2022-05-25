@@ -17,7 +17,7 @@ const config: Configuration = {
     core: join(__dirname, 'src/index.tsx'),
   },
   output: {
-    path: join(__dirname, 'dist'),
+    path: join(__dirname, 'docs'),
     filename: '[name].js',
     chunkFilename: join('chunks', '[id]', '[id].js'),
     clean: true,
