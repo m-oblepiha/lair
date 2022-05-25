@@ -5,7 +5,6 @@ import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 
@@ -17,7 +16,7 @@ const config: Configuration = {
     core: join(__dirname, 'src/index.tsx'),
   },
   output: {
-    path: join(__dirname, 'docs'),
+    path: join(__dirname, 'dist'),
     filename: '[name].js',
     chunkFilename: join('chunks', '[id]', '[id].js'),
     clean: true,
@@ -84,17 +83,11 @@ const config: Configuration = {
       },
       {
         test: /\.(png|jpe?g)$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: 'assets/images/[name].[ext]',
-        },
+        type: 'asset/inline',
       },
       {
         test: /\.woff2$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: 'assets/fonts/[name].[ext]',
-        },
+        type: 'asset/inline',
       },
     ],
   },
@@ -111,7 +104,6 @@ const config: Configuration = {
     new CircularDependencyPlugin({
       exclude: /node_modules/,
     }),
-    // new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
     ...(isProd
       ? [
           new MiniCssExtractPlugin({
