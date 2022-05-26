@@ -18,7 +18,7 @@ const config: Configuration = {
   output: {
     path: join(__dirname, 'dist'),
     filename: '[name].js',
-    chunkFilename: join('chunks', '[id]', '[id].js'),
+    chunkFilename: join('chunks', '[id]', '[chunkhash][id].js'),
     clean: true,
   },
   module: {
@@ -108,7 +108,7 @@ const config: Configuration = {
       ? [
           new MiniCssExtractPlugin({
             filename: '[name].css',
-            chunkFilename: join('chunks', '[id]', '[id].css'),
+            chunkFilename: join('chunks', '[id]', '[chunkhash][id].css'),
           }),
         ]
       : []),
