@@ -137,6 +137,8 @@ const config: Configuration = {
     preset: 'minimal',
     chunks: true,
   },
+  ignoreWarnings: [/size limit/],
+  devtool: 'inline-source-map',
 };
 
 export default config;

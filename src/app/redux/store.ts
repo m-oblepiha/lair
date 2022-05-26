@@ -1,12 +1,18 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { responseMiddleware, recordsMiddleware } from './middleware';
-
+import {
+  responseMiddleware,
+  recordsMiddleware,
+  localStorageMiddleware,
+} from './middleware';
+import { getState } from 'common/utils';
 import {
   heartsReducer,
   timeReducer,
   recordsReducer,
   petsReducer,
 } from 'redux/reducers';
+
+const preloadedState = getState();
 
 const rootReducer = combineReducers({
   hearts: heartsReducer,
@@ -16,6 +22,7 @@ const rootReducer = combineReducers({
 });
 
 const store = configureStore({
+  preloadedState,
   reducer: {
     hearts: heartsReducer,
     time: timeReducer,
@@ -25,7 +32,8 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .prepend(responseMiddleware)
+      .concat(localStorageMiddleware)
       .concat(recordsMiddleware),
 });
 
-export { store, rootReducer };
+export { store, rootReducer, preloadedState };
