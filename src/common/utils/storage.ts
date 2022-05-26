@@ -18,7 +18,6 @@ const getState = (): RootState | undefined => {
 
 const setState = debounce((state: RootState) => {
   try {
-    console.log('tick');
     const serializedState = JSON.stringify(state);
     localStorage.setItem(KEY, serializedState);
   } catch (e) {

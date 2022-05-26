@@ -63,6 +63,11 @@
   filter: invert(1);
 }
 
+.avatarSleeping {
+  filter: brightness(0) saturate(100%) invert(88%) sepia(8%) saturate(5598%)
+    hue-rotate(174deg) brightness(101%) contrast(101%);
+}
+
 .stats {
   font-size: 0.8em;
 
