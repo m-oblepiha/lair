@@ -25,6 +25,12 @@ import {
 } from './responses';
 import { restCase, tireCase, starveCase, ageCase } from './effects';
 import { summonCase, deathCase } from './interactions';
+import {
+  increaseAttributeCase,
+  decreaseAttributeCase,
+  increaseStatCase,
+  decreaseStatCase,
+} from './leveling';
 
 const initialState: IPet[] = [];
 
@@ -54,7 +60,11 @@ const petsReducer = createReducer(initialState, (builder) => {
     .addCase(...starveCase)
     .addCase(...ageCase)
     .addCase(...summonCase)
-    .addCase(...deathCase);
+    .addCase(...deathCase)
+    .addCase(...increaseAttributeCase)
+    .addCase(...decreaseAttributeCase)
+    .addCase(...increaseStatCase)
+    .addCase(...decreaseStatCase);
 });
 
 export { petsReducer };

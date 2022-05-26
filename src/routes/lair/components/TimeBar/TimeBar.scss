@@ -5,14 +5,14 @@
 .container {
   width: 100%;
   height: 4em;
-  padding: 1em;
+  padding: 1em 2em;
 
   grid-area: time;
-  display: flex;
-  justify-content: center;
-  @include breakpoints.landscape-s {
-    justify-content: end;
+  display: grid;
+  grid-template-columns: 3em 1fr 2fr 3em;
+  grid-template-areas: 'mi m d di';
 
+  @include breakpoints.landscape-s {
     border-left: 0.5em solid colors.$borders;
   }
 
@@ -20,16 +20,57 @@
 }
 
 .day {
-  font-size: 2em;
+  font-size: 1.5em;
+
+  margin-top: 0.2em;
+
+  grid-area: d;
+  justify-self: end;
 
   word-spacing: -0.5em;
+
+  @include breakpoints.portrait-s {
+    font-size: 2em;
+
+    margin-top: 0;
+  }
 }
 
-.icon {
+.dayIcon {
   margin-top: -0.5em;
   margin-left: 1em;
   width: 3em;
   height: 3em;
+
+  grid-area: di;
+  justify-self: center;
+
+  filter: invert(1);
+}
+
+.mana {
+  font-size: 1.5em;
+
+  margin-top: 0.2em;
+
+  grid-area: m;
+  justify-self: start;
+
+  @include breakpoints.portrait-s {
+    font-size: 2em;
+
+    margin-top: 0;
+  }
+}
+
+.manaIcon {
+  margin-top: -0.5em;
+  margin-right: 1em;
+  width: 3em;
+  height: 3em;
+
+  grid-area: mi;
+  justify-self: center;
 
   filter: invert(1);
 }

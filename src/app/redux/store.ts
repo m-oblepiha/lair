@@ -10,25 +10,24 @@ import {
   timeReducer,
   recordsReducer,
   petsReducer,
+  manaReducer,
 } from 'redux/reducers';
 
 const preloadedState = getState();
 
-const rootReducer = combineReducers({
+const reducerMap = {
   hearts: heartsReducer,
   time: timeReducer,
   records: recordsReducer,
   pets: petsReducer,
-});
+  mana: manaReducer,
+};
+
+const rootReducer = combineReducers(reducerMap);
 
 const store = configureStore({
   preloadedState,
-  reducer: {
-    hearts: heartsReducer,
-    time: timeReducer,
-    records: recordsReducer,
-    pets: petsReducer,
-  },
+  reducer: reducerMap,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .prepend(responseMiddleware)

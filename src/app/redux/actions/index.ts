@@ -17,3 +17,10 @@ export {
   caressJoin,
   deathPanic,
 } from './responses';
+export {
+  increaseAttribute,
+  decreaseAttribute,
+  increaseStat,
+  decreaseStat,
+} from './leveling';
+export { addMana } from './mana';
