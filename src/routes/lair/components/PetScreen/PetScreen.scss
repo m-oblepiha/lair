@@ -21,6 +21,7 @@
   }
 
   background-color: colors.$main;
+  backdrop-filter: blur(3em);
 }
 
 .pets {
@@ -46,7 +47,6 @@
   grid-area: return;
 
   border-right: 0.25em solid colors.$borders;
-  background-color: colors.$main;
   color: colors.$font;
 
   line-height: 1em;

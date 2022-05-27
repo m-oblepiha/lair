@@ -7,6 +7,7 @@ import {
   SummonButton,
   TimeBar,
 } from './components';
+import classnames from 'classnames';
 import classes from './LairRoute.scss';
 
 const LairRoute: React.FC = () => {
@@ -15,10 +16,17 @@ const LairRoute: React.FC = () => {
     false
   );
   return (
-    <div className={classes.container}>
-      <HealthBar />
+    <div className={classnames(classes.container)}>
       {isPetScreenShown && <PetScreen close={setIsPetScreenShown} />}
-      <button className={classes.petsButton} onClick={setIsPetScreenShown}>
+      <HealthBar />
+      <button
+        className={classes.petsButton}
+        onClick={(event) => {
+          setIsPetScreenShown();
+          event.currentTarget.blur();
+        }}
+        tabIndex={isPetScreenShown ? -1 : 0}
+      >
         {'ПИТОМЦЫ'}
       </button>
       <PetList />

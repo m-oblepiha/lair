@@ -3,8 +3,7 @@
 @use 'fonts';
 
 body {
-  background-position: center;
-  background-color: colors.$background;
+  background: colors.$background url('/assets/images/cover.png') center/cover;
   color: colors.$font;
 }
 
