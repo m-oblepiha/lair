@@ -24,3 +24,4 @@ export {
   caressJoinProbability,
   deathPanicProbability,
 } from './responseProbability';
+export { generatePetName } from './generatePetName';

@@ -1,8 +1,8 @@
 import type { ID, Stat } from 'common/types';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useTypedSelector, useTypedDispatch } from 'redux/hooks';
 import { increaseStat, decreaseStat } from 'redux/actions';
-import { selectPet } from 'common/utils';
+import { selectPet, useColorBlink } from 'common/utils';
 import { PetIcon } from 'common/components';
 import classes from './PetProperty.scss';
 import { heart as health, morale, fatigue, hunger } from 'assets/images/stats';
@@ -23,10 +23,17 @@ type Props = {
 
 const PetStat: React.FC<Props> = ({ id, stat }) => {
   const dispatch = useTypedDispatch();
+
   const pet = useTypedSelector((state) => selectPet(state.pets, id));
   const mana = useTypedSelector((state) => state.mana);
   const hearts = useTypedSelector((state) => state.hearts);
+
   const value = pet.stats[stat];
+
+  const countRef = useRef<HTMLSpanElement>(null);
+
+  useColorBlink({ ref: countRef, value });
+
   return (
     <div className={classes.container}>
       <PetIcon extraClassname={classes.icon} src={statImageMap[stat]} />
@@ -38,7 +45,9 @@ const PetStat: React.FC<Props> = ({ id, stat }) => {
       >
         {'-'}
       </button>
-      <span className={classes.count}>{value}</span>
+      <span className={classes.count} ref={countRef}>
+        {value}
+      </span>
       <button
         className={classes.button}
         onClick={() => dispatch(increaseStat({ id, stat }))}

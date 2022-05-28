@@ -1,8 +1,8 @@
 import type { ID, Attribute } from 'common/types';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTypedSelector, useTypedDispatch } from 'redux/hooks';
 import { increaseAttribute, decreaseAttribute } from 'redux/actions';
-import { selectPet } from 'common/utils';
+import { selectPet, useColorBlink } from 'common/utils';
 import { PetIcon } from 'common/components';
 import classes from './PetProperty.scss';
 import {
@@ -33,10 +33,17 @@ type Props = {
 
 const PetAttribute: React.FC<Props> = ({ id, attribute }) => {
   const dispatch = useTypedDispatch();
+
   const pet = useTypedSelector((state) => selectPet(state.pets, id));
   const mana = useTypedSelector((state) => state.mana);
   const hearts = useTypedSelector((state) => state.hearts);
+
   const value = pet.attributes[attribute];
+
+  const countRef = useRef<HTMLSpanElement>(null);
+
+  useColorBlink({ ref: countRef, value });
+
   return (
     <div className={classes.container}>
       <PetIcon
@@ -51,7 +58,9 @@ const PetAttribute: React.FC<Props> = ({ id, attribute }) => {
       >
         {'-'}
       </button>
-      <span className={classes.count}>{value}</span>
+      <span className={classes.count} ref={countRef}>
+        {value}
+      </span>
       <button
         className={classes.button}
         onClick={() => dispatch(increaseAttribute({ id, attribute }))}

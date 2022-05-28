@@ -1,3 +1,4 @@
+import React from 'react';
 import type { ActAction } from 'redux/types';
 import type {
   SleepAct,
@@ -8,6 +9,7 @@ import type {
   HealAct,
   CaressAct,
 } from 'common/types/act';
+import classes from './messages.scss';
 
 const sleepActMessage = ({ actor }: SleepAct) => {
   return `${actor.name} уснул.`;

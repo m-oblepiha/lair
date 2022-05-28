@@ -2,5 +2,17 @@ $cover: #0a2139;
 $background: rgba(grey, 0.5);
 $main: white;
 $primary: yellow;
-$bad: red;
-$good: green;
+$good: lawngreen;
+$bad: tomato;
+
+.primary {
+  color: $primary;
+}
+
+.good {
+  color: $good;
+}
+
+.bad {
+  color: $bad;
+}

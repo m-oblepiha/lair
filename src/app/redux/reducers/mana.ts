@@ -7,7 +7,7 @@ import {
   decreaseStat,
 } from 'redux/actions';
 
-const initialState: number = 5;
+const initialState: number = 500;
 
 const manaReducer = createReducer(initialState, (builder) => {
   builder

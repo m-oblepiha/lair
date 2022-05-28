@@ -1,0 +1,17 @@
+@use 'colors';
+
+.message {
+  word-spacing: -0.5em;
+}
+
+.good {
+  color: colors.$good;
+}
+
+.bad {
+  color: colors.$bad;
+}
+
+.stress {
+  color: colors.$primary;
+}

@@ -1,12 +1,29 @@
 import type { ID } from 'common/types';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTypedSelector } from 'redux/hooks';
-import { selectPet } from 'common/utils';
+import { selectPet, useColorBlink } from 'common/utils';
 import { Avatar, PetIcon } from 'common/components';
 import classnames from 'classnames';
 import classes from './PetListItem.scss';
 import { hunger, fatigue, heart, morale } from 'assets/images/stats';
+
+type StatProps = { src: string; value: number };
+
+const PetListStat: React.FC<StatProps> = ({ src, value }) => {
+  const countRef = useRef<HTMLSpanElement>(null);
+
+  useColorBlink({ ref: countRef, value });
+
+  return (
+    <div className={classes.stat}>
+      <span className={classes.count} ref={countRef}>
+        {value}
+      </span>
+      <PetIcon src={src} extraClassname={classes.icon} />
+    </div>
+  );
+};
 
 type Props = {
   id: ID;
@@ -36,22 +53,10 @@ const PetListItem: React.FC<Props> = ({ id }) => {
       />
       <span className={classes.petName}>{pet.name}</span>
       <div className={classes.stats}>
-        <div className={classes.stat}>
-          <span className={classes.count}>{pet.stats.health}</span>
-          <PetIcon src={heart} extraClassname={classes.icon} />
-        </div>
-        <div className={classes.stat}>
-          <span className={classes.count}>{pet.stats.morale}</span>
-          <PetIcon src={morale} extraClassname={classes.icon} />
-        </div>
-        <div className={classes.stat}>
-          <span className={classes.count}>{pet.stats.hunger}</span>
-          <PetIcon src={hunger} extraClassname={classes.icon} />
-        </div>
-        <div className={classes.stat}>
-          <span className={classes.count}>{pet.stats.fatigue}</span>
-          <PetIcon src={fatigue} extraClassname={classes.icon} />
-        </div>
+        <PetListStat src={heart} value={pet.stats.health} />
+        <PetListStat src={morale} value={pet.stats.morale} />
+        <PetListStat src={hunger} value={pet.stats.hunger} />
+        <PetListStat src={fatigue} value={pet.stats.fatigue} />
       </div>
     </li>
   );

@@ -1,7 +1,7 @@
 import type { IPet } from 'common/types';
-import { generatePetName } from 'common/utils/textgen';
 import { avatars, type Avatar } from 'assets/images/avatars';
 import { roll } from './roll';
+import { generatePetName } from './generatePetName';
 import { customAlphabet } from 'nanoid';
 
 const nanoid = customAlphabet('1234567890', 3);

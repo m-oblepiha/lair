@@ -1,8 +1,10 @@
+import React from 'react';
 import type { InteractionAction } from 'redux/actions/interactions';
 import type {
   SummonInteraction,
   DeathInteraction,
 } from 'common/types/interaction';
+import classes from './messages.scss';
 
 const summonInteractionMessage = ({ target }: SummonInteraction) => {
   return `В логово призван ${target.name}.`;

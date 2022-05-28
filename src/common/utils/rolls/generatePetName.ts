@@ -1,4 +1,4 @@
-import { roll } from 'common/utils/rolls/roll';
+import { roll } from './roll';
 
 const petNames: string[] = [
   'Вырбырдль',

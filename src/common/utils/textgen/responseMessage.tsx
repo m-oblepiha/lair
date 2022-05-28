@@ -1,3 +1,4 @@
+import React from 'react';
 import type { ResponseAction } from 'redux/types';
 import type {
   WakeupCaressResponse,
@@ -13,6 +14,7 @@ import type {
   CaressJoinResponse,
   DeathPanicResponse,
 } from 'common/types/response';
+import classes from './messages.scss';
 
 const wakeupCaressResponseMessage = ({
   actor,
