@@ -1,7 +1,274 @@
+@use 'colors';
+@use 'breakpoints';
+@use 'placeholders';
+
 .container {
   width: 100%;
   height: 100%;
 
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 2fr 2fr 6em 6em;
+  grid-template-areas: 'card card' 'stats stats' 'attributes attributes' 'hearts mana' 'return kill';
+
+  @include breakpoints.portrait-s {
+    grid-template-rows: 1fr 2fr 2fr 4em 6em;
+  }
+  @include breakpoints.portrait-m {
+    grid-template-rows: 1fr 2fr 2fr 6em 6em;
+  }
+  @include breakpoints.landscape-s {
+    grid-template-columns: 2fr 1fr 1fr 2fr;
+    grid-template-rows: 10em 2fr 4em;
+    grid-template-areas: 'card card card card' 'stats stats attributes attributes' 'return hearts mana kill';
+  }
+  @include breakpoints.landscape-l {
+    grid-template-rows: 14em 2fr 4em;
+  }
+}
+
+.card {
+  width: 24em;
+  height: 8em;
+  padding: 1em 0;
+
+  grid-area: card;
+  place-self: center;
+  display: grid;
+  grid-template-columns: 1fr 5.75em;
+  grid-template-areas: 'name avatar' 'sleep avatar' 'age avatar';
+  justify-items: end;
+
+  @include breakpoints.portrait-m {
+    font-size: 1.25em;
+  }
+  @include breakpoints.portrait-l {
+    font-size: 1.5em;
+  }
+  @include breakpoints.landscape-s {
+    margin-right: 1em;
+
+    justify-self: end;
+  }
+  @include breakpoints.landscape-m {
+    font-size: 1.25em;
+  }
+  @include breakpoints.landscape-l {
+    font-size: 1.5em;
+  }
+}
+
+.name {
+  font-size: 2em;
+
+  grid-area: name;
+}
+
+.avatar {
+  margin-right: 0.25em;
+  width: 5em;
+  height: 5em;
+
+  grid-area: avatar;
+
+  filter: invert(1);
+}
+
+.sleep {
+  grid-area: sleep;
+}
+
+.age {
+  grid-area: age;
+}
+
+.stats {
+  padding: 0.5em 0;
+
+  border-top: 0.5em solid colors.$borders;
+
+  grid-area: stats;
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+
+  @include breakpoints.portrait-m {
+    font-size: 1.25em;
+  }
+  @include breakpoints.portrait-l {
+    font-size: 1.5em;
+  }
+  @include breakpoints.landscape-s {
+    font-size: 0.88em;
+
+    padding: 2em 0;
+
+    border-right: 0.375em solid colors.$borders;
+    border-bottom: 0.5em solid colors.$borders;
+  }
+  @include breakpoints.landscape-m {
+    font-size: 1.2em;
+
+    padding: 3em 0;
+  }
+  @include breakpoints.landscape-l {
+    font-size: 1.4em;
+
+    padding: 3em 0;
+  }
+}
+
+.attributes {
+  padding: 0.5em 0;
+
+  border-top: 0.5em solid colors.$borders;
+  border-bottom: 0.5em solid colors.$borders;
+
+  grid-area: attributes;
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+
+  @include breakpoints.portrait-m {
+    font-size: 1.25em;
+  }
+  @include breakpoints.portrait-l {
+    font-size: 1.5em;
+  }
+  @include breakpoints.landscape-s {
+    font-size: 0.88em;
+
+    padding: 2em 0;
+
+    border-left: 0.375em solid colors.$borders;
+  }
+  @include breakpoints.landscape-m {
+    font-size: 1.2em;
+
+    padding: 3em 0;
+  }
+  @include breakpoints.landscape-l {
+    font-size: 1.4em;
+
+    padding: 3em 0;
+  }
+}
+
+.return {
+  @extend %button;
+
+  font-size: 2em;
+
+  grid-area: return;
+
+  border-top: 0.25em solid colors.$borders;
+  border-right: 0.125em solid colors.$borders;
+
+  line-height: 3em;
+
+  @include breakpoints.landscape-s {
+    border-top: none;
+    border-right: 0.25em solid colors.$borders;
+
+    line-height: 2.5em;
+  }
+}
+
+.kill {
+  @extend %button;
+
+  font-size: 2em;
+
+  grid-area: kill;
+
+  border-top: 0.25em solid colors.$borders;
+  border-left: 0.125em solid colors.$borders;
+
+  line-height: 3em;
+
+  &:hover,
+  &:focus {
+    color: colors.$bad;
+  }
+  &:disabled {
+    color: rgba(colors.$font, 0.3);
+  }
+
+  @include breakpoints.landscape-s {
+    border-top: none;
+    border-left: 0.25em solid colors.$borders;
+
+    line-height: 2.5em;
+  }
+}
+
+.mana {
+  font-size: 3em;
+
+  height: 2em;
+
+  place-self: center;
+  grid-area: mana;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+
+  & span {
+    line-height: 2em;
+
+    padding-top: 0.5em;
+  }
+
+  & img {
+    margin-left: 0.25em;
+    width: 1.25em;
+    height: 1.25em;
+
+    filter: invert(1);
+  }
+
+  @include breakpoints.portrait-s {
+    font-size: 2em;
+  }
+  @include breakpoints.portrait-m {
+    font-size: 2.5em;
+  }
+  @include breakpoints.landscape-s {
+    font-size: 2em;
+  }
+}
+
+.hearts {
+  font-size: 3em;
+
+  height: 2em;
+
+  place-self: center;
+  grid-area: hearts;
+  display: flex;
+  align-items: center;
+
+  & span {
+    padding-top: 0.5em;
+
+    line-height: 2em;
+  }
+
+  & img {
+    margin-left: 0.25em;
+    width: 1.1em;
+    height: 1.1em;
+
+    filter: brightness(0) saturate(100%) invert(50%) sepia(67%) saturate(3157%)
+      hue-rotate(334deg) brightness(107%) contrast(101%);
+  }
+
+  @include breakpoints.portrait-s {
+    font-size: 2em;
+  }
+  @include breakpoints.portrait-m {
+    font-size: 2.5em;
+  }
+  @include breakpoints.landscape-s {
+    font-size: 2em;
+  }
 }

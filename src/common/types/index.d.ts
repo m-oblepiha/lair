@@ -24,4 +24,8 @@ type IPet = {
   relations: { [key: ID]: number };
 };
 
-export type { ID, IPet };
+type Attribute = Exclude<keyof IPet['attributes'], 'maxAge'>;
+
+type Stat = Exclude<keyof IPet['stats'], 'age' | 'isAwake'>;
+
+export type { ID, IPet, Attribute, Stat };

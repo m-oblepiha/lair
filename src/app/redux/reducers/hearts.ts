@@ -1,10 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { death } from 'redux/actions';
 
-const initialState: number = 4;
+const initialState: number = 10;
 
 const heartsReducer = createReducer(initialState, (builder) => {
-  builder.addCase(death, (state) => state--);
+  builder.addCase(death, (state) => state && state - 1);
 });
 
 export { heartsReducer };

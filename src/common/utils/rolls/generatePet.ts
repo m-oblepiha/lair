@@ -10,7 +10,7 @@ const generatePet = (): IPet => {
   const id = nanoid();
   return {
     id,
-    name: generatePetName(id),
+    name: generatePetName(),
     avatar: Object.keys(avatars)[roll(0, 9)] as Avatar,
     stats: {
       isAwake: true,

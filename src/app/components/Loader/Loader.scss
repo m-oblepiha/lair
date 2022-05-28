@@ -1,19 +1,17 @@
 @use 'colors';
 
 @keyframes load {
-  0% {
-    background-color: colors.$main;
+  from {
+    opacity: 1;
   }
-  50% {
-    background-color: rgba(colors.$font, 0.3);
-  }
-  100% {
-    background-color: colors.$main;
+  to {
+    opacity: 0;
   }
 }
 
 .loader {
   width: 100%;
   height: 100%;
-  animation: 1.5s linear infinite load;
+  background-color: colors.$main;
+  animation: 1s linear infinite alternate load;
 }

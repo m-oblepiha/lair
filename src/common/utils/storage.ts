@@ -16,8 +16,12 @@ const getState = (): RootState | undefined => {
   }
 };
 
-const setState = debounce((state: RootState) => {
+const setState = debounce((state: RootState | null) => {
   try {
+    if (!state) {
+      localStorage.clear();
+      return;
+    }
     const serializedState = JSON.stringify(state);
     localStorage.setItem(KEY, serializedState);
   } catch (e) {

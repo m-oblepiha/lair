@@ -8,7 +8,14 @@ const localStorageMiddleware: Middleware<{}, RootState> =
   (action) => {
     const result = next(action);
 
-    setState(getState());
+    const state = getState();
+
+    if (state.hearts === 0) {
+      setState(null);
+      return result;
+    }
+
+    setState(state);
 
     return result;
   };

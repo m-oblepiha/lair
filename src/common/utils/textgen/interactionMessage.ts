@@ -9,7 +9,7 @@ const summonInteractionMessage = ({ target }: SummonInteraction) => {
 };
 
 const deathInteractionMessage = ({ target }: DeathInteraction) => {
-  return `${target.name} тихо скулит и, наконец, затихает...`;
+  return `${target.name} умирает.`;
 };
 
 const interactionMessage = ({

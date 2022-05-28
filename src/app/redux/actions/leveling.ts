@@ -1,8 +1,5 @@
-import type { IPet, ID } from 'common/types';
+import type { ID, Attribute, Stat } from 'common/types';
 import { createAction } from '@reduxjs/toolkit';
-
-type Attribute = Exclude<keyof IPet['attributes'], 'maxAge'>;
-type Stat = Exclude<keyof IPet['stats'], 'age' | 'isAwake'>;
 
 const increaseAttribute = createAction<
   { id: ID; attribute: Attribute },

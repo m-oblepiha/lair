@@ -1,0 +1,52 @@
+@use 'colors';
+@use 'placeholders';
+
+.container {
+  font-size: 1em;
+
+  height: 3em;
+  width: 24em;
+
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  font-size: 1.25em;
+
+  height: 2em;
+  flex-grow: 1;
+
+  line-height: 2em;
+  word-spacing: -0.5em;
+}
+
+.button {
+  @extend %button;
+
+  font-size: 2em;
+
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0;
+
+  line-height: 1.75em;
+}
+
+.icon {
+  margin-top: -0.5em;
+  margin-right: 1em;
+  width: 2em;
+  height: 2em;
+
+  filter: brightness(0) saturate(100%) invert(86%) sepia(25%) saturate(2845%)
+    hue-rotate(324deg) brightness(99%) contrast(105%);
+}
+
+.count {
+  font-size: 1.5em;
+
+  height: 2em;
+
+  line-height: 2em;
+}

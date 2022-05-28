@@ -96,6 +96,9 @@
   margin-right: 2em;
   width: 2.5em;
   height: 2.5em;
+
+  filter: brightness(0) saturate(100%) invert(86%) sepia(25%) saturate(2845%)
+    hue-rotate(324deg) brightness(99%) contrast(105%);
 }
 
 .count {

@@ -8,8 +8,22 @@ import { Loader } from 'app/components';
 import { ErrorBoundary } from 'app/components';
 
 import EntryRoute from 'routes/entry/EntryRoute';
-const LairRoute = React.lazy(() => import('routes/lair/LairRoute'));
-const PetRoute = React.lazy(() => import('routes/pet/PetRoute'));
+
+const LairRoute = React.lazy(async () => {
+  const [component] = await Promise.all([
+    import('routes/lair/LairRoute'),
+    new Promise((resolve) => setTimeout(resolve, 500)),
+  ]);
+  return component;
+});
+
+const PetRoute = React.lazy(async () => {
+  const [component] = await Promise.all([
+    import('routes/pet/PetRoute'),
+    new Promise((resolve) => setTimeout(resolve, 500)),
+  ]);
+  return component;
+});
 
 const App: React.FC = () => {
   return (

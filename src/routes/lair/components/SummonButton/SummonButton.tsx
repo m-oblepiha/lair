@@ -12,12 +12,13 @@ const SummonButton: React.FC<Props> = ({ extraClassname }) => {
   const dispatch = useTypedDispatch();
 
   const petsCount = useTypedSelector((state) => state.pets.length);
+  const hearts = useTypedSelector((state) => state.hearts);
   const handleClick = () => dispatch(summon());
 
   return (
     <button
       className={classnames(classes.button, extraClassname)}
-      disabled={petsCount === 4}
+      disabled={petsCount === 4 || hearts === 0}
       onClick={handleClick}
     >
       {'ПРИЗВАТЬ'}
