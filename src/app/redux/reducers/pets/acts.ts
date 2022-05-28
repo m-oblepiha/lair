@@ -43,14 +43,14 @@ const supplyCaseReducer = (
 
     if (action.payload.distribution.type === 'steal') {
       pet.relations[target.id] = clipRelation(
-        pet.relations[target.id] +
-          changeRelation({ target: pet, type: 'steal' })
+        pet.relations[target.id] ??
+          0 + changeRelation({ target: pet, type: 'steal' })
       );
     }
     if (action.payload.distribution.type === 'share') {
       target.relations[pet.id] = clipRelation(
-        target.relations[pet.id] +
-          changeRelation({ target: target, type: 'share' })
+        target.relations[pet.id] ??
+          0 + changeRelation({ target: target, type: 'share' })
       );
     }
   }
@@ -68,12 +68,13 @@ const attackCaseReducer = (
   target.stats.health = health < 0 ? 0 : health;
 
   target.relations[actor.id] = clipRelation(
-    target.relations[actor.id] +
-      changeRelation({
-        target: target,
-        type: 'attack',
-        value: action.payload.value,
-      })
+    target.relations[actor.id] ??
+      0 +
+        changeRelation({
+          target: target,
+          type: 'attack',
+          value: action.payload.value,
+        })
   );
 };
 const attackCase = [attack, attackCaseReducer] as const;
@@ -86,12 +87,13 @@ const bullyCaseReducer = (state: IPet[], action: ReturnType<typeof bully>) => {
   target.stats.morale = morale < 0 ? 0 : morale;
 
   target.relations[actor.id] = clipRelation(
-    target.relations[actor.id] +
-      changeRelation({
-        target: target,
-        type: 'bully',
-        value: action.payload.value,
-      })
+    target.relations[actor.id] ??
+      0 +
+        changeRelation({
+          target: target,
+          type: 'bully',
+          value: action.payload.value,
+        })
   );
 };
 const bullyCase = [bully, bullyCaseReducer] as const;
@@ -104,12 +106,13 @@ const healCaseReducer = (state: IPet[], action: ReturnType<typeof heal>) => {
   target.stats.health = health > 10 ? 10 : health;
 
   target.relations[actor.id] = clipRelation(
-    target.relations[actor.id] +
-      changeRelation({
-        target: target,
-        type: 'heal',
-        value: action.payload.value,
-      })
+    target.relations[actor.id] ??
+      0 +
+        changeRelation({
+          target: target,
+          type: 'heal',
+          value: action.payload.value,
+        })
   );
 };
 const healCase = [heal, healCaseReducer] as const;
@@ -125,12 +128,13 @@ const caressCaseReducer = (
   target.stats.morale = morale > 10 ? 10 : morale;
 
   target.relations[actor.id] = clipRelation(
-    target.relations[actor.id] +
-      changeRelation({
-        target: target,
-        type: 'caress',
-        value: action.payload.value,
-      })
+    target.relations[actor.id] ??
+      0 +
+        changeRelation({
+          target: target,
+          type: 'caress',
+          value: action.payload.value,
+        })
   );
 };
 const caressCase = [caress, caressCaseReducer] as const;

@@ -44,7 +44,7 @@ const attackCounterProbability = (actor: IPet, act: AttackAct) => {
   const { friendliness } = actor.attributes;
   const { morale } = actor.stats;
   const damage = act.value;
-  const rel = actor.relations[act.actor.id];
+  const rel = actor.relations[act.actor.id] ?? 0;
 
   const COEFF = {
     friendlinessWeight: -3,
@@ -128,7 +128,7 @@ const bullyCounterProbability = (actor: IPet, act: BullyAct) => {
   const { friendliness } = actor.attributes;
   const { morale } = actor.stats;
   const damage = act.value;
-  const rel = actor.relations[act.actor.id];
+  const rel = actor.relations[act.actor.id] ?? 0;
 
   const COEFF = {
     friendlinessWeight: -3,
@@ -210,7 +210,7 @@ const bullyJoinProbability = (actor: IPet, act: BullyAct) => {
 
 const healDelightProbability = (actor: IPet, act: HealAct) => {
   const { friendliness } = actor.attributes;
-  const rel = actor.relations[act.target.id];
+  const rel = actor.relations[act.target.id] ?? 0;
 
   const COEFF = {
     friendlinessWeight: 2,
@@ -233,7 +233,7 @@ const healDelightProbability = (actor: IPet, act: HealAct) => {
 const caressCounterProbability = (actor: IPet, act: CaressAct) => {
   const { friendliness } = actor.attributes;
   const { morale } = actor.stats;
-  const rel = actor.relations[act.actor.id];
+  const rel = actor.relations[act.actor.id] ?? 0;
 
   const COEFF = {
     friendlinessWeight: 2,
@@ -285,7 +285,7 @@ const caressJoinProbability = (actor: IPet, act: CaressAct) => {
 
 const deathPanicProbability = (actor: IPet, effect: DeathInteraction) => {
   const { willpower } = actor.attributes;
-  const rel = actor.relations[effect.target.id];
+  const rel = actor.relations[effect.target.id] ?? 0;
 
   const COEFF = {
     willpowerWeight: -2,

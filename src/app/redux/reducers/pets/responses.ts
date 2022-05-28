@@ -27,12 +27,13 @@ const wakeupCaressCaseReducer = (
   target.stats.morale = morale > 10 ? 10 : morale;
 
   target.relations[actor.id] = clipRelation(
-    target.relations[actor.id] +
-      changeRelation({
-        target: target,
-        type: 'caress',
-        value: action.payload.value,
-      })
+    target.relations[actor.id] ??
+      0 +
+        changeRelation({
+          target: target,
+          type: 'caress',
+          value: action.payload.value,
+        })
   );
 };
 const wakeupCaressCase = [wakeupCaress, wakeupCaressCaseReducer] as const;
@@ -57,12 +58,13 @@ const attackCounterCaseReducer = (
   target.stats.health = health < 0 ? 0 : health;
 
   target.relations[actor.id] = clipRelation(
-    target.relations[actor.id] +
-      changeRelation({
-        target: target,
-        type: 'attack',
-        value: action.payload.value,
-      })
+    target.relations[actor.id] ??
+      0 +
+        changeRelation({
+          target: target,
+          type: 'attack',
+          value: action.payload.value,
+        })
   );
 };
 const attackCounterCase = [attackCounter, attackCounterCaseReducer] as const;
@@ -79,21 +81,23 @@ const attackAvengeCaseReducer = (
   actActor.stats.health = health < 0 ? 0 : health;
 
   actActor.relations[actor.id] = clipRelation(
-    actActor.relations[actor.id] +
-      changeRelation({
-        target: actActor,
-        type: 'attack',
-        value: action.payload.value,
-      })
+    actActor.relations[actor.id] ??
+      0 +
+        changeRelation({
+          target: actActor,
+          type: 'attack',
+          value: action.payload.value,
+        })
   );
 
   actTarget.relations[actor.id] = clipRelation(
-    actTarget.relations[actor.id] +
-      changeRelation({
-        target: actTarget,
-        type: 'avenge',
-        value: action.payload.value,
-      })
+    actTarget.relations[actor.id] ??
+      0 +
+        changeRelation({
+          target: actTarget,
+          type: 'avenge',
+          value: action.payload.value,
+        })
   );
 };
 const attackAvengeCase = [attackAvenge, attackAvengeCaseReducer] as const;
@@ -110,20 +114,22 @@ const attackJoinCaseReducer = (
   actTarget.stats.health = health < 0 ? 0 : health;
 
   actTarget.relations[actor.id] = clipRelation(
-    actTarget.relations[actor.id] +
-      changeRelation({
-        target: actTarget,
-        type: 'attack',
-        value: action.payload.value,
-      })
+    actTarget.relations[actor.id] ??
+      0 +
+        changeRelation({
+          target: actTarget,
+          type: 'attack',
+          value: action.payload.value,
+        })
   );
 
   actActor.relations[actor.id] = clipRelation(
-    actActor.relations[actor.id] +
-      changeRelation({
-        target: actActor,
-        type: 'join',
-      })
+    actActor.relations[actor.id] ??
+      0 +
+        changeRelation({
+          target: actActor,
+          type: 'join',
+        })
   );
 };
 const attackJoinCase = [attackJoin, attackJoinCaseReducer] as const;
@@ -139,12 +145,13 @@ const bullyCounterCaseReducer = (
   target.stats.morale = morale < 0 ? 0 : morale;
 
   target.relations[actor.id] = clipRelation(
-    target.relations[actor.id] +
-      changeRelation({
-        target: target,
-        type: 'bully',
-        value: action.payload.value,
-      })
+    target.relations[actor.id] ??
+      0 +
+        changeRelation({
+          target: target,
+          type: 'bully',
+          value: action.payload.value,
+        })
   );
 };
 const bullyCounterCase = [bullyCounter, bullyCounterCaseReducer] as const;
@@ -161,21 +168,23 @@ const bullyAvengeCaseReducer = (
   actActor.stats.morale = morale < 0 ? 0 : morale;
 
   actActor.relations[actor.id] = clipRelation(
-    actActor.relations[actor.id] +
-      changeRelation({
-        target: actActor,
-        type: 'bully',
-        value: action.payload.value,
-      })
+    actActor.relations[actor.id] ??
+      0 +
+        changeRelation({
+          target: actActor,
+          type: 'bully',
+          value: action.payload.value,
+        })
   );
 
   actTarget.relations[actor.id] = clipRelation(
-    actTarget.relations[actor.id] +
-      changeRelation({
-        target: actTarget,
-        type: 'avenge',
-        value: action.payload.value,
-      })
+    actTarget.relations[actor.id] ??
+      0 +
+        changeRelation({
+          target: actTarget,
+          type: 'avenge',
+          value: action.payload.value,
+        })
   );
 };
 const bullyAvengeCase = [bullyAvenge, bullyAvengeCaseReducer] as const;
@@ -192,20 +201,22 @@ const bullyJoinCaseReducer = (
   actTarget.stats.morale = morale < 0 ? 0 : morale;
 
   actTarget.relations[actor.id] = clipRelation(
-    actTarget.relations[actor.id] +
-      changeRelation({
-        target: actTarget,
-        type: 'bully',
-        value: action.payload.value,
-      })
+    actTarget.relations[actor.id] ??
+      0 +
+        changeRelation({
+          target: actTarget,
+          type: 'bully',
+          value: action.payload.value,
+        })
   );
 
   actActor.relations[actor.id] = clipRelation(
-    actActor.relations[actor.id] +
-      changeRelation({
-        target: actActor,
-        type: 'join',
-      })
+    actActor.relations[actor.id] ??
+      0 +
+        changeRelation({
+          target: actActor,
+          type: 'join',
+        })
   );
 };
 const bullyJoinCase = [bullyJoin, bullyJoinCaseReducer] as const;
@@ -230,12 +241,13 @@ const caressCounterCaseReducer = (
   target.stats.morale = morale > 10 ? 10 : morale;
 
   target.relations[actor.id] = clipRelation(
-    target.relations[actor.id] +
-      changeRelation({
-        target: target,
-        type: 'caress',
-        value: action.payload.value,
-      })
+    target.relations[actor.id] ??
+      0 +
+        changeRelation({
+          target: target,
+          type: 'caress',
+          value: action.payload.value,
+        })
   );
 };
 const caressCounterCase = [caressCounter, caressCounterCaseReducer] as const;
@@ -252,17 +264,18 @@ const caressJoinCaseReducer = (
   actTarget.stats.morale = morale > 10 ? 10 : morale;
 
   actTarget.relations[actor.id] = clipRelation(
-    actTarget.relations[actor.id] +
-      changeRelation({
-        target: actTarget,
-        type: 'caress',
-        value: action.payload.value,
-      })
+    actTarget.relations[actor.id] ??
+      0 +
+        changeRelation({
+          target: actTarget,
+          type: 'caress',
+          value: action.payload.value,
+        })
   );
 
   actActor.relations[actor.id] = clipRelation(
-    actActor.relations[actor.id] +
-      changeRelation({ target: actTarget, type: 'join' })
+    actActor.relations[actor.id] ??
+      0 + changeRelation({ target: actTarget, type: 'join' })
   );
 };
 const caressJoinCase = [caressJoin, caressJoinCaseReducer] as const;
