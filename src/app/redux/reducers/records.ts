@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { addRecord } from 'redux/actions';
 
-const initialState: string[] = [];
+const initialState: Array<ReturnType<typeof addRecord>['payload']> = [];
 
 const recordsReducer = createReducer(initialState, (builder) => {
   builder.addCase(addRecord, (state, action) => {

@@ -124,6 +124,11 @@ const config: Configuration = {
         extractComments: false,
       }),
     ],
+    splitChunks: {
+      cacheGroups: {
+        default: false,
+      },
+    },
   },
   devServer: {
     static: {
@@ -138,7 +143,7 @@ const config: Configuration = {
     chunks: true,
   },
   ignoreWarnings: [/size limit/],
-  devtool: 'inline-source-map',
+  devtool: isProd ? false : 'inline-source-map',
 };
 
 export default config;
