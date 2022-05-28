@@ -16,7 +16,7 @@
   grid-column-gap: 1em;
   grid-template-areas: 'avatar petName' 'avatar stats';
 
-  border-bottom: 0.5em solid colors.$borders;
+  border-bottom: 0.5em solid colors.$main;
   list-style-type: none;
 
   &:hover,
@@ -42,13 +42,8 @@
 }
 
 .avatar {
-  width: 5em;
-  height: 5em;
-
   grid-area: avatar;
   align-self: center;
-
-  filter: invert(1);
 }
 
 .avatarSleeping {
@@ -75,10 +70,6 @@
   margin-top: 0.5em;
   margin-bottom: 0.5em;
   width: 1.5em;
-  height: 1.5em;
-
-  filter: brightness(0) saturate(100%) invert(86%) sepia(25%) saturate(2845%)
-    hue-rotate(324deg) brightness(99%) contrast(105%);
 }
 
 .count {

@@ -3,8 +3,8 @@
 @use 'fonts';
 
 body {
-  background: colors.$background url('/assets/images/cover.png') center/cover;
-  color: colors.$font;
+  background: colors.$cover url('/assets/images/cover.png') center/cover;
+  color: colors.$main;
 }
 
 .container {
@@ -14,8 +14,10 @@ body {
   width: min(47em, 100vw);
   height: max(50em, 100vh);
 
-  border: 1em solid colors.$borders;
-  background-color: colors.$main;
+  border: 1em solid colors.$main;
+  background-color: colors.$background;
+
+  user-select: none;
 
   @include breakpoints.landscape-s {
     font-size: 1em;

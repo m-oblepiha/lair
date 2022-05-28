@@ -3,6 +3,25 @@
 @use 'colors';
 @use 'sass:math';
 
+%petScreenButton {
+  @extend %sizedButton;
+
+  font-size: 1.6em;
+
+  width: 100%;
+  height: 2.5em;
+
+  line-height: 2.8em;
+
+  @include breakpoints.portrait-s {
+    font-size: 2em;
+
+    height: 2em;
+
+    line-height: 2.25em;
+  }
+}
+
 .container {
   font-size: 1em;
 
@@ -20,7 +39,7 @@
     display: none;
   }
 
-  background-color: colors.$main;
+  background-color: colors.$background;
   backdrop-filter: blur(3em);
 }
 
@@ -32,44 +51,23 @@
   grid-template-rows: repeat(4, 1fr);
   place-items: center;
 
-  border-bottom: 0.5em solid colors.$borders;
+  border-bottom: 0.5em solid colors.$main;
 }
 
 .returnButton {
-  @extend %button;
-
-  font-size: 1.5em;
-
-  width: 100%;
-  height: math.div(8em, 3);
-  padding-top: math.div(2em, 3);
+  @extend %petScreenButton;
 
   grid-area: return;
 
-  border-right: 0.25em solid colors.$borders;
-  color: colors.$font;
-
-  line-height: 1em;
+  border-right: 0.25em solid colors.$main;
 
   @include breakpoints.portrait-s {
-    height: math.div(8em, 3);
-    padding-top: math.div(2em, 3);
-
-    border-right: math.div(1em, 3) solid colors.$borders;
+    border-right: math.div(1em, 3) solid colors.$main;
   }
 }
 
 .summonButton {
-  font-size: 1.5em;
+  @extend %petScreenButton;
 
-  width: 100%;
-  height: math.div(8em, 3);
-  padding-top: math.div(2em, 3);
-
-  @include breakpoints.portrait-s {
-    font-size: 1.5em;
-
-    height: 2.5em;
-    padding-top: 0.625em;
-  }
+  grid-area: summon;
 }

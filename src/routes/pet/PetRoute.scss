@@ -1,6 +1,54 @@
 @use 'colors';
 @use 'breakpoints';
 @use 'placeholders';
+@use 'sass:math';
+
+%petRouteButton {
+  @extend %sizedButton;
+
+  height: 100%;
+
+  border-top: 0.25em solid colors.$main;
+
+  @include breakpoints.landscape-s {
+    border-top: none;
+  }
+}
+
+%petScreenProperty {
+  padding: 4% 0;
+
+  border-top: 0.5em solid colors.$main;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+
+  @include breakpoints.portrait-s {
+    padding: 0.5em 0;
+  }
+  @include breakpoints.portrait-m {
+    font-size: 1.25em;
+  }
+  @include breakpoints.portrait-l {
+    font-size: 1.5em;
+  }
+  @include breakpoints.landscape-s {
+    font-size: 0.88em;
+
+    padding: 2em 0;
+  }
+  @include breakpoints.landscape-m {
+    font-size: 1.2em;
+
+    padding: 3em 0;
+  }
+  @include breakpoints.landscape-l {
+    font-size: 1.4em;
+
+    padding: 3em 0;
+  }
+}
 
 .container {
   width: 100%;
@@ -8,14 +56,14 @@
 
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 2fr 2fr 6em 6em;
+  grid-template-rows: 1fr 2fr 2fr 6em 4.5em;
   grid-template-areas: 'card card' 'stats stats' 'attributes attributes' 'hearts mana' 'return kill';
 
   @include breakpoints.portrait-s {
-    grid-template-rows: 1fr 2fr 2fr 4em 6em;
+    grid-template-rows: 1fr 2fr 2fr 4em 4.5em;
   }
   @include breakpoints.portrait-m {
-    grid-template-rows: 1fr 2fr 2fr 6em 6em;
+    grid-template-rows: 1fr 2fr 2fr 6em 4.5em;
   }
   @include breakpoints.landscape-s {
     grid-template-columns: 2fr 1fr 1fr 2fr;
@@ -66,12 +114,8 @@
 
 .avatar {
   margin-right: 0.25em;
-  width: 5em;
-  height: 5em;
 
   grid-area: avatar;
-
-  filter: invert(1);
 }
 
 .sleep {
@@ -83,148 +127,78 @@
 }
 
 .stats {
-  padding: 0.5em 0;
-
-  border-top: 0.5em solid colors.$borders;
+  @extend %petScreenProperty;
 
   grid-area: stats;
-  display: grid;
-  grid-template-columns: 1fr;
-  place-items: center;
 
-  @include breakpoints.portrait-m {
-    font-size: 1.25em;
-  }
-  @include breakpoints.portrait-l {
-    font-size: 1.5em;
-  }
   @include breakpoints.landscape-s {
-    font-size: 0.88em;
-
-    padding: 2em 0;
-
-    border-right: 0.375em solid colors.$borders;
-    border-bottom: 0.5em solid colors.$borders;
+    border-right: 0.375em solid colors.$main;
+    border-bottom: 0.5em solid colors.$main;
   }
   @include breakpoints.landscape-m {
-    font-size: 1.2em;
-
-    padding: 3em 0;
+    border-bottom: math.div(2.5em, 6) solid colors.$main;
   }
   @include breakpoints.landscape-l {
-    font-size: 1.4em;
-
-    padding: 3em 0;
+    border-bottom: math.div(2.5em, 7) solid colors.$main;
   }
 }
 
 .attributes {
-  padding: 0.5em 0;
+  border-bottom: 0.5em solid colors.$main; // reason for duplicate
 
-  border-top: 0.5em solid colors.$borders;
-  border-bottom: 0.5em solid colors.$borders;
+  @extend %petScreenProperty;
 
   grid-area: attributes;
-  display: grid;
-  grid-template-columns: 1fr;
-  place-items: center;
 
-  @include breakpoints.portrait-m {
-    font-size: 1.25em;
-  }
-  @include breakpoints.portrait-l {
-    font-size: 1.5em;
-  }
   @include breakpoints.landscape-s {
-    font-size: 0.88em;
-
-    padding: 2em 0;
-
-    border-left: 0.375em solid colors.$borders;
+    border-left: 0.375em solid colors.$main;
+    border-bottom: 0.5em solid colors.$main;
   }
   @include breakpoints.landscape-m {
-    font-size: 1.2em;
-
-    padding: 3em 0;
+    border-bottom: math.div(2.5em, 6) solid colors.$main;
   }
   @include breakpoints.landscape-l {
-    font-size: 1.4em;
-
-    padding: 3em 0;
+    border-bottom: math.div(2.5em, 7) solid colors.$main;
   }
 }
 
 .return {
-  @extend %button;
+  @extend %petRouteButton;
 
-  font-size: 2em;
+  border-right: 0.125em solid colors.$main;
 
   grid-area: return;
 
-  border-top: 0.25em solid colors.$borders;
-  border-right: 0.125em solid colors.$borders;
-
-  line-height: 3em;
-
   @include breakpoints.landscape-s {
-    border-top: none;
-    border-right: 0.25em solid colors.$borders;
-
-    line-height: 2.5em;
+    border-right: 0.25em solid colors.$main;
   }
 }
 
 .kill {
-  @extend %button;
+  @extend %petRouteButton;
 
-  font-size: 2em;
+  border-left: 0.125em solid colors.$main;
 
   grid-area: kill;
-
-  border-top: 0.25em solid colors.$borders;
-  border-left: 0.125em solid colors.$borders;
-
-  line-height: 3em;
 
   &:hover,
   &:focus {
     color: colors.$bad;
   }
   &:disabled {
-    color: rgba(colors.$font, 0.3);
+    color: rgba(colors.$main, 0.3);
   }
 
   @include breakpoints.landscape-s {
-    border-top: none;
-    border-left: 0.25em solid colors.$borders;
-
-    line-height: 2.5em;
+    border-left: 0.25em solid colors.$main;
   }
 }
 
 .mana {
   font-size: 3em;
 
-  height: 2em;
-
   place-self: center;
   grid-area: mana;
-  display: flex;
-  align-items: center;
-
-  & span {
-    line-height: 2em;
-
-    padding-top: 0.5em;
-  }
-
-  & img {
-    margin-left: 0.25em;
-    width: 1.25em;
-    height: 1.25em;
-
-    filter: invert(1);
-  }
 
   @include breakpoints.portrait-s {
     font-size: 2em;
@@ -240,27 +214,9 @@
 .hearts {
   font-size: 3em;
 
-  height: 2em;
-
-  place-self: center;
   grid-area: hearts;
   display: flex;
-  align-items: center;
-
-  & span {
-    padding-top: 0.5em;
-
-    line-height: 2em;
-  }
-
-  & img {
-    margin-left: 0.25em;
-    width: 1.1em;
-    height: 1.1em;
-
-    filter: brightness(0) saturate(100%) invert(50%) sepia(67%) saturate(3157%)
-      hue-rotate(334deg) brightness(107%) contrast(101%);
-  }
+  place-self: center;
 
   @include breakpoints.portrait-s {
     font-size: 2em;

@@ -13,11 +13,11 @@
 
   display: grid;
   grid-template-columns: 1fr 9em 11em 1fr;
-  grid-template-rows: 1fr 4em 1fr 7em 1fr;
+  grid-template-rows: 1fr 4em 0.3fr 7em 1fr;
   grid-column-gap: 1em;
   grid-template-areas: '. . . .' '. petName petName .' '. . . .' '. avatar stats .' '. . . .';
 
-  border-bottom: 0.5em solid colors.$borders;
+  border-bottom: 0.5em solid colors.$main;
   list-style-type: none;
 
   &:hover,
@@ -54,13 +54,10 @@
 
 .avatar {
   width: 7em;
-  height: 7em;
 
   grid-area: avatar;
   justify-self: start;
   align-self: center;
-
-  filter: invert(1);
 }
 
 .avatarSleeping {
@@ -96,9 +93,6 @@
   margin-right: 2em;
   width: 2.5em;
   height: 2.5em;
-
-  filter: brightness(0) saturate(100%) invert(86%) sepia(25%) saturate(2845%)
-    hue-rotate(324deg) brightness(99%) contrast(105%);
 }
 
 .count {

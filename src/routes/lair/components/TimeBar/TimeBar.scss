@@ -9,14 +9,12 @@
 
   grid-area: time;
   display: grid;
-  grid-template-columns: 3em 1fr 2fr 3em;
-  grid-template-areas: 'mi m d di';
+  grid-template-columns: 1fr 2fr 3em;
+  grid-template-areas: 'm d di';
 
   @include breakpoints.landscape-s {
-    border-left: 0.5em solid colors.$borders;
+    border-left: 0.5em solid colors.$main;
   }
-
-  user-select: none;
 }
 
 .day {
@@ -49,28 +47,10 @@
 }
 
 .mana {
-  font-size: 1.5em;
+  font-size: 2em;
 
-  margin-top: 0.2em;
+  margin-top: -0.5em;
 
   grid-area: m;
   justify-self: start;
-
-  @include breakpoints.portrait-s {
-    font-size: 2em;
-
-    margin-top: 0;
-  }
-}
-
-.manaIcon {
-  margin-top: -0.5em;
-  margin-right: 1em;
-  width: 3em;
-  height: 3em;
-
-  grid-area: mi;
-  justify-self: center;
-
-  filter: invert(1);
 }

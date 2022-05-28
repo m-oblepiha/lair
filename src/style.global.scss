@@ -1,19 +1,21 @@
 * {
-  margin: 0;
   box-sizing: border-box;
+
+  margin: 0;
+
   font-family: 'Press Start 2';
 }
 
 #app {
-  display: grid;
   min-height: 100vh;
   width: max(100vw, 20rem);
+
+  display: grid;
   place-content: center;
 }
 
 button {
   outline: none;
   border: none;
-  user-select: none;
   cursor: pointer;
 }

@@ -10,14 +10,24 @@
   @extend %clickable;
 
   background-color: transparent;
-  color: colors.$font;
+  color: colors.$main;
 
   &:hover,
   &:focus {
     color: colors.$primary;
   }
   &:disabled {
-    color: rgba(colors.$font, 0.3);
+    color: rgba(colors.$main, 0.3);
     cursor: auto;
   }
+}
+
+%sizedButton {
+  @extend %button;
+
+  font-size: 2em;
+
+  height: 2em;
+
+  line-height: 2.25em;
 }

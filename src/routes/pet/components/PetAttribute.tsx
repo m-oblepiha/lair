@@ -3,7 +3,8 @@ import React from 'react';
 import { useTypedSelector, useTypedDispatch } from 'redux/hooks';
 import { increaseAttribute, decreaseAttribute } from 'redux/actions';
 import { selectPet } from 'common/utils';
-import classes from './PetAttribute.scss';
+import { PetIcon } from 'common/components';
+import classes from './PetProperty.scss';
 import {
   vitality,
   willpower,
@@ -38,7 +39,10 @@ const PetAttribute: React.FC<Props> = ({ id, attribute }) => {
   const value = pet.attributes[attribute];
   return (
     <div className={classes.container}>
-      <img className={classes.icon} src={attributeImageMap[attribute]} />
+      <PetIcon
+        extraClassname={classes.icon}
+        src={attributeImageMap[attribute]}
+      />
       <span className={classes.title}>{attributeTitleMap[attribute]}</span>
       <button
         className={classes.button}

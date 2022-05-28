@@ -2,15 +2,7 @@
 @use 'colors';
 
 .button {
-  @extend %button;
-
-  font-size: 2em;
+  @extend %sizedButton;
 
   width: 12em;
-  height: 2em;
-  padding-top: 0.5em;
-
-  grid-area: summon;
-
-  line-height: 1em;
 }

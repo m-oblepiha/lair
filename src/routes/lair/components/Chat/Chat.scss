@@ -12,19 +12,21 @@
   display: flex;
   flex-direction: column-reverse;
 
-  border-top: 0.5em solid colors.$borders;
-  border-bottom: 0.5em solid colors.$borders;
+  border-top: 0.5em solid colors.$main;
+  border-bottom: 0.5em solid colors.$main;
 
   overflow: scroll;
 
   @include breakpoints.landscape-s {
-    border-left: 0.5em solid colors.$borders;
+    border-left: 0.5em solid colors.$main;
   }
 }
+
 .message {
-  color: colors.$font;
+  color: colors.$main;
   text-align: right;
 }
+
 .gg {
   font-size: 1.5em;
 

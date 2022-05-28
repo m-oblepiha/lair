@@ -1,0 +1,23 @@
+@use 'colors';
+@use 'breakpoints';
+
+.hearts {
+  height: 2em;
+
+  align-items: center;
+}
+
+.icon {
+  margin-left: 0.25em;
+  width: 1.1em;
+  height: 1.1em;
+
+  filter: brightness(0) saturate(100%) invert(50%) sepia(67%) saturate(3157%)
+    hue-rotate(334deg) brightness(107%) contrast(101%);
+}
+
+.count {
+  padding-top: 0.5em;
+
+  line-height: 2em;
+}

@@ -4,29 +4,27 @@ import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { useTypedDispatch, useTypedSelector } from 'redux/hooks';
 import { death } from 'redux/actions';
 import { selectPet } from 'common/utils';
+import { Hearts, Mana, Avatar } from 'common/components';
 import { PetAttribute, PetStat } from './components';
 import classes from './PetRoute.scss';
-import { avatars } from 'assets/images/avatars';
-import { heart } from 'assets/images/stats';
-import levelup from 'assets/images/levelup.png';
 
 const PetRoute: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useTypedDispatch();
 
   const routeState = useLocation().state as { id: ID };
-  const mana = useTypedSelector((state) => state.mana);
+
   const hearts = useTypedSelector((state) => state.hearts);
   const pet = useTypedSelector((state) =>
     selectPet(state.pets, routeState.id)
-  ) as IPet | null;
+  ) as IPet | undefined;
 
   if (!pet) return <Navigate to="/lair" />;
   return (
     <div className={classes.container}>
       <div className={classes.card}>
         <span className={classes.name}>{pet.name}</span>
-        <img className={classes.avatar} src={avatars[pet.avatar]} />
+        <Avatar avatar={pet.avatar} extraClassname={classes.avatar} />
         <span className={classes.sleep}>
           {pet.stats.isAwake ? 'не спит' : 'спит'}
         </span>
@@ -46,14 +44,8 @@ const PetRoute: React.FC = () => {
         <PetAttribute id={pet.id} attribute="supply" />
         <PetAttribute id={pet.id} attribute="friendliness" />
       </div>
-      <div className={classes.mana}>
-        <span>{mana}</span>
-        <img src={levelup} />
-      </div>
-      <div className={classes.hearts}>
-        <span>{hearts}</span>
-        <img src={heart} />
-      </div>
+      <Mana extraClassname={classes.mana} />
+      <Hearts extraClassname={classes.hearts} />
       <button className={classes.return} onClick={() => navigate('/lair')}>
         {'НАЗАД'}
       </button>

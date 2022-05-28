@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTypedSelector } from 'redux/hooks';
+import { Hearts } from 'common/components';
 import classes from './HealthBar.scss';
 import { heart, brokenHeart } from 'assets/images/stats';
 
@@ -18,11 +19,9 @@ const HealthBar: React.FC = () => {
         {Array.from({ length: hearts }, (item, index) => (
           <img className={classes.heartIcon} src={heart} key={index} />
         ))}
+        <span className={classes.count}>{hearts}</span>
       </div>
-      <div className={classes.heartsShort}>
-        <img className={classes.heartIcon} src={heart} />
-      </div>
-      <span className={classes.count}>{hearts}</span>
+      <Hearts extraClassname={classes.heartsShort} />
     </div>
   );
 };

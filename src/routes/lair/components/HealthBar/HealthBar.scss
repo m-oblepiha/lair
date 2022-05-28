@@ -10,18 +10,18 @@
   grid-area: health;
   display: flex;
   justify-content: end;
-  align-items: center;
 
-  border-left: 0.5em solid colors.$borders;
-
-  user-select: none;
+  border-left: 0.5em solid colors.$main;
 }
 
 .heartsLong {
-  width: 24em;
+  width: 28em;
+  height: 4em;
 
   display: none;
   justify-content: space-between;
+  align-items: center;
+
   @include breakpoints.landscape-s {
     display: flex;
   }
@@ -31,11 +31,15 @@
 }
 
 .heartsShort {
-  width: 2em;
+  font-size: 2em;
 
-  display: flex;
+  margin-top: 0.25em;
+
   @include breakpoints.landscape-s {
     display: none;
+  }
+  @include breakpoints.portrait-m {
+    font-size: 2em;
   }
   @include breakpoints.portrait-l {
     display: none;
