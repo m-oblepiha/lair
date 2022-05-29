@@ -7,11 +7,11 @@ import {
   decreaseStat,
 } from 'redux/actions';
 
-const initialState: number = 500;
+const initialState: number = 10;
 
 const manaReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(addMana, (state) => state++)
+    .addCase(addMana, (state) => state + 1)
     .addCase(increaseAttribute, (state) => state - 3)
     .addCase(decreaseAttribute, (state) => state - 3)
     .addCase(increaseStat, (state) => state - 1)

@@ -1,36 +1,30 @@
 import type { IPet } from 'common/types';
-import { rest, tire, starve, age } from 'redux/actions';
-import { selectPet } from 'common/utils';
+import { rest, starve, age } from 'redux/actions';
 
 const restCaseReducer = (state: IPet[], action: ReturnType<typeof rest>) => {
-  const pet = selectPet(state, action.payload.target.id);
-  if (!pet) return;
-
-  const { fatigue, morale, hunger, health } = pet.stats;
-
-  if (fatigue > 3) pet.stats.fatigue = pet.stats.fatigue - 3;
-  else {
-    pet.stats.fatigue = 0;
-    if (morale !== 10) pet.stats.morale++;
-    if (hunger === 0 && health !== 10) pet.stats.health++;
-  }
-};
-const restCase = [rest, restCaseReducer] as const;
-
-const tireCaseReducer = (state: IPet[], action: ReturnType<typeof tire>) => {
   const { preroll } = action.payload;
 
   for (const pet of state) {
-    if (!pet.stats.isAwake) continue;
-    const { fatigue, morale } = pet.stats;
+    const { fatigue, morale, hunger, health } = pet.stats;
     const { vitality, willpower } = pet.attributes;
-    if (fatigue === 10) {
-      if (morale === 0 && preroll > vitality) pet.stats.health--;
-      else if (preroll > willpower) pet.stats.morale--;
-    } else pet.stats.fatigue++;
+
+    if (pet.stats.isAwake) {
+      if (fatigue === 10) {
+        if (morale === 0 && health > 0 && preroll > vitality)
+          pet.stats.health--;
+        else if (morale > 0 && preroll > willpower) pet.stats.morale--;
+      } else pet.stats.fatigue++;
+    } else {
+      if (fatigue > 3) pet.stats.fatigue = pet.stats.fatigue - 3;
+      else {
+        pet.stats.fatigue = 0;
+        if (morale < 10) pet.stats.morale++;
+        if (hunger < 3 && health < 10) pet.stats.health++;
+      }
+    }
   }
 };
-const tireCase = [tire, tireCaseReducer] as const;
+const restCase = [rest, restCaseReducer] as const;
 
 const starveCaseReducer = (
   state: IPet[],
@@ -39,11 +33,11 @@ const starveCaseReducer = (
   const { preroll } = action.payload;
 
   for (const pet of state) {
-    const hunger = pet.stats.hunger;
+    const { hunger, morale, health } = pet.stats;
     const { vitality, willpower } = pet.attributes;
     if (hunger === 10) {
-      if (preroll > vitality) pet.stats.health--;
-      if (preroll > willpower) pet.stats.morale--;
+      if (health > 0 && preroll > vitality) pet.stats.health--;
+      if (morale > 0 && preroll > willpower) pet.stats.morale--;
     } else pet.stats.hunger++;
   }
 };
@@ -57,4 +51,4 @@ const ageCaseReducer = (state: IPet[]) => {
 };
 const ageCase = [age, ageCaseReducer] as const;
 
-export { restCase, tireCase, starveCase, ageCase };
+export { restCase, starveCase, ageCase };

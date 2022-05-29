@@ -1,2 +1,1 @@
-export { makeTurn } from './makeTurn';
-export { timeFlow } from './timeFlow';
+export { next } from './next';

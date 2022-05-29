@@ -8,12 +8,16 @@ import classnames from 'classnames';
 import classes from './PetScreenItem.scss';
 import { hunger, fatigue, heart, morale } from 'assets/images/stats';
 
-type StatProps = { src: string; value: number };
+type StatProps = { src: string; value: number; reverse?: boolean };
 
-const PetScreenStat: React.FC<StatProps> = ({ src, value }) => {
+const PetScreenStat: React.FC<StatProps> = ({ src, value, reverse }) => {
   const countRef = useRef<HTMLSpanElement>(null);
 
-  useColorBlink({ ref: countRef, value });
+  useColorBlink({
+    ref: countRef,
+    value,
+    reverse,
+  });
 
   return (
     <div className={classes.stat}>
@@ -55,8 +59,8 @@ const PetScreenItem: React.FC<Props> = ({ id }) => {
       <div className={classes.stats}>
         <PetScreenStat src={heart} value={pet.stats.health} />
         <PetScreenStat src={morale} value={pet.stats.morale} />
-        <PetScreenStat src={hunger} value={pet.stats.hunger} />
-        <PetScreenStat src={fatigue} value={pet.stats.fatigue} />
+        <PetScreenStat src={hunger} value={pet.stats.hunger} reverse />
+        <PetScreenStat src={fatigue} value={pet.stats.fatigue} reverse />
       </div>
     </li>
   );

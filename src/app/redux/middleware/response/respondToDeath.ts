@@ -6,7 +6,9 @@ const respondToDeath =
   (action: ReturnType<typeof death>) =>
   (dispatch: AppDispatch, getState: AppGetState) => {
     const { pets } = getState();
-    const responses = pets.map((pet) => pickDeathResponse(pet, action.payload));
+    const responses = pets
+      .filter((pet) => pet.stats.isAwake)
+      .map((pet) => pickDeathResponse(pet, action.payload));
 
     const realResponses = responses.filter(
       (response) => response !== null

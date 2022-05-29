@@ -1,5 +1,5 @@
 import type { ID, Attribute } from 'common/types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useTypedSelector, useTypedDispatch } from 'redux/hooks';
 import { increaseAttribute, decreaseAttribute } from 'redux/actions';
 import { selectPet, useColorBlink } from 'common/utils';

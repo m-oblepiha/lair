@@ -1,4 +1,5 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect, useRef } from 'react';
+import { useTypedDispatch } from 'redux/hooks';
 import {
   Chat,
   HealthBar,
@@ -8,13 +9,29 @@ import {
   TimeBar,
 } from './components';
 import classnames from 'classnames';
+import { next } from 'redux/thunks';
 import classes from './LairRoute.scss';
 
 const LairRoute: React.FC = () => {
+  const dispatch = useTypedDispatch();
+
   const [isPetScreenShown, setIsPetScreenShown] = useReducer(
     (state: boolean) => !state,
     false
   );
+  const controller = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    const timer = setInterval(
+      () => (controller.current = dispatch(next())),
+      2000
+    );
+    return () => {
+      clearInterval(timer);
+      if (controller.current) controller.current.abort();
+    };
+  }, []);
+
   return (
     <div className={classnames(classes.container)}>
       {isPetScreenShown && <PetScreen close={setIsPetScreenShown} />}

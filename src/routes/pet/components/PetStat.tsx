@@ -32,7 +32,11 @@ const PetStat: React.FC<Props> = ({ id, stat }) => {
 
   const countRef = useRef<HTMLSpanElement>(null);
 
-  useColorBlink({ ref: countRef, value });
+  useColorBlink({
+    ref: countRef,
+    value,
+    reverse: stat === 'fatigue' || stat === 'hunger',
+  });
 
   return (
     <div className={classes.container}>

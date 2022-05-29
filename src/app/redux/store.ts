@@ -11,6 +11,7 @@ import {
   recordsReducer,
   petsReducer,
   manaReducer,
+  orderReducer,
 } from 'redux/reducers';
 
 const preloadedState = getState();
@@ -21,6 +22,7 @@ const reducerMap = {
   records: recordsReducer,
   pets: petsReducer,
   mana: manaReducer,
+  order: orderReducer,
 };
 
 const rootReducer = combineReducers(reducerMap);

@@ -5,8 +5,7 @@ const supplyValue = (actor: IPet) => {
   const { health, hunger } = actor.stats;
   const supply = actor.attributes.vitality;
   const profit = roll(1, 10) * ((10 + health) / 20) * (supply / (10 + supply));
-  const deficit = 10 - hunger;
-  return Math.min(deficit, Math.round(profit));
+  return Math.min(hunger, Math.round(profit));
 };
 
 const attackValue = (actor: IPet, target: IPet) => {

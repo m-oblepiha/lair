@@ -4,7 +4,7 @@ const selectBestChoice = <T extends { probability: number }[]>(
   const realChoices = choices.filter((choice) => choice.probability > 0);
   if (realChoices.length === 0) return null;
   return choices.reduce((prev, next) =>
-    prev.probability > next.probability ? next : prev
+    prev.probability > next.probability ? prev : next
   );
 };
 

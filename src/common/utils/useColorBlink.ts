@@ -4,9 +4,10 @@ import classes from 'common/styles/_colors.scss';
 type Args = {
   ref: React.RefObject<HTMLElement>;
   value: number;
+  reverse?: boolean;
 };
 
-const useColorBlink = ({ ref, value }: Args) => {
+const useColorBlink = ({ ref, value, reverse }: Args) => {
   const isFirstRender = useRef<boolean>(true);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [prevValue, setPrevValue] = useState(value);
@@ -15,8 +16,13 @@ const useColorBlink = ({ ref, value }: Args) => {
     if (isFirstRender.current) return;
     if (timer.current) clearTimeout(timer.current);
 
-    const classname = value > prevValue ? classes.good : classes.bad;
-    const another = value > prevValue ? classes.bad : classes.good;
+    const shift = {
+      good: reverse ? classes.bad : classes.good,
+      bad: reverse ? classes.good : classes.bad,
+    };
+
+    const classname = value > prevValue ? shift.good : shift.bad;
+    const another = value > prevValue ? shift.bad : shift.good;
 
     setPrevValue(value);
 

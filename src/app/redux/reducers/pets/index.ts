@@ -23,7 +23,7 @@ import {
   caressJoinCase,
   deathPanicCase,
 } from './responses';
-import { restCase, tireCase, starveCase, ageCase } from './effects';
+import { restCase, starveCase, ageCase } from './effects';
 import { summonCase, deathCase } from './interactions';
 import {
   increaseAttributeCase,
@@ -56,7 +56,6 @@ const petsReducer = createReducer(initialState, (builder) => {
     .addCase(...caressJoinCase)
     .addCase(...deathPanicCase)
     .addCase(...restCase)
-    .addCase(...tireCase)
     .addCase(...starveCase)
     .addCase(...ageCase)
     .addCase(...summonCase)

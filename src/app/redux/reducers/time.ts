@@ -10,7 +10,9 @@ const initialState: { day: number; phase: Phase } = {
 
 const timeReducer = createReducer(initialState, (builder) => {
   builder.addCase(timePass, ({ day, phase }) =>
-    phase === 4 ? { day: day++, phase: 1 } : { day, phase: phase++ as Phase }
+    phase === 4
+      ? { day: day + 1, phase: 1 }
+      : { day, phase: (phase + 1) as Phase }
   );
 });
 

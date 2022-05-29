@@ -23,7 +23,7 @@ const WakeupCaressResponseMessage: React.FC<WakeupCaressResponse> = ({
 }) => {
   return (
     <p className={classes.message}>
-      {`${actor.name} подходит поближе и няшкает сонного ${act.actor.name}. `}
+      {`${actor.name} подходит и няшкает сонного ${act.actor.name}. `}
       <span className={classes.good}>{`+${value}`}</span>
       {` морали.`}
     </p>
@@ -118,7 +118,7 @@ const BullyJoinResponseMessage: React.FC<BullyJoinResponse> = ({
 }) => {
   return (
     <p className={classes.message}>
-      {`${actor.name} громко шипит, глядя ${act.target.name} в глаза, отчего тот пугается еще больше. `}
+      {`${actor.name} громко шипит на ${act.target.name}. `}
       <span className={classes.bad}>{`-${value}`}</span>
       {` морали.`}
     </p>
@@ -128,11 +128,7 @@ const BullyJoinResponseMessage: React.FC<BullyJoinResponse> = ({
 const HealDelightResponseMessage: React.FC<HealDelightResponse> = ({
   actor,
 }) => {
-  return (
-    <p
-      className={classes.message}
-    >{`${actor.name} не может сдержать слез умиления, глядя на такую благодать.`}</p>
-  );
+  return <p className={classes.message}>{`${actor.name} умиляется.`}</p>;
 };
 
 const CaressCounterResponseMessage: React.FC<CaressCounterResponse> = ({
@@ -156,14 +152,12 @@ const CaressJoinResponseMessage: React.FC<CaressJoinResponse> = ({
   return (
     <p
       className={classes.message}
-    >{`${actor.name} тоже не стоит в стороне, слегка поглаживая ${act.target.name} вместе с ${act.actor.name}`}</p>
+    >{`${actor.name} няшкает ${act.target.name} вместе с ${act.actor.name}`}</p>
   );
 };
 
 const DeathPanicResponseMessage: React.FC<DeathPanicResponse> = ({ actor }) => {
-  return (
-    <p className={classes.message}>{`${actor.name} в шоке от его смерти...`}</p>
-  );
+  return <p className={classes.message}>{`${actor.name} в панике.`}</p>;
 };
 
 const ResponseMessage: React.FC<ResponseAction> = ({

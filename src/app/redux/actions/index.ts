@@ -1,7 +1,7 @@
 export { addRecord } from './records';
 export { timePass } from './time';
 export { sleep, wakeup, supply, attack, bully, heal, caress } from './acts';
-export { rest, tire, starve, age } from './effects';
+export { rest, starve, age } from './effects';
 export { summon, death } from './interactions';
 export {
   wakeupCaress,
@@ -24,3 +24,4 @@ export {
   decreaseStat,
 } from './leveling';
 export { addMana } from './mana';
+export { removeActor, addActors, shiftTurn } from './order';
