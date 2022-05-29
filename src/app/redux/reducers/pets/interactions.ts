@@ -10,9 +10,8 @@ const summonCaseReducer = (
 const summonCase = [summon, summonCaseReducer] as const;
 
 const deathCaseReducer = (state: IPet[], action: ReturnType<typeof death>) => {
-  const survivors = state.filter((pet) => pet.id !== action.payload.target.id);
-  survivors.forEach((pet) => delete pet.relations[action.payload.target.id]);
-  return survivors;
+  state = state.filter((pet) => pet.id !== action.payload.target.id);
+  state.forEach((pet) => delete pet.relations[action.payload.target.id]);
 };
 const deathCase = [death, deathCaseReducer] as const;
 

@@ -13,7 +13,7 @@ const respondToAct =
 
     if ('target' in act.payload) {
       if (!signal.aborted)
-        await new Promise((resolve) => setTimeout(resolve, 200));
+        await new Promise((resolve) => setTimeout(resolve, 800));
 
       const actTarget = act.payload.target;
       const target = selectPet(pets, actTarget.id);
@@ -27,7 +27,7 @@ const respondToAct =
 
     for (const pet of respondents) {
       if (!signal.aborted)
-        await new Promise((resolve) => setTimeout(resolve, 200));
+        await new Promise((resolve) => setTimeout(resolve, 800));
 
       const response = pickResponse(pet, act, pets);
       if (response) dispatch(response);

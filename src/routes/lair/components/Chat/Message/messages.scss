@@ -1,6 +1,10 @@
 @use 'colors';
 
 .message {
+  font-size: 0.75em;
+
+  margin-top: 2em;
+
   word-spacing: -0.5em;
   text-align: right;
 }
