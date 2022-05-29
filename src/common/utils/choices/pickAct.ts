@@ -41,23 +41,21 @@ const pickAct = (actor: IPet, pets: IPet[]) => {
     case 'pets/wakeup':
       return wakeup({ actor });
     case 'pets/supply':
-      const foodDistribution = distributeFood(
-        pets,
-        actor,
-        actValue(actor, 'supply')
-      );
-      if (foodDistribution)
+      const value = actValue(actor, 'supply');
+      const foodDistribution = distributeFood(pets, actor, value);
+      if (foodDistribution) {
         return supply({
           actor,
-          value: actValue(actor, 'supply') - 1,
+          value: value - 1,
           distribution: {
             type: foodDistribution.type,
             target: foodDistribution.target,
           },
         });
+      }
       return supply({
         actor,
-        value: actValue(actor, 'supply'),
+        value,
       });
     case 'pets/attack':
       return attack({

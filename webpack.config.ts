@@ -143,7 +143,7 @@ const config: Configuration = {
     chunks: true,
   },
   ignoreWarnings: [/size limit/],
-  devtool: isProd ? false : 'inline-source-map',
+  devtool: isProd ? false : 'eval-source-map',
 };
 
 export default config;

@@ -1,12 +1,20 @@
 @use 'colors';
+@use 'breakpoints';
 
 .message {
-  font-size: 0.75em;
+  font-size: 1em;
 
   margin-top: 2em;
 
   word-spacing: -0.5em;
   text-align: right;
+
+  @include breakpoints.landscape-s {
+    font-size: 0.75em;
+  }
+  @include breakpoints.portrait-s {
+    font-size: 0.75em;
+  }
 }
 
 .good {

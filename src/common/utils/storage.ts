@@ -27,6 +27,6 @@ const setState = debounce((state: RootState | null) => {
   } catch (e) {
     return;
   }
-}, 100);
+}, 1000);
 
 export { getState, setState };

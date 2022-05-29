@@ -7,9 +7,12 @@ import { pickAct } from 'common/utils/choices';
 const next =
   () =>
   (dispatch: AppDispatch, getState: AppGetState): AbortController | null => {
-    const { order, pets } = getState();
+    const { order, pets, hearts } = getState();
+
+    if (hearts === 0) return null;
 
     if (order.turn === 1) dispatch(timeFlow());
+
     dispatch(shiftTurn());
 
     if (!order.actors.length) return null;
