@@ -3,7 +3,6 @@ export { generatePet } from './generatePet';
 export { actValue } from './actValue';
 export {
   sleepProbability,
-  wakeupProbability,
   supplyProbability,
   attackProbability,
   healProbability,
@@ -11,7 +10,6 @@ export {
   caressProbability,
 } from './actProbability';
 export {
-  wakeupCaressProbability,
   attackCounterProbability,
   attackPanicProbability,
   attackAvengeProbability,

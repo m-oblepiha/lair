@@ -5,13 +5,13 @@ import {
   increaseStat,
   decreaseStat,
 } from 'redux/actions';
-import { selectPet } from 'common/utils';
+import { unsafeSelectPet } from 'common/utils';
 
 const increaseAttributeCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof increaseAttribute>
 ) => {
-  const pet = selectPet(state, action.payload.id);
+  const pet = unsafeSelectPet(state, action.payload.id);
   pet.attributes[action.payload.attribute]++;
 };
 const increaseAttributeCase = [
@@ -23,7 +23,7 @@ const decreaseAttributeCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof decreaseAttribute>
 ) => {
-  const pet = selectPet(state, action.payload.id);
+  const pet = unsafeSelectPet(state, action.payload.id);
   pet.attributes[action.payload.attribute]--;
 };
 const decreaseAttributeCase = [
@@ -35,7 +35,7 @@ const increaseStatCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof increaseStat>
 ) => {
-  const pet = selectPet(state, action.payload.id);
+  const pet = unsafeSelectPet(state, action.payload.id);
   pet.stats[action.payload.stat]++;
 };
 const increaseStatCase = [increaseStat, increaseStatCaseReducer] as const;
@@ -44,7 +44,7 @@ const decreaseStatCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof decreaseStat>
 ) => {
-  const pet = selectPet(state, action.payload.id);
+  const pet = unsafeSelectPet(state, action.payload.id);
   pet.stats[action.payload.stat]--;
 };
 const decreaseStatCase = [decreaseStat, decreaseStatCaseReducer] as const;

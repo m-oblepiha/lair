@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
 
-const timePass = createAction<void, 'time/pass'>('time/pass');
+const timePass = createAction('time/pass');
 
 export { timePass };

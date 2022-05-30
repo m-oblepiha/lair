@@ -1,59 +1,49 @@
 import type { AnyAction } from '@reduxjs/toolkit';
 import type {
-  WakeupCaressResponse,
   AttackPanicResponse,
-  AttackCounterResponse,
-  AttackAvengeResponse,
-  AttackJoinResponse,
-  BullyCounterResponse,
-  BullyAvengeResponse,
-  BullyJoinResponse,
-  HealDelightResponse,
-  CaressCounterResponse,
-  CaressJoinResponse,
-  DeathPanicResponse,
+  AttackResponse,
+  BullyResponse,
+  HealResponse,
+  CaressResponse,
+  DeathResponse,
 } from 'common/types/response';
 import { createAction } from '@reduxjs/toolkit';
 
-const wakeupCaress = createAction<WakeupCaressResponse, 'pets/wakeupCaress'>(
-  'pets/wakeupCaress'
-);
 const attackPanic = createAction<AttackPanicResponse, 'pets/attackPanic'>(
   'pets/attackPanic'
 );
-const attackCounter = createAction<AttackCounterResponse, 'pets/attackCounter'>(
+const attackCounter = createAction<AttackResponse, 'pets/attackCounter'>(
   'pets/attackCounter'
 );
-const attackAvenge = createAction<AttackAvengeResponse, 'pets/attackAvenge'>(
+const attackAvenge = createAction<AttackResponse, 'pets/attackAvenge'>(
   'pets/attackAvenge'
 );
-const attackJoin = createAction<AttackJoinResponse, 'pets/attackJoin'>(
+const attackJoin = createAction<AttackResponse, 'pets/attackJoin'>(
   'pets/attackJoin'
 );
-const bullyCounter = createAction<BullyCounterResponse, 'pets/bullyCounter'>(
+const bullyCounter = createAction<BullyResponse, 'pets/bullyCounter'>(
   'pets/bullyCounter'
 );
-const bullyAvenge = createAction<BullyAvengeResponse, 'pets/bullyAvenge'>(
+const bullyAvenge = createAction<BullyResponse, 'pets/bullyAvenge'>(
   'pets/bullyAvenge'
 );
-const bullyJoin = createAction<BullyJoinResponse, 'pets/bullyJoin'>(
+const bullyJoin = createAction<BullyResponse, 'pets/bullyJoin'>(
   'pets/bullyJoin'
 );
-const healDelight = createAction<HealDelightResponse, 'pets/healDelight'>(
+const healDelight = createAction<HealResponse, 'pets/healDelight'>(
   'pets/healDelight'
 );
-const caressCounter = createAction<CaressCounterResponse, 'pets/caressCounter'>(
+const caressCounter = createAction<CaressResponse, 'pets/caressCounter'>(
   'pets/caressCounter'
 );
-const caressJoin = createAction<CaressJoinResponse, 'pets/caressJoin'>(
+const caressJoin = createAction<CaressResponse, 'pets/caressJoin'>(
   'pets/caressJoin'
 );
-const deathPanic = createAction<DeathPanicResponse, 'pets/deathPanic'>(
+const deathPanic = createAction<DeathResponse, 'pets/deathPanic'>(
   'pets/deathPanic'
 );
 
 const responseActions = [
-  wakeupCaress,
   attackPanic,
   attackCounter,
   attackAvenge,
@@ -79,7 +69,6 @@ const isResponse = (action: AnyAction): action is ResponseAction => {
 export type { ResponseType, ResponseAction };
 export {
   isResponse,
-  wakeupCaress,
   attackPanic,
   attackCounter,
   attackAvenge,

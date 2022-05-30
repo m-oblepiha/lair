@@ -1,22 +1,17 @@
-import type { IPet } from 'common/types';
-import {
-  sleep,
-  wakeup,
-  supply,
-  attack,
-  bully,
-  heal,
-  caress,
-} from 'redux/actions';
+import type { ID, IPet } from 'common/types';
+import { sleep, supply, attack, bully, heal, caress } from 'redux/actions';
+import { selectPet } from 'common/utils';
 import { actValue } from 'common/utils/rolls';
 import { actChoice } from './actChoice';
 import { distributeFood } from './distributeFood';
 import { selectBestChoice } from './selectBestChoice';
 
-const pickAct = (actor: IPet, pets: IPet[]) => {
+const pickAct = (actorID: ID, pets: IPet[]) => {
+  const actor = selectPet(pets, actorID);
+  if (!actor || actor.stats.sleep) return null;
+
   const otherPets = pets.filter((pet) => pet.id !== actor.id);
 
-  const wakeupChoice = [actChoice(actor, 'pets/wakeup')];
   const selfActChoices = [
     actChoice(actor, 'pets/sleep'),
     actChoice(actor, 'pets/supply'),
@@ -28,57 +23,54 @@ const pickAct = (actor: IPet, pets: IPet[]) => {
     actChoice(actor, 'pets/caress', pet),
   ]);
 
-  const choices = actor.stats.isAwake
-    ? [...selfActChoices, ...targetActChoices]
-    : wakeupChoice;
+  const choices = [...selfActChoices, ...targetActChoices];
 
   const bestChoice = selectBestChoice(choices);
   if (!bestChoice) return null;
 
   switch (bestChoice.type) {
     case 'pets/sleep':
-      return sleep({ actor });
-    case 'pets/wakeup':
-      return wakeup({ actor });
+      return sleep({ actor: actor.id });
     case 'pets/supply':
       const value = actValue(actor, 'supply');
-      const foodDistribution = distributeFood(pets, actor, value);
+      const foodDistribution = distributeFood(otherPets, actor, value);
+
       if (foodDistribution) {
         return supply({
-          actor,
-          value: value - 1,
+          actor: actor.id,
+          value,
           distribution: {
             type: foodDistribution.type,
-            target: foodDistribution.target,
+            target: foodDistribution.target.id,
           },
         });
       }
       return supply({
-        actor,
+        actor: actor.id,
         value,
       });
     case 'pets/attack':
       return attack({
-        actor,
-        target: bestChoice.target,
+        actor: actor.id,
+        target: bestChoice.target.id,
         value: actValue(actor, 'attack', bestChoice.target),
       });
     case 'pets/bully':
       return bully({
-        actor,
-        target: bestChoice.target,
+        actor: actor.id,
+        target: bestChoice.target.id,
         value: actValue(actor, 'bully', bestChoice.target),
       });
     case 'pets/heal':
       return heal({
-        actor,
-        target: bestChoice.target,
+        actor: actor.id,
+        target: bestChoice.target.id,
         value: actValue(actor, 'heal', bestChoice.target),
       });
     case 'pets/caress':
       return caress({
-        actor,
-        target: bestChoice.target,
+        actor: actor.id,
+        target: bestChoice.target.id,
         value: actValue(actor, 'caress', bestChoice.target),
       });
   }

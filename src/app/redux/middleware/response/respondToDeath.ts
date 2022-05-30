@@ -7,7 +7,7 @@ const respondToDeath =
   (dispatch: AppDispatch, getState: AppGetState) => {
     const { pets } = getState();
     const responses = pets
-      .filter((pet) => pet.stats.isAwake)
+      .filter((pet) => !pet.stats.sleep)
       .map((pet) => pickDeathResponse(pet, action.payload));
 
     const realResponses = responses.filter(

@@ -1,41 +1,101 @@
 import type { IPet } from 'common/types';
+import { clipToLimit } from 'common/utils';
 import { roll } from './roll';
 
 const supplyValue = (actor: IPet) => {
   const { health, hunger } = actor.stats;
   const supply = actor.attributes.vitality;
-  const profit = roll(1, 10) * ((10 + health) / 20) * (supply / (10 + supply));
-  return Math.min(hunger, Math.round(profit));
+
+  const COEFF = {
+    healthWeight: 0.1,
+    supplyWeight: 0.2,
+    rollWeight: 0.2,
+    offset: -2,
+  };
+
+  const profit =
+    COEFF.healthWeight * health +
+    COEFF.supplyWeight * supply +
+    COEFF.rollWeight * roll(1, 10) +
+    COEFF.offset;
+
+  return Math.min(hunger, clipToLimit(Math.round(profit), 0, 5));
 };
 
 const attackValue = (actor: IPet, target: IPet) => {
   if (roll(1, 1000) === 1000) return roll(1e6, 1e8);
+
   const health = actor.stats.health;
   const vitality = target.attributes.vitality;
-  const damage = roll(1, 10) * (health / (8 + vitality)) * (1 / 2);
-  return Math.round(damage);
+
+  const COEFF = {
+    healthWeight: 0.3,
+    vitalityWeight: -0.2,
+    rollWeight: 0.2,
+  };
+
+  const result =
+    COEFF.healthWeight * health +
+    COEFF.vitalityWeight * vitality +
+    COEFF.rollWeight * roll(1, 10);
+
+  return clipToLimit(Math.round(result), 0, 5);
 };
 
 const healValue = (actor: IPet, target: IPet) => {
   if (roll(1, 1000) === 1000) return roll(1e4, 1e6);
+
   const willpower = actor.attributes.willpower;
   const vitality = target.attributes.vitality;
-  const regen = roll(1, 10) * (willpower / 10) * (vitality / 10) * (1 / 3);
-  return Math.round(regen);
+
+  const COEFF = {
+    willpowerWeight: 0.1,
+    vitalityWeight: 0.1,
+    rollWeight: 0.1,
+  };
+
+  const result =
+    COEFF.willpowerWeight * willpower +
+    COEFF.vitalityWeight * vitality +
+    COEFF.rollWeight * roll(1, 10);
+
+  return Math.round(result);
 };
 
 const bullyValue = (actor: IPet, target: IPet) => {
-  const morale = actor.stats.morale;
-  const willpower = target.attributes.willpower;
-  const damage = roll(1, 10) * (morale / (8 + willpower)) * (1 / 2);
-  return Math.round(damage);
+  const actorWillpower = actor.attributes.willpower;
+  const targetWillpower = target.attributes.willpower;
+
+  const COEFF = {
+    actorWeight: 0.2,
+    targetWeight: -0.15,
+    rollWeight: 0.2,
+  };
+
+  const result =
+    COEFF.actorWeight * actorWillpower +
+    COEFF.targetWeight * targetWillpower +
+    COEFF.rollWeight * roll(1, 10);
+
+  return clipToLimit(Math.round(result), 0, 5);
 };
 
 const caressValue = (actor: IPet, target: IPet) => {
-  const morale = actor.stats.morale;
-  const willpower = target.attributes.willpower;
-  const regen = roll(1, 10) * (morale / 10) * (willpower / 10) * (2 / 3);
-  return Math.round(regen);
+  const actorWillpower = actor.attributes.willpower;
+  const targetWillpower = target.attributes.willpower;
+
+  const COEFF = {
+    actorWeight: 0.1,
+    targetWeight: 0.1,
+    rollWeight: 0.1,
+  };
+
+  const result =
+    COEFF.actorWeight * actorWillpower +
+    COEFF.targetWeight * targetWillpower +
+    COEFF.rollWeight * roll(1, 10);
+
+  return Math.round(result);
 };
 
 type Args =

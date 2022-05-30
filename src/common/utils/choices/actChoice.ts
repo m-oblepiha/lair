@@ -2,7 +2,6 @@ import type { IPet } from 'common/types';
 import type { ActType } from 'redux/types';
 import {
   sleepProbability,
-  wakeupProbability,
   supplyProbability,
   attackProbability,
   healProbability,
@@ -11,7 +10,6 @@ import {
 } from 'common/utils/rolls/actProbability';
 
 type SleepActChoiceArgs = [actor: IPet, type: 'pets/sleep'];
-type WakeupActChoiceArgs = [actor: IPet, type: 'pets/wakeup'];
 type SupplyActChoiceArgs = [actor: IPet, type: 'pets/supply'];
 type AttackActChoiceArgs = [actor: IPet, type: 'pets/attack', target: IPet];
 type BullyActChoiceArgs = [actor: IPet, type: 'pets/bully', target: IPet];
@@ -20,7 +18,6 @@ type CaressActChoiceArgs = [actor: IPet, type: 'pets/caress', target: IPet];
 
 type ActChoiceArgs =
   | SleepActChoiceArgs
-  | WakeupActChoiceArgs
   | SupplyActChoiceArgs
   | AttackActChoiceArgs
   | BullyActChoiceArgs
@@ -29,10 +26,6 @@ type ActChoiceArgs =
 
 function actChoice(...[actor, type]: SleepActChoiceArgs): {
   type: 'pets/sleep';
-  probability: number;
-};
-function actChoice(...[actor, type]: WakeupActChoiceArgs): {
-  type: 'pets/wakeup';
   probability: number;
 };
 function actChoice(...[actor, type]: SupplyActChoiceArgs): {
@@ -67,8 +60,6 @@ function actChoice(...[actor, type, target]: ActChoiceArgs): {
   switch (type) {
     case 'pets/sleep':
       return { type, probability: sleepProbability(actor) };
-    case 'pets/wakeup':
-      return { type, probability: wakeupProbability(actor) };
     case 'pets/supply':
       return { type, probability: supplyProbability(actor) };
     case 'pets/attack':

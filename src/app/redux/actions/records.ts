@@ -1,11 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
-import type { ActAction } from 'redux/actions/acts';
-import type { ResponseAction } from 'redux/actions/responses';
-import type { InteractionAction } from 'redux/actions/interactions';
+import type { Record } from 'common/types/message';
 
-const addRecord = createAction<
-  ActAction | ResponseAction | InteractionAction,
-  'records/add'
->('records/add');
+const addRecord = createAction<Record, 'records/add'>('records/add');
 
 export { addRecord };

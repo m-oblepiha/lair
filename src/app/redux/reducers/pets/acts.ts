@@ -1,44 +1,26 @@
 import type { IPet } from 'common/types';
-import {
-  sleep,
-  wakeup,
-  supply,
-  attack,
-  bully,
-  heal,
-  caress,
-} from 'redux/actions';
-import { clipRelation, selectPet } from 'common/utils';
+import { sleep, supply, attack, bully, heal, caress } from 'redux/actions';
+import { clipRelation, unsafeSelectPet } from 'common/utils';
 import { changeRelation } from 'common/utils/calcs';
 
 const sleepCaseReducer = (state: IPet[], action: ReturnType<typeof sleep>) => {
-  const pet = selectPet(state, action.payload.actor.id);
-  pet.stats.isAwake = false;
+  const pet = unsafeSelectPet(state, action.payload.actor);
+  pet.stats.sleep = 1 + Math.round(pet.stats.fatigue / 4);
 };
 const sleepCase = [sleep, sleepCaseReducer] as const;
-
-const wakeupCaseReducer = (
-  state: IPet[],
-  action: ReturnType<typeof wakeup>
-) => {
-  const pet = selectPet(state, action.payload.actor.id);
-  pet.stats.isAwake = true;
-};
-const wakeupCase = [wakeup, wakeupCaseReducer] as const;
 
 const supplyCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof supply>
 ) => {
-  const pet = selectPet(state, action.payload.actor.id);
+  const pet = unsafeSelectPet(state, action.payload.actor);
 
   const hunger = pet.stats.hunger - action.payload.value;
   pet.stats.hunger = hunger < 0 ? 0 : hunger;
 
   if (action.payload.distribution) {
-    const target = selectPet(state, action.payload.distribution.target.id);
-
-    target.stats.isAwake = true;
+    const target = unsafeSelectPet(state, action.payload.distribution.target);
+    target.stats.sleep = 0;
 
     const targetHunger = target.stats.hunger - 1;
     target.stats.hunger = targetHunger < 0 ? 0 : targetHunger;
@@ -63,10 +45,10 @@ const attackCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof attack>
 ) => {
-  const actor = selectPet(state, action.payload.actor.id);
-  const target = selectPet(state, action.payload.target.id);
+  const actor = unsafeSelectPet(state, action.payload.actor);
+  const target = unsafeSelectPet(state, action.payload.target);
 
-  target.stats.isAwake = true;
+  target.stats.sleep = 0;
 
   const health = target.stats.health - action.payload.value;
   target.stats.health = health < 0 ? 0 : health;
@@ -83,10 +65,10 @@ const attackCaseReducer = (
 const attackCase = [attack, attackCaseReducer] as const;
 
 const bullyCaseReducer = (state: IPet[], action: ReturnType<typeof bully>) => {
-  const actor = selectPet(state, action.payload.actor.id);
-  const target = selectPet(state, action.payload.target.id);
+  const actor = unsafeSelectPet(state, action.payload.actor);
+  const target = unsafeSelectPet(state, action.payload.target);
 
-  target.stats.isAwake = true;
+  target.stats.sleep = 0;
 
   const morale = target.stats.morale - action.payload.value;
   target.stats.morale = morale < 0 ? 0 : morale;
@@ -103,8 +85,8 @@ const bullyCaseReducer = (state: IPet[], action: ReturnType<typeof bully>) => {
 const bullyCase = [bully, bullyCaseReducer] as const;
 
 const healCaseReducer = (state: IPet[], action: ReturnType<typeof heal>) => {
-  const actor = selectPet(state, action.payload.actor.id);
-  const target = selectPet(state, action.payload.target.id);
+  const actor = unsafeSelectPet(state, action.payload.actor);
+  const target = unsafeSelectPet(state, action.payload.target);
 
   const health = target.stats.health + action.payload.value;
   target.stats.health = health > 10 ? 10 : health;
@@ -124,8 +106,8 @@ const caressCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof caress>
 ) => {
-  const actor = selectPet(state, action.payload.actor.id);
-  const target = selectPet(state, action.payload.target.id);
+  const actor = unsafeSelectPet(state, action.payload.actor);
+  const target = unsafeSelectPet(state, action.payload.target);
 
   const morale = target.stats.morale + action.payload.value;
   target.stats.morale = morale > 10 ? 10 : morale;
@@ -141,12 +123,4 @@ const caressCaseReducer = (
 };
 const caressCase = [caress, caressCaseReducer] as const;
 
-export {
-  sleepCase,
-  wakeupCase,
-  supplyCase,
-  attackCase,
-  bullyCase,
-  healCase,
-  caressCase,
-};
+export { sleepCase, supplyCase, attackCase, bullyCase, healCase, caressCase };

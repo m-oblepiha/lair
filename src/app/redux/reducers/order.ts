@@ -20,9 +20,7 @@ const orderReducer = createReducer(initialState, (builder) => {
       state.actors = state.actors.filter((actor) => actor !== payload);
     })
     .addCase(death, (state, { payload }) => {
-      state.actors = state.actors.filter(
-        (actor) => actor !== payload.target.id
-      );
+      state.actors.splice(state.actors.indexOf(payload.target.id), 1);
     });
 });
 

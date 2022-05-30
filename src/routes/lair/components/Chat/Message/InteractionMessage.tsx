@@ -1,36 +1,35 @@
 import React from 'react';
-import type { InteractionAction } from 'redux/actions/interactions';
 import type {
-  SummonInteraction,
-  DeathInteraction,
-} from 'common/types/interaction';
+  InteractionRecord,
+  SummonInteractionRecord,
+  DeathInteractionRecord,
+} from 'common/types/message';
 import classes from './messages.scss';
 
-const SummonInteractionMessage: React.FC<SummonInteraction> = ({ target }) => {
-  return (
-    <p className={classes.message}>{`В логово призван ${target.name}.`}</p>
-  );
+const SummonInteractionMessage: React.FC<SummonInteractionRecord> = ({
+  target,
+}) => {
+  return <p className={classes.message}>{`В логово призван ${target}.`}</p>;
 };
 
-const DeathInteractionMessage: React.FC<DeathInteraction> = ({ target }) => {
+const DeathInteractionMessage: React.FC<DeathInteractionRecord> = ({
+  target,
+}) => {
   return (
     <p className={classes.message}>
-      {`${target.name} `}
+      {`${target} `}
       <span className={classes.bad}>{'умирает'}</span>
       {'.'}
     </p>
   );
 };
 
-const InteractionMessage: React.FC<InteractionAction> = ({
-  type,
-  payload: effect,
-}) => {
-  switch (type) {
-    case 'pets/summon':
-      return <SummonInteractionMessage {...effect} />;
-    case 'pets/death':
-      return <DeathInteractionMessage {...effect} />;
+const InteractionMessage = (message: InteractionRecord) => {
+  switch (message.type) {
+    case 'summon':
+      return <SummonInteractionMessage {...message} />;
+    case 'death':
+      return <DeathInteractionMessage {...message} />;
   }
 };
 

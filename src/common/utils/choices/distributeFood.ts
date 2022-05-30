@@ -1,5 +1,5 @@
 import type { IPet } from 'common/types';
-import { clipProbability } from 'common/utils';
+import { clipProbability, selectPet } from 'common/utils';
 import { roll } from 'common/utils/rolls';
 import { selectBestChoice } from './selectBestChoice';
 
@@ -54,11 +54,11 @@ const supplyStealProbability = (
     hungerWeight: 10,
     relWeight: -10,
     rollWeight: 7.5,
-    offset: -90,
+    offset: -120,
     divisor: 16,
   };
 
-  if (foodAmount < 1) return 0;
+  if (foodAmount < 1 || actor.stats.sleep) return 0;
 
   const result =
     (COEFF.friendlinessWeight * friendliness +
@@ -73,8 +73,7 @@ const supplyStealProbability = (
 };
 
 const distributeFood = (pets: IPet[], actor: IPet, value: number) => {
-  const otherPets = pets.filter((pet) => pet.id !== actor.id);
-  const choices = otherPets.flatMap((pet) => [
+  const choices = pets.flatMap((pet) => [
     {
       target: pet,
       type: 'steal' as const,

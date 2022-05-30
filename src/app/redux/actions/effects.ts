@@ -1,5 +1,4 @@
 import type { AnyAction } from '@reduxjs/toolkit';
-import type { RestEffect } from 'common/types/effect';
 import { createAction } from '@reduxjs/toolkit';
 import { roll } from 'common/utils/rolls';
 

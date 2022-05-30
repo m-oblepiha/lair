@@ -2,7 +2,7 @@ import type { ID, Attribute } from 'common/types';
 import React, { useRef } from 'react';
 import { useTypedSelector, useTypedDispatch } from 'redux/hooks';
 import { increaseAttribute, decreaseAttribute } from 'redux/actions';
-import { selectPet, useColorBlink } from 'common/utils';
+import { unsafeSelectPet, useColorBlink } from 'common/utils';
 import { PetIcon } from 'common/components';
 import classes from './PetProperty.scss';
 import {
@@ -34,7 +34,7 @@ type Props = {
 const PetAttribute: React.FC<Props> = ({ id, attribute }) => {
   const dispatch = useTypedDispatch();
 
-  const pet = useTypedSelector((state) => selectPet(state.pets, id));
+  const pet = useTypedSelector((state) => unsafeSelectPet(state.pets, id));
   const mana = useTypedSelector((state) => state.mana);
   const hearts = useTypedSelector((state) => state.hearts);
 
@@ -54,7 +54,7 @@ const PetAttribute: React.FC<Props> = ({ id, attribute }) => {
       <button
         className={classes.button}
         onClick={() => dispatch(decreaseAttribute({ id, attribute }))}
-        disabled={value < 2 || mana < 3 || hearts === 0}
+        disabled={value < 2 || mana < 5 || hearts === 0}
       >
         {'-'}
       </button>
@@ -64,7 +64,7 @@ const PetAttribute: React.FC<Props> = ({ id, attribute }) => {
       <button
         className={classes.button}
         onClick={() => dispatch(increaseAttribute({ id, attribute }))}
-        disabled={value > 8 || mana < 3 || hearts === 0}
+        disabled={value > 8 || mana < 5 || hearts === 0}
       >
         {'+'}
       </button>

@@ -1,35 +1,34 @@
 import React from 'react';
-import type { ActAction } from 'redux/types';
 import type {
-  SleepAct,
-  WakeupAct,
-  SupplyAct,
-  AttackAct,
-  BullyAct,
-  HealAct,
-  CaressAct,
-} from 'common/types/act';
+  ActRecord,
+  SleepActRecord,
+  SupplyActRecord,
+  AttackActRecord,
+  BullyActRecord,
+  HealActRecord,
+  CaressActRecord,
+} from 'common/types/message';
 import classes from './messages.scss';
 
-const SleepActMessage: React.FC<SleepAct> = ({ actor }) => (
-  <p className={classes.message}>{`${actor.name} уснул.`}</p>
-);
-
-const WakeupActMessage: React.FC<WakeupAct> = ({ actor }) => {
-  return <p className={classes.message}>{`${actor.name} проснулся.`}</p>;
+const SleepActMessage: React.FC<SleepActRecord> = ({ actor }) => {
+  return <p className={classes.message}>{`${actor} уснул.`}</p>;
 };
 
-const SupplyActMessage: React.FC<SupplyAct> = (act) => {
-  const actor = act.actor;
-  if (act.distribution) {
-    const target = act.distribution.target;
-    switch (act.distribution.type) {
+const SupplyActMessage: React.FC<SupplyActRecord> = ({
+  actor,
+  value,
+  distribution,
+}) => {
+  if (value === 0) return null;
+
+  if (distribution) {
+    switch (distribution.type) {
       case 'steal':
         return (
           <p className={classes.message}>
-            {`${actor.name} добыл `}
-            <span className={classes.good}>{`${act.value}`}</span>
-            {` еды, но ${target.name} `}
+            {`${actor} добыл `}
+            <span className={classes.good}>{value}</span>
+            {` еды, но ${distribution.target} `}
             <span className={classes.bad}>{'украл'}</span>
             {` у него кусочек!`}
           </p>
@@ -37,80 +36,90 @@ const SupplyActMessage: React.FC<SupplyAct> = (act) => {
       case 'share':
         return (
           <p className={classes.message}>
-            {`${actor.name} добыл `}
-            <span className={classes.good}>{`${act.value}`}</span>
+            {`${actor} добыл `}
+            <span className={classes.good}>{value}</span>
             {` еды и решил `}
             <span className={classes.good}>{`поделиться`}</span>
-            {` с  ${target.name}.`}
+            {` с  ${distribution.target}.`}
           </p>
         );
     }
   }
   return (
     <p className={classes.message}>
-      {`${actor.name} добыл `}
-      <span className={classes.good}>{`${act.value}`}</span>
+      {`${actor} добыл `}
+      <span className={classes.good}>{value}</span>
       {` еды.`}
     </p>
   );
 };
 
-const AttackActMessage: React.FC<AttackAct> = ({ actor, target, value }) => {
+const AttackActMessage: React.FC<AttackActRecord> = ({
+  actor,
+  target,
+  value,
+}) => {
   return (
     <p className={classes.message}>
-      {`${actor.name} атакует ${target.name}, нанося `}
-      <span className={classes.bad}>{`${value}`}</span>
+      {`${actor} атакует ${target}, нанося `}
+      <span className={classes.bad}>{value}</span>
       {` урона!`}
     </p>
   );
 };
 
-const BullyActMessage: React.FC<BullyAct> = ({ actor, target, value }) => {
+const BullyActMessage: React.FC<BullyActRecord> = ({
+  actor,
+  target,
+  value,
+}) => {
   return (
     <p className={classes.message}>
-      {`${actor.name} рычит на ${target.name}. ${target.name} теряет `}
-      <span className={classes.bad}>{`${value}`}</span>
+      {`${actor} рычит на ${target}. ${target} теряет `}
+      <span className={classes.bad}>{value}</span>
       {` морали.`}
     </p>
   );
 };
 
-const HealActMessage: React.FC<HealAct> = ({ actor, target, value }) => {
+const HealActMessage: React.FC<HealActRecord> = ({ actor, target, value }) => {
   return (
     <p className={classes.message}>
-      {`${actor.name} зализывает раны ${target.name}, восстанавливая ему `}
-      <span className={classes.good}>{`+${value}`}</span>
+      {`${actor} зализывает раны ${target}, восстанавливая ему `}
+      <span className={classes.good}>{value}</span>
       {` здоровья!`}
     </p>
   );
 };
 
-const CaressActMessage: React.FC<CaressAct> = ({ actor, target, value }) => {
+const CaressActMessage: React.FC<CaressActRecord> = ({
+  actor,
+  target,
+  value,
+}) => {
   return (
     <p className={classes.message}>
-      {`${actor.name} няшкает ${target.name}. `}
-      <span className={classes.good}>{`+${value}`}</span>
+      {`${actor} няшкает ${target}. +`}
+      <span className={classes.good}>{value}</span>
       {` морали!`}
     </p>
   );
 };
 
-const ActMessage: React.FC<ActAction> = ({ type, payload: act }) => {
-  switch (type) {
-    case 'pets/sleep':
-      return <SleepActMessage {...act} />;
-    case 'pets/wakeup':
-      return <WakeupActMessage {...act} />;
-    case 'pets/supply':
-      return <SupplyActMessage {...act} />;
-    case 'pets/attack':
-      return <AttackActMessage {...act} />;
-    case 'pets/bully':
-      return <BullyActMessage {...act} />;
-    case 'pets/heal':
-      return <HealActMessage {...act} />;
-    case 'pets/caress':
-      return <CaressActMessage {...act} />;
+const ActMessage = (message: ActRecord) => {
+  switch (message.type) {
+    case 'sleep':
+      return <SleepActMessage {...message} />;
+    case 'supply':
+      return <SupplyActMessage {...message} />;
+    case 'attack':
+      return <AttackActMessage {...message} />;
+    case 'bully':
+      return <BullyActMessage {...message} />;
+    case 'heal':
+      return <HealActMessage {...message} />;
+    case 'caress':
+      return <CaressActMessage {...message} />;
   }
 };
 

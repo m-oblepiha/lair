@@ -2,7 +2,7 @@ import type { ID } from 'common/types';
 import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTypedSelector } from 'redux/hooks';
-import { selectPet, useColorBlink } from 'common/utils';
+import { unsafeSelectPet, useColorBlink } from 'common/utils';
 import { Avatar, PetIcon } from 'common/components';
 import classnames from 'classnames';
 import classes from './PetListItem.scss';
@@ -32,7 +32,7 @@ type Props = {
 const PetListItem: React.FC<Props> = ({ id }) => {
   const navigate = useNavigate();
 
-  const pet = useTypedSelector((state) => selectPet(state.pets, id));
+  const pet = useTypedSelector((state) => unsafeSelectPet(state.pets, id));
   const openPetScreen = () => navigate('/pet', { state: { id } });
 
   return (
@@ -48,15 +48,15 @@ const PetListItem: React.FC<Props> = ({ id }) => {
       <Avatar
         avatar={pet.avatar}
         extraClassname={classnames(classes.avatar, {
-          [classes.avatarSleeping]: !pet.stats.isAwake,
+          [classes.avatarSleeping]: !!pet.stats.sleep,
         })}
       />
       <span className={classes.petName}>{pet.name}</span>
       <div className={classes.stats}>
         <PetListStat src={heart} value={pet.stats.health} />
         <PetListStat src={morale} value={pet.stats.morale} />
-        <PetListStat src={hunger} value={pet.stats.hunger} reverse />
-        <PetListStat src={fatigue} value={pet.stats.fatigue} reverse />
+        <PetListStat src={hunger} value={10 - pet.stats.hunger} />
+        <PetListStat src={fatigue} value={10 - pet.stats.fatigue} />
       </div>
     </li>
   );

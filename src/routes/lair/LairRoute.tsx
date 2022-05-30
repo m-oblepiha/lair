@@ -24,7 +24,7 @@ const LairRoute: React.FC = () => {
   useEffect(() => {
     const timer = setInterval(
       () => (controller.current = dispatch(next())),
-      4000
+      2000
     );
     return () => {
       clearInterval(timer);

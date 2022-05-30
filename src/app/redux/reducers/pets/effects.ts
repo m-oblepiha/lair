@@ -5,16 +5,17 @@ const restCaseReducer = (state: IPet[], action: ReturnType<typeof rest>) => {
   const { preroll } = action.payload;
 
   for (const pet of state) {
-    const { fatigue, morale, hunger, health } = pet.stats;
+    const { fatigue, morale, hunger, health, sleep } = pet.stats;
     const { vitality, willpower } = pet.attributes;
 
-    if (pet.stats.isAwake) {
+    if (sleep === 0) {
       if (fatigue === 10) {
         if (morale === 0 && health > 0 && preroll > vitality)
           pet.stats.health--;
         else if (morale > 0 && preroll > willpower) pet.stats.morale--;
       } else pet.stats.fatigue++;
     } else {
+      pet.stats.sleep--;
       if (fatigue > 3) pet.stats.fatigue = pet.stats.fatigue - 3;
       else {
         pet.stats.fatigue = 0;

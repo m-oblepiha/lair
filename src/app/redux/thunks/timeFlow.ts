@@ -7,7 +7,8 @@ const timeFlow = () => (dispatch: AppDispatch, getState: AppGetState) => {
   const { time, pets } = getState();
 
   dispatch(rest());
-  if ([2, 4].includes(time.phase)) dispatch(starve());
+  dispatch(starve());
+
   if (time.phase === 1) {
     dispatch(age());
     if (pets.length) dispatch(addMana());

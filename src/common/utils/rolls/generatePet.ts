@@ -13,7 +13,7 @@ const generatePet = (): IPet => {
     name: generatePetName(),
     avatar: Object.keys(avatars)[roll(0, 9)] as Avatar,
     stats: {
-      isAwake: true,
+      sleep: 0,
       fatigue: roll(0, 10),
       hunger: roll(0, 10),
       health: roll(5, 10),

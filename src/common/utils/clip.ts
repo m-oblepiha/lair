@@ -8,4 +8,4 @@ const clipProbability = (value: number) => clipToLimit(value, 0, 5);
 
 const clipRelation = (value: number) => clipToLimit(value, -10, 10);
 
-export { clipProbability, clipRelation };
+export { clipProbability, clipRelation, clipToLimit };

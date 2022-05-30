@@ -10,7 +10,7 @@ const localStorageMiddleware: Middleware<{}, RootState> =
 
     const state = getState();
 
-    if (state.hearts === 0) {
+    if (state.hearts === 0 || state.time.day === 100) {
       setState(null);
       return result;
     }

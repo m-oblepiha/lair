@@ -2,7 +2,6 @@ import { createReducer } from '@reduxjs/toolkit';
 import type { IPet } from 'common/types';
 import {
   sleepCase,
-  wakeupCase,
   supplyCase,
   attackCase,
   bullyCase,
@@ -10,7 +9,6 @@ import {
   caressCase,
 } from './acts';
 import {
-  wakeupCaressCase,
   attackPanicCase,
   attackCounterCase,
   attackAvengeCase,
@@ -37,13 +35,11 @@ const initialState: IPet[] = [];
 const petsReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(...sleepCase)
-    .addCase(...wakeupCase)
     .addCase(...supplyCase)
     .addCase(...attackCase)
     .addCase(...bullyCase)
     .addCase(...healCase)
     .addCase(...caressCase)
-    .addCase(...wakeupCaressCase)
     .addCase(...attackPanicCase)
     .addCase(...attackCounterCase)
     .addCase(...attackAvengeCase)
@@ -67,3 +63,5 @@ const petsReducer = createReducer(initialState, (builder) => {
 });
 
 export { petsReducer };
+
+if (module.hot) module.hot.accept();

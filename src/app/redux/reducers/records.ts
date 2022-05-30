@@ -1,7 +1,8 @@
+import type { Record } from 'common/types/message';
 import { createReducer } from '@reduxjs/toolkit';
 import { addRecord } from 'redux/actions';
 
-const initialState: Array<ReturnType<typeof addRecord>['payload']> = [];
+const initialState: Record[] = [];
 
 const recordsReducer = createReducer(initialState, (builder) => {
   builder.addCase(addRecord, (state, action) => {

@@ -1,4 +1,4 @@
-import type { IPet } from './';
+import type { ID, IPet } from './';
 
 type SummonInteraction = {
   target: IPet;

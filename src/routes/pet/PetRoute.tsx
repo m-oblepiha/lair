@@ -1,4 +1,4 @@
-import { ID, IPet } from 'common/types';
+import { ID } from 'common/types';
 import React from 'react';
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { useTypedDispatch, useTypedSelector } from 'redux/hooks';
@@ -15,9 +15,7 @@ const PetRoute: React.FC = () => {
   const routeState = useLocation().state as { id: ID };
 
   const hearts = useTypedSelector((state) => state.hearts);
-  const pet = useTypedSelector((state) =>
-    selectPet(state.pets, routeState.id)
-  ) as IPet | undefined;
+  const pet = useTypedSelector((state) => selectPet(state.pets, routeState.id));
 
   if (!pet) return <Navigate to="/lair" />;
   return (
@@ -26,7 +24,7 @@ const PetRoute: React.FC = () => {
         <span className={classes.name}>{pet.name}</span>
         <Avatar avatar={pet.avatar} extraClassname={classes.avatar} />
         <span className={classes.sleep}>
-          {pet.stats.isAwake ? 'не спит' : 'спит'}
+          {!!pet.stats.sleep ? 'спит' : 'не спит'}
         </span>
         <span className={classes.age}>
           {pet.stats.age * 3 > pet.attributes.maxAge * 2 ? 'старый' : 'молодой'}

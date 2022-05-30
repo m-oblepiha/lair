@@ -19,13 +19,13 @@ type IPet = {
     health: number;
     morale: number;
     age: number;
-    isAwake: boolean;
+    sleep: number;
   };
   relations: { [key: ID]: number };
 };
 
 type Attribute = Exclude<keyof IPet['attributes'], 'maxAge'>;
 
-type Stat = Exclude<keyof IPet['stats'], 'age' | 'isAwake'>;
+type Stat = Exclude<keyof IPet['stats'], 'age' | 'sleep'>;
 
 export type { ID, IPet, Attribute, Stat };

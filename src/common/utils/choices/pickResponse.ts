@@ -1,14 +1,7 @@
-import type { IPet } from 'common/types';
+import type { IPet, ID } from 'common/types';
 import type { ActAction } from 'redux/types';
-import type {
-  WakeupAct,
-  AttackAct,
-  BullyAct,
-  HealAct,
-  CaressAct,
-} from 'common/types/act';
+import type { AttackAct, BullyAct, HealAct, CaressAct } from 'common/types/act';
 import {
-  wakeupCaress,
   attackPanic,
   attackCounter,
   attackAvenge,
@@ -24,27 +17,12 @@ import { selectPet } from 'common/utils';
 import { actValue } from 'common/utils/rolls';
 import {
   responseChoice,
-  wakeupResponseTypes,
   attackResponseTypes,
   bullyResponseTypes,
   healResponseTypes,
   caressResponseTypes,
 } from './responseChoice';
 import { selectBestChoice } from './selectBestChoice';
-
-const pickWakeupResponse = (actor: IPet, act: WakeupAct, pets: IPet[]) => {
-  const choices = wakeupResponseTypes.map((type) =>
-    responseChoice(actor, type, act)
-  );
-  const bestChoice = selectBestChoice(choices);
-  if (!bestChoice) return null;
-
-  return wakeupCaress({
-    actor,
-    act,
-    value: actValue(actor, 'caress', selectPet(pets, act.actor.id)),
-  });
-};
 
 const pickAttackResponse = (actor: IPet, act: AttackAct, pets: IPet[]) => {
   const choices = attackResponseTypes.map((type) =>
@@ -53,29 +31,36 @@ const pickAttackResponse = (actor: IPet, act: AttackAct, pets: IPet[]) => {
   const bestChoice = selectBestChoice(choices);
   if (!bestChoice) return null;
 
+  const actActor = selectPet(pets, act.actor);
+  const actTarget = selectPet(pets, act.target);
+
+  if (!actActor) return null;
+
   switch (bestChoice.type) {
     case 'pets/attackPanic':
       return attackPanic({
-        actor,
+        actor: actor.id,
         act,
       });
     case 'pets/attackCounter':
       return attackCounter({
-        actor,
+        actor: actor.id,
         act,
-        value: actValue(actor, 'attack', selectPet(pets, act.actor.id)),
+        value: actValue(actor, 'attack', actActor),
       });
     case 'pets/attackAvenge':
+      // unsafe
       return attackAvenge({
-        actor,
+        actor: actor.id,
         act,
-        value: actValue(actor, 'attack', selectPet(pets, act.actor.id)),
+        value: actValue(actor, 'attack', actActor),
       });
     case 'pets/attackJoin':
+      if (!actTarget) return null;
       return attackJoin({
-        actor,
+        actor: actor.id,
         act,
-        value: actValue(actor, 'attack', selectPet(pets, act.target.id)),
+        value: actValue(actor, 'attack', actTarget),
       });
   }
 };
@@ -87,37 +72,47 @@ const pickBullyResponse = (actor: IPet, act: BullyAct, pets: IPet[]) => {
   const bestChoice = selectBestChoice(choices);
   if (!bestChoice) return null;
 
+  const actActor = selectPet(pets, act.actor);
+  const actTarget = selectPet(pets, act.target);
+
+  if (!actActor || !actTarget) return null;
+
   switch (bestChoice.type) {
     case 'pets/bullyCounter':
       return bullyCounter({
-        actor,
+        actor: actor.id,
         act,
-        value: actValue(actor, 'bully', selectPet(pets, act.actor.id)),
+        value: actValue(actor, 'bully', actActor),
       });
     case 'pets/bullyAvenge':
       return bullyAvenge({
-        actor,
+        actor: actor.id,
         act,
-        value: actValue(actor, 'bully', selectPet(pets, act.actor.id)),
+        value: actValue(actor, 'bully', actActor),
       });
     case 'pets/bullyJoin':
       return bullyJoin({
-        actor,
+        actor: actor.id,
         act,
-        value: actValue(actor, 'bully', selectPet(pets, act.target.id)),
+        value: actValue(actor, 'bully', actTarget),
       });
   }
 };
 
-const pickHealResponse = (actor: IPet, act: HealAct) => {
+const pickHealResponse = (actor: IPet, act: HealAct, pets: IPet[]) => {
   const choices = healResponseTypes.map((type) =>
     responseChoice(actor, type, act)
   );
   const bestChoice = selectBestChoice(choices);
   if (!bestChoice) return null;
 
+  const actActor = selectPet(pets, act.actor);
+  const actTarget = selectPet(pets, act.target);
+
+  if (!actActor || !actTarget) return null;
+
   return healDelight({
-    actor,
+    actor: actor.id,
     act,
   });
 };
@@ -129,36 +124,41 @@ const pickCaressResponse = (actor: IPet, act: CaressAct, pets: IPet[]) => {
   const bestChoice = selectBestChoice(choices);
   if (!bestChoice) return null;
 
+  const actActor = selectPet(pets, act.actor);
+  const actTarget = selectPet(pets, act.target);
+
+  if (!actActor || !actTarget) return null;
+
   switch (bestChoice.type) {
     case 'pets/caressCounter':
       return caressCounter({
-        actor,
+        actor: actor.id,
         act,
-        value: actValue(actor, 'caress', selectPet(pets, act.actor.id)),
+        value: actValue(actor, 'caress', actActor),
       });
     case 'pets/caressJoin':
       return caressJoin({
-        actor,
+        actor: actor.id,
         act,
-        value: actValue(actor, 'caress', selectPet(pets, act.target.id)),
+        value: actValue(actor, 'caress', actTarget),
       });
   }
 };
 
 const pickResponse = (
-  actor: IPet,
+  actorID: ID,
   { type, payload: act }: ActAction,
   pets: IPet[]
 ) => {
+  const actor = selectPet(pets, actorID);
+  if (!actor) return null;
   switch (type) {
-    case 'pets/wakeup':
-      return pickWakeupResponse(actor, act, pets);
     case 'pets/attack':
       return pickAttackResponse(actor, act, pets);
     case 'pets/bully':
       return pickBullyResponse(actor, act, pets);
     case 'pets/heal':
-      return pickHealResponse(actor, act);
+      return pickHealResponse(actor, act, pets);
     case 'pets/caress':
       return pickCaressResponse(actor, act, pets);
     default:

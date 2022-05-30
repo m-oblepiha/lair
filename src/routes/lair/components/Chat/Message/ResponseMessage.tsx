@@ -1,194 +1,178 @@
 import React from 'react';
-import type { ResponseAction } from 'redux/types';
 import type {
-  WakeupCaressResponse,
-  AttackPanicResponse,
-  AttackCounterResponse,
-  AttackAvengeResponse,
-  AttackJoinResponse,
-  BullyCounterResponse,
-  BullyAvengeResponse,
-  BullyJoinResponse,
-  HealDelightResponse,
-  CaressCounterResponse,
-  CaressJoinResponse,
-  DeathPanicResponse,
-} from 'common/types/response';
+  ResponseRecord,
+  AttackPanicResponseRecord,
+  AttackCounterResponseRecord,
+  AttackAvengeResponseRecord,
+  AttackJoinResponseRecord,
+  BullyCounterResponseRecord,
+  BullyAvengeResponseRecord,
+  BullyJoinResponseRecord,
+  HealDelightResponseRecord,
+  CaressCounterResponseRecord,
+  CaressJoinResponseRecord,
+  DeathPanicResponseRecord,
+} from 'common/types/message';
 import classes from './messages.scss';
 
-const WakeupCaressResponseMessage: React.FC<WakeupCaressResponse> = ({
+const AttackPanicResponseMessage: React.FC<AttackPanicResponseRecord> = ({
   actor,
-  act,
-  value,
-}) => {
-  return (
-    <p className={classes.message}>
-      {`${actor.name} подходит и няшкает сонного ${act.actor.name}. `}
-      <span className={classes.good}>{`+${value}`}</span>
-      {` морали.`}
-    </p>
-  );
-};
-
-const AttackPanicResponseMessage: React.FC<AttackPanicResponse> = ({
-  actor,
-  act,
+  actActor,
 }) => {
   return (
     <p
       className={classes.message}
-    >{`${actor.name} напуган жестокостью ${act.target.name}...`}</p>
+    >{`${actor} напуган жестокостью ${actActor}...`}</p>
   );
 };
 
-const AttackCounterResponseMessage: React.FC<AttackCounterResponse> = ({
+const AttackCounterResponseMessage: React.FC<AttackCounterResponseRecord> = ({
   actor,
-  act,
+  actActor,
   value,
 }) => {
   return (
     <p className={classes.message}>
-      {`${actor.name} отбивается, нанося ${act.actor.name} `}
-      <span className={classes.bad}>{`${value}`}</span>
+      {`${actor} отбивается, нанося ${actActor} `}
+      <span className={classes.bad}>{value}</span>
       {` урона.`}
     </p>
   );
 };
 
-const AttackAvengeResponseMessage: React.FC<AttackAvengeResponse> = ({
+const AttackAvengeResponseMessage: React.FC<AttackAvengeResponseRecord> = ({
   actor,
-  act,
+  actActor,
+  actTarget,
   value,
 }) => {
   return (
     <p className={classes.message}>
-      {`${actor.name} бросается на помощь ${act.target.name}, нанося ${act.actor.name} `}
-      <span className={classes.bad}>{`${value}`}</span>
+      {`${actor} бросается на помощь ${actTarget}, нанося ${actActor} `}
+      <span className={classes.bad}>{value}</span>
       {` урона!`}
     </p>
   );
 };
 
-const AttackJoinResponseMessage: React.FC<AttackJoinResponse> = ({
+const AttackJoinResponseMessage: React.FC<AttackJoinResponseRecord> = ({
   actor,
-  act,
+  actTarget,
   value,
 }) => {
   return (
     <p className={classes.message}>
-      {`${actor.name} в крысу кусает ${act.target.name} за хвост на `}
-      <span className={classes.bad}>{`${value}`}</span>
+      {`${actor} в крысу кусает ${actTarget} за хвост на `}
+      <span className={classes.bad}>{value}</span>
       {` урона.`}
     </p>
   );
 };
 
-const BullyCounterResponseMessage: React.FC<BullyCounterResponse> = ({
+const BullyCounterResponseMessage: React.FC<BullyCounterResponseRecord> = ({
   actor,
-  act,
+  actActor,
   value,
 }) => {
   return (
     <p className={classes.message}>
-      {`${actor.name} рычит в ответ, пугая ${act.actor.name} на `}
-      <span className={classes.bad}>{`-${value}`}</span>
+      {`${actor} рычит в ответ, пугая ${actActor} на `}
+      <span className={classes.bad}>{value}</span>
       {` морали.`}
     </p>
   );
 };
 
-const BullyAvengeResponseMessage: React.FC<BullyAvengeResponse> = ({
+const BullyAvengeResponseMessage: React.FC<BullyAvengeResponseRecord> = ({
   actor,
-  act,
+  actActor,
   value,
 }) => {
   return (
     <p className={classes.message}>
-      {`${actor.name} издалека шугает ${act.actor.name}, заставляя того отложить `}
-      <span className={classes.bad}>{`-${value}`}</span>
+      {`${actor} издалека шугает ${actActor}, заставляя того отложить `}
+      <span className={classes.bad}>{value}</span>
       {` морали.`}
     </p>
   );
 };
 
-const BullyJoinResponseMessage: React.FC<BullyJoinResponse> = ({
+const BullyJoinResponseMessage: React.FC<BullyJoinResponseRecord> = ({
   actor,
-  act,
+  actTarget,
   value,
 }) => {
   return (
     <p className={classes.message}>
-      {`${actor.name} громко шипит на ${act.target.name}. `}
-      <span className={classes.bad}>{`-${value}`}</span>
+      {`${actor} громко шипит на ${actTarget}. -`}
+      <span className={classes.bad}>{value}</span>
       {` морали.`}
     </p>
   );
 };
 
-const HealDelightResponseMessage: React.FC<HealDelightResponse> = ({
+const HealDelightResponseMessage: React.FC<HealDelightResponseRecord> = ({
   actor,
 }) => {
-  return <p className={classes.message}>{`${actor.name} умиляется.`}</p>;
+  return <p className={classes.message}>{`${actor} умиляется.`}</p>;
 };
 
-const CaressCounterResponseMessage: React.FC<CaressCounterResponse> = ({
+const CaressCounterResponseMessage: React.FC<CaressCounterResponseRecord> = ({
   actor,
-  act,
+  actActor,
   value,
 }) => {
   return (
     <p className={classes.message}>
-      {`${actor.name} резко няшкает в ответ! `}
-      <span className={classes.good}>{`+${value}`}</span>
-      {` морали для ${act.actor.name}.`}
+      {`${actor} резко няшкает в ответ! +`}
+      <span className={classes.good}>{value}</span>
+      {` морали для ${actActor}.`}
     </p>
   );
 };
 
-const CaressJoinResponseMessage: React.FC<CaressJoinResponse> = ({
+const CaressJoinResponseMessage: React.FC<CaressJoinResponseRecord> = ({
   actor,
-  act,
+  actActor,
+  actTarget,
 }) => {
   return (
     <p
       className={classes.message}
-    >{`${actor.name} няшкает ${act.target.name} вместе с ${act.actor.name}`}</p>
+    >{`${actor} няшкает ${actTarget} вместе с ${actActor}`}</p>
   );
 };
 
-const DeathPanicResponseMessage: React.FC<DeathPanicResponse> = ({ actor }) => {
-  return <p className={classes.message}>{`${actor.name} в панике.`}</p>;
+const DeathPanicResponseMessage: React.FC<DeathPanicResponseRecord> = ({
+  actor,
+}) => {
+  return <p className={classes.message}>{`${actor} в панике.`}</p>;
 };
 
-const ResponseMessage: React.FC<ResponseAction> = ({
-  type,
-  payload: response,
-}) => {
-  switch (type) {
-    case 'pets/wakeupCaress':
-      return <WakeupCaressResponseMessage {...response} />;
-    case 'pets/attackPanic':
-      return <AttackPanicResponseMessage {...response} />;
-    case 'pets/attackCounter':
-      return <AttackCounterResponseMessage {...response} />;
-    case 'pets/attackAvenge':
-      return <AttackAvengeResponseMessage {...response} />;
-    case 'pets/attackJoin':
-      return <AttackJoinResponseMessage {...response} />;
-    case 'pets/bullyCounter':
-      return <BullyCounterResponseMessage {...response} />;
-    case 'pets/bullyAvenge':
-      return <BullyAvengeResponseMessage {...response} />;
-    case 'pets/bullyJoin':
-      return <BullyJoinResponseMessage {...response} />;
-    case 'pets/healDelight':
-      return <HealDelightResponseMessage {...response} />;
-    case 'pets/caressCounter':
-      return <CaressCounterResponseMessage {...response} />;
-    case 'pets/caressJoin':
-      return <CaressJoinResponseMessage {...response} />;
-    case 'pets/deathPanic':
-      return <DeathPanicResponseMessage {...response} />;
+const ResponseMessage = (message: ResponseRecord) => {
+  switch (message.type) {
+    case 'attackPanic':
+      return <AttackPanicResponseMessage {...message} />;
+    case 'attackCounter':
+      return <AttackCounterResponseMessage {...message} />;
+    case 'attackAvenge':
+      return <AttackAvengeResponseMessage {...message} />;
+    case 'attackJoin':
+      return <AttackJoinResponseMessage {...message} />;
+    case 'bullyCounter':
+      return <BullyCounterResponseMessage {...message} />;
+    case 'bullyAvenge':
+      return <BullyAvengeResponseMessage {...message} />;
+    case 'bullyJoin':
+      return <BullyJoinResponseMessage {...message} />;
+    case 'healDelight':
+      return <HealDelightResponseMessage {...message} />;
+    case 'caressCounter':
+      return <CaressCounterResponseMessage {...message} />;
+    case 'caressJoin':
+      return <CaressJoinResponseMessage {...message} />;
+    case 'deathPanic':
+      return <DeathPanicResponseMessage {...message} />;
   }
 };
 

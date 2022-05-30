@@ -1,10 +1,9 @@
 export { addRecord } from './records';
 export { timePass } from './time';
-export { sleep, wakeup, supply, attack, bully, heal, caress } from './acts';
+export { sleep, supply, attack, bully, heal, caress } from './acts';
 export { rest, starve, age } from './effects';
 export { summon, death } from './interactions';
 export {
-  wakeupCaress,
   attackPanic,
   attackCounter,
   attackAvenge,
@@ -25,3 +24,5 @@ export {
 } from './leveling';
 export { addMana } from './mana';
 export { removeActor, addActors, shiftTurn } from './order';
+
+if (module.hot) module.hot.accept();

@@ -17,7 +17,7 @@ const TimeBar: React.FC = () => {
   return (
     <div className={classes.container}>
       <Mana extraClassname={classes.mana} />
-      <span className={classes.day}>{`ДЕНЬ ${time.day}`}</span>
+      <span className={classes.day}>{`ДЕНЬ ${time.day}/100`}</span>
       <img className={classes.dayIcon} src={iconsMap[time.phase]} />
     </div>
   );
