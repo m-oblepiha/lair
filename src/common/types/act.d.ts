@@ -1,4 +1,4 @@
-import type { ID, IPet } from './';
+import type { ID } from './';
 
 type SleepAct = {
   actor: ID;
@@ -7,10 +7,12 @@ type SleepAct = {
 type SupplyAct = {
   actor: ID;
   value: number;
-  distribution?: {
-    type: 'share' | 'steal';
-    target: ID;
-  };
+  distribution?:
+    | {
+        type: 'steal';
+        target: ID;
+      }
+    | { type: 'share' };
 };
 
 type AttackAct = {

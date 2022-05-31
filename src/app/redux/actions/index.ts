@@ -24,5 +24,6 @@ export {
 } from './leveling';
 export { addMana } from './mana';
 export { removeActor, addActors, shiftTurn } from './order';
+export { pause } from './pause';
 
 if (module.hot) module.hot.accept();

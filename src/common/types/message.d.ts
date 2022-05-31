@@ -7,10 +7,12 @@ type SupplyActRecord = {
   type: 'supply';
   actor: string;
   value: number;
-  distribution?: {
-    type: 'share' | 'steal';
-    target: string;
-  };
+  distribution?:
+    | {
+        type: 'steal';
+        target: string;
+      }
+    | { type: 'share' };
 };
 
 type AttackActRecord = {

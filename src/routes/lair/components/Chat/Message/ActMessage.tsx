@@ -21,37 +21,36 @@ const SupplyActMessage: React.FC<SupplyActRecord> = ({
 }) => {
   if (value === 0) return null;
 
-  if (distribution) {
-    switch (distribution.type) {
-      case 'steal':
-        return (
-          <p className={classes.message}>
-            {`${actor} добыл `}
-            <span className={classes.good}>{value}</span>
-            {` еды, но ${distribution.target} `}
-            <span className={classes.bad}>{'украл'}</span>
-            {` у него кусочек!`}
-          </p>
-        );
-      case 'share':
-        return (
-          <p className={classes.message}>
-            {`${actor} добыл `}
-            <span className={classes.good}>{value}</span>
-            {` еды и решил `}
-            <span className={classes.good}>{`поделиться`}</span>
-            {` с  ${distribution.target}.`}
-          </p>
-        );
-    }
+  switch (distribution?.type) {
+    case 'steal':
+      return (
+        <p className={classes.message}>
+          {`${actor} добыл `}
+          <span className={classes.good}>{value}</span>
+          {` еды, но ${distribution.target} `}
+          <span className={classes.bad}>{'украл'}</span>
+          {` у него кусочек!`}
+        </p>
+      );
+    case 'share':
+      return (
+        <p className={classes.message}>
+          {`${actor} добыл `}
+          <span className={classes.good}>{value}</span>
+          {` еды `}
+          <span className={classes.good}>{`для всех`}</span>
+          {`.`}
+        </p>
+      );
+    default:
+      return (
+        <p className={classes.message}>
+          {`${actor} добыл `}
+          <span className={classes.good}>{value}</span>
+          {` еды.`}
+        </p>
+      );
   }
-  return (
-    <p className={classes.message}>
-      {`${actor} добыл `}
-      <span className={classes.good}>{value}</span>
-      {` еды.`}
-    </p>
-  );
 };
 
 const AttackActMessage: React.FC<AttackActRecord> = ({

@@ -18,12 +18,15 @@ const transformActMessage = (
         type: 'supply',
         actor: unsafeSelectPet(pets, payload.actor).name,
         value: payload.value,
-        distribution: payload.distribution
-          ? {
-              type: payload.distribution.type,
-              target: unsafeSelectPet(pets, payload.distribution.target).name,
-            }
-          : undefined,
+        distribution:
+          payload.distribution?.type === 'steal'
+            ? {
+                type: 'steal',
+                target: unsafeSelectPet(pets, payload.distribution.target).name,
+              }
+            : payload.distribution?.type === 'share'
+            ? { type: 'share' }
+            : undefined,
       };
     case 'pets/attack':
       return {

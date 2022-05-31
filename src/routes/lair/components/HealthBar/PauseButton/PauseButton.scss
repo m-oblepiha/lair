@@ -1,0 +1,42 @@
+@use 'colors';
+@use 'placeholders';
+@use 'breakpoints';
+
+.pause {
+  @extend %button;
+
+  font-size: 0.75em;
+
+  width: 3em;
+  height: 3em;
+  padding: 0;
+
+  display: none;
+
+  & img {
+    margin-top: 1.15em;
+    height: 3em;
+    filter: invert(1);
+  }
+
+  &:hover,
+  &:focus {
+    & img {
+      filter: brightness(0) saturate(100%) invert(89%) sepia(71%)
+        saturate(6235%) hue-rotate(356deg) brightness(107%) contrast(106%);
+    }
+  }
+
+  @include breakpoints.portrait-s {
+    display: block;
+  }
+  @include breakpoints.landscape-s {
+    display: block;
+  }
+  @include breakpoints.landscape-m {
+    font-size: 0.8em;
+    & img {
+      margin-top: 1em;
+    }
+  }
+}

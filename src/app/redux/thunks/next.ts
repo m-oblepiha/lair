@@ -6,9 +6,11 @@ import { pickAct } from 'common/utils/choices';
 const next =
   () =>
   (dispatch: AppDispatch, getState: AppGetState): AbortController | null => {
-    const { order, hearts, time } = getState();
+    const { order, hearts, time, pause } = getState();
+    let { pets } = getState();
 
-    if (hearts === 0 || time.day === 100) return null;
+    if (hearts === 0 || time.day === 100 || pause || pets.length === 0)
+      return null;
 
     if (order.turn === 1) dispatch(timeFlow());
     dispatch(shiftTurn());
@@ -17,7 +19,7 @@ const next =
 
     const { payload: actorID } = dispatch(removeActor(order.actors[0]));
 
-    const { pets } = getState();
+    pets = getState().pets;
     const act = pickAct(actorID, pets);
 
     if (!act) return null;

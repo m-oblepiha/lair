@@ -15,30 +15,37 @@ const supplyCaseReducer = (
   state: IPet[],
   action: ReturnType<typeof supply>
 ) => {
-  const pet = unsafeSelectPet(state, action.payload.actor);
+  const actor = unsafeSelectPet(state, action.payload.actor);
 
-  const hunger = pet.stats.hunger - action.payload.value;
-  pet.stats.hunger = hunger < 0 ? 0 : hunger;
+  switch (action.payload.distribution?.type) {
+    case 'share':
+      state.forEach((pet) => {
+        const hunger = pet.stats.hunger - action.payload.value;
+        pet.stats.hunger = hunger < 0 ? 0 : hunger;
+        if (pet.id !== actor.id)
+          pet.relations[pet.id] = clipRelation(
+            (pet.relations[pet.id] ?? 0) +
+              changeRelation({ target: pet, type: 'share' })
+          );
+      });
+      break;
+    case 'steal':
+      const actorHunger = actor.stats.hunger - action.payload.value + 1;
+      actor.stats.hunger = actorHunger < 0 ? 0 : actorHunger;
 
-  if (action.payload.distribution) {
-    const target = unsafeSelectPet(state, action.payload.distribution.target);
-    target.stats.sleep = 0;
+      const target = unsafeSelectPet(state, action.payload.distribution.target);
+      const targetHunger = target.stats.hunger - 1;
+      target.stats.hunger = targetHunger < 0 ? 0 : targetHunger;
 
-    const targetHunger = target.stats.hunger - 1;
-    target.stats.hunger = targetHunger < 0 ? 0 : targetHunger;
-
-    if (action.payload.distribution.type === 'steal') {
-      pet.relations[target.id] = clipRelation(
-        (pet.relations[target.id] ?? 0) +
-          changeRelation({ target: pet, type: 'steal' })
+      actor.relations[target.id] = clipRelation(
+        (actor.relations[target.id] ?? 0) +
+          changeRelation({ target: actor, type: 'steal' })
       );
-    }
-    if (action.payload.distribution.type === 'share') {
-      target.relations[pet.id] = clipRelation(
-        (target.relations[pet.id] ?? 0) +
-          changeRelation({ target: target, type: 'share' })
-      );
-    }
+      break;
+    default:
+      const hunger = actor.stats.hunger - action.payload.value;
+      actor.stats.hunger = hunger < 0 ? 0 : hunger;
+      break;
   }
 };
 const supplyCase = [supply, supplyCaseReducer] as const;

@@ -3,23 +3,12 @@ import { clipToLimit } from 'common/utils';
 import { roll } from './roll';
 
 const supplyValue = (actor: IPet) => {
-  const { health, hunger } = actor.stats;
-  const supply = actor.attributes.vitality;
+  const { hunger } = actor.stats;
+  const supply = actor.attributes.supply;
 
-  const COEFF = {
-    healthWeight: 0.1,
-    supplyWeight: 0.2,
-    rollWeight: 0.2,
-    offset: -2,
-  };
+  const profit = Math.round(clipToLimit((supply - roll(0, 10)) / 2, 0, 5));
 
-  const profit =
-    COEFF.healthWeight * health +
-    COEFF.supplyWeight * supply +
-    COEFF.rollWeight * roll(1, 10) +
-    COEFF.offset;
-
-  return Math.min(hunger, clipToLimit(Math.round(profit), 0, 5));
+  return Math.min(hunger, profit);
 };
 
 const attackValue = (actor: IPet, target: IPet) => {

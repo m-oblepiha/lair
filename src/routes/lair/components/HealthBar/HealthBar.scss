@@ -12,6 +12,13 @@
   justify-content: end;
 
   border-left: 0.5em solid colors.$main;
+
+  @include breakpoints.portrait-s {
+    justify-content: space-between;
+  }
+  @include breakpoints.landscape-s {
+    justify-content: space-between;
+  }
 }
 
 .heartsLong {
@@ -25,9 +32,6 @@
   @include breakpoints.landscape-s {
     display: flex;
   }
-  @include breakpoints.portrait-l {
-    display: flex;
-  }
 }
 
 .heartsShort {
@@ -36,12 +40,6 @@
   margin-top: 0.25em;
 
   @include breakpoints.landscape-s {
-    display: none;
-  }
-  @include breakpoints.portrait-m {
-    font-size: 2em;
-  }
-  @include breakpoints.portrait-l {
     display: none;
   }
 }

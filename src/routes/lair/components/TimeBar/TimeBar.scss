@@ -10,7 +10,7 @@
   grid-area: time;
   display: grid;
   grid-template-columns: 1fr 2fr 3em;
-  grid-template-areas: 'm d di';
+  grid-template-rows: 1fr;
 
   @include breakpoints.landscape-s {
     border-left: 0.5em solid colors.$main;
@@ -22,7 +22,6 @@
 
   margin-top: 0.5em;
 
-  grid-area: d;
   justify-self: end;
 
   word-spacing: -0.5em;
@@ -45,17 +44,26 @@
   width: 3em;
   height: 3em;
 
-  grid-area: di;
   justify-self: center;
 
   filter: invert(1);
 }
 
 .mana {
-  font-size: 2em;
+  font-size: 1.75em;
 
-  margin-top: -0.5em;
+  margin-top: -0.4em;
 
-  grid-area: m;
   justify-self: start;
+
+  @include breakpoints.portrait-s {
+    font-size: 2em;
+
+    margin-top: -0.5em;
+  }
+  @include breakpoints.landscape-s {
+    font-size: 2em;
+
+    margin-top: -0.5em;
+  }
 }
