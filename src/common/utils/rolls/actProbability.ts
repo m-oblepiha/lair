@@ -21,15 +21,16 @@ const attackProbability = (actor: IPet, target: IPet) => {
   const { friendliness } = actor.attributes;
   const { morale } = actor.stats;
 
-  const result = morale < 8 && roll(1, 10) > friendliness;
+  const result = morale < roll(1, 10) && roll(1, 15) > friendliness;
 
   return +result;
 };
 
 const bullyProbability = (actor: IPet, target: IPet) => {
   const { friendliness } = actor.attributes;
+  const { morale } = actor.stats;
 
-  const result = roll(1, 10) > friendliness;
+  const result = morale < roll(1, 10) && roll(1, 15) > friendliness;
 
   return +result;
 };
@@ -49,7 +50,7 @@ const caressProbability = (actor: IPet, target: IPet) => {
   const { friendliness } = actor.attributes;
   const { morale } = actor.stats;
 
-  const result = friendliness > roll(1, 10) && morale > roll(1, 10);
+  const result = friendliness > roll(1, 12) && morale > roll(1, 10);
 
   return +result;
 };

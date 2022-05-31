@@ -25,7 +25,7 @@ const supplyStealProbability = (
 };
 
 const distributeFood = (pets: IPet[], actor: IPet, value: number) => {
-  if (pets.length > 1 && roll(1, 10) > 3) return { type: 'share' as const };
+  if (pets.length > 0 && roll(1, 10) > 3) return { type: 'share' as const };
   const stealChoices = pets.map((pet) => ({
     target: pet,
     probability: supplyStealProbability(pet, actor, value),

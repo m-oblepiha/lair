@@ -15,7 +15,8 @@
   border-top: 0.5em solid colors.$main;
   border-bottom: 0.5em solid colors.$main;
 
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 
   @include breakpoints.landscape-s {
     border-left: 0.5em solid colors.$main;
