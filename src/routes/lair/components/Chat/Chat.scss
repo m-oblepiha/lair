@@ -18,6 +18,10 @@
   overflow-y: scroll;
   overflow-x: hidden;
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   @include breakpoints.landscape-s {
     border-left: 0.5em solid colors.$main;
   }

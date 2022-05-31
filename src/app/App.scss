@@ -7,12 +7,13 @@ body {
   color: colors.$main;
 }
 
-.container {
+.app {
   font-size: 0.75em;
 
   min-width: 20rem;
   width: min(47em, 100vw);
-  height: max(50em, 100vh);
+  height: 100vh;
+  min-height: 54em;
 
   border: 1em solid colors.$main;
   background-color: colors.$background;
@@ -23,26 +24,32 @@ body {
     font-size: 1em;
     width: 48em;
     height: 35em;
+    min-height: 0;
   }
   @include breakpoints.landscape-m {
     width: 64em;
     height: 43em;
+    min-height: 0;
   }
   @include breakpoints.landscape-l {
     width: 80em;
     height: 55em;
+    min-height: 0;
   }
   @include breakpoints.portrait-s {
     font-size: 1em;
     width: 35em;
     height: 48em;
+    min-height: 0;
   }
   @include breakpoints.portrait-m {
     width: 43em;
     height: 64em;
+    min-height: 0;
   }
   @include breakpoints.portrait-l {
     width: 55em;
     height: 80em;
+    min-height: 0;
   }
 }

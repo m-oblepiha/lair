@@ -5,3 +5,4 @@ export { clipRelation, clipToLimit } from './clip';
 export { getState, setState } from './storage';
 export { useColorBlink } from './useColorBlink';
 export { readonlyArrayIncludes } from './readonlyArrayIncludes';
+export { useBreakpoint } from './useBreakpoint';
