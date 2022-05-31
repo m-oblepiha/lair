@@ -7,7 +7,7 @@ const initialState: Record[] = [];
 const recordsReducer = createReducer(initialState, (builder) => {
   builder.addCase(addRecord, (state, action) => {
     state.unshift(action.payload);
-    if (state.length > 50) state.pop();
+    if (state.length > 100) state.pop();
   });
 });
 

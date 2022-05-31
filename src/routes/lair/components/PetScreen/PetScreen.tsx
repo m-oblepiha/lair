@@ -1,8 +1,9 @@
 import React from 'react';
 import { useTypedSelector } from 'redux/hooks';
 import { SummonButton } from '../SummonButton/SummonButton';
-import { PetScreenItem } from './PetScreenItem/PetScreenItem';
+import { PetListItem } from '../PetListItem/PetListItem';
 import classes from './PetScreen.scss';
+import listItemClasses from './PetScreenItem.scss';
 
 type Props = {
   close: () => void;
@@ -14,7 +15,7 @@ const PetScreen: React.FC<Props> = ({ close }) => {
     <div className={classes.container}>
       <menu className={classes.pets}>
         {petIDs.map((id, index) => (
-          <PetScreenItem id={id} key={index} />
+          <PetListItem id={id} key={index} classes={listItemClasses} />
         ))}
       </menu>
       <button className={classes.returnButton} onClick={close}>

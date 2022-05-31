@@ -9,14 +9,14 @@ const HealthBar: React.FC = () => {
   return (
     <div className={classes.container}>
       <div className={classes.heartsLong}>
-        {Array.from({ length: 10 - hearts }, (item, index) => (
+        {Array.from({ length: 10 - hearts }, (_, index) => (
           <img
             className={classes.brokenHeartIcon}
             src={brokenHeart}
             key={index}
           />
         ))}
-        {Array.from({ length: hearts }, (item, index) => (
+        {Array.from({ length: hearts }, (_, index) => (
           <img className={classes.heartIcon} src={heart} key={index} />
         ))}
         <span className={classes.count}>{hearts}</span>

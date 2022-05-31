@@ -5,7 +5,9 @@ import { changeRelation } from 'common/utils/calcs';
 
 const sleepCaseReducer = (state: IPet[], action: ReturnType<typeof sleep>) => {
   const pet = unsafeSelectPet(state, action.payload.actor);
-  pet.stats.sleep = 1 + Math.round(pet.stats.fatigue / 4);
+  const { fatigue } = pet.stats;
+
+  pet.stats.sleep = 1 + Math.round(fatigue / 4);
 };
 const sleepCase = [sleep, sleepCaseReducer] as const;
 

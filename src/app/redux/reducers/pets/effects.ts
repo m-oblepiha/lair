@@ -46,8 +46,12 @@ const starveCase = [starve, starveCaseReducer] as const;
 
 const ageCaseReducer = (state: IPet[]) => {
   for (const pet of state) {
+    const age = pet.stats.age;
+    const maxAge = pet.attributes.maxAge;
+
     pet.stats.age++;
-    if (pet.stats.age > pet.attributes.maxAge) pet.stats.health = 0;
+
+    if (age > maxAge) pet.stats.health = 0;
   }
 };
 const ageCase = [age, ageCaseReducer] as const;

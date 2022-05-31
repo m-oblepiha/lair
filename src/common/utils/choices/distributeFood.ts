@@ -1,5 +1,5 @@
 import type { IPet } from 'common/types';
-import { clipProbability, selectPet } from 'common/utils';
+import { clipProbability } from 'common/utils';
 import { roll } from 'common/utils/rolls';
 import { selectBestChoice } from './selectBestChoice';
 

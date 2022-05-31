@@ -8,9 +8,14 @@ import classnames from 'classnames';
 import classes from './PetListItem.scss';
 import { hunger, fatigue, heart, morale } from 'assets/images/stats';
 
-type StatProps = { src: string; value: number; reverse?: boolean };
+type StatProps = {
+  src: string;
+  value: number;
+  reverse?: boolean;
+  classes: { [key: string]: string };
+};
 
-const PetListStat: React.FC<StatProps> = ({ src, value, reverse }) => {
+const PetListStat: React.FC<StatProps> = ({ src, value, reverse, classes }) => {
   const countRef = useRef<HTMLSpanElement>(null);
 
   useColorBlink({ ref: countRef, value, reverse });
@@ -27,9 +32,10 @@ const PetListStat: React.FC<StatProps> = ({ src, value, reverse }) => {
 
 type Props = {
   id: ID;
+  classes: { [key: string]: string };
 };
 
-const PetListItem: React.FC<Props> = ({ id }) => {
+const PetListItem: React.FC<Props> = ({ id, classes }) => {
   const navigate = useNavigate();
 
   const pet = useTypedSelector((state) => unsafeSelectPet(state.pets, id));
@@ -53,10 +59,18 @@ const PetListItem: React.FC<Props> = ({ id }) => {
       />
       <span className={classes.petName}>{pet.name}</span>
       <div className={classes.stats}>
-        <PetListStat src={heart} value={pet.stats.health} />
-        <PetListStat src={morale} value={pet.stats.morale} />
-        <PetListStat src={hunger} value={10 - pet.stats.hunger} />
-        <PetListStat src={fatigue} value={10 - pet.stats.fatigue} />
+        <PetListStat src={heart} value={pet.stats.health} classes={classes} />
+        <PetListStat src={morale} value={pet.stats.morale} classes={classes} />
+        <PetListStat
+          src={hunger}
+          value={10 - pet.stats.hunger}
+          classes={classes}
+        />
+        <PetListStat
+          src={fatigue}
+          value={10 - pet.stats.fatigue}
+          classes={classes}
+        />
       </div>
     </li>
   );

@@ -11,16 +11,15 @@ const next =
     if (hearts === 0 || time.day === 100) return null;
 
     if (order.turn === 1) dispatch(timeFlow());
-
-    const { pets } = getState();
-
     dispatch(shiftTurn());
 
     if (!order.actors.length) return null;
 
     const { payload: actorID } = dispatch(removeActor(order.actors[0]));
 
+    const { pets } = getState();
     const act = pickAct(actorID, pets);
+
     if (!act) return null;
 
     return dispatch(act);
