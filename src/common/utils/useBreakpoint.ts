@@ -2,18 +2,14 @@ import { useLayoutEffect } from 'react';
 
 const useBreakpoint = () => {
   const resizeListener = () => {
-    const body = document.querySelector('body') as HTMLBodyElement;
-    const root = document.querySelector('#app') as HTMLDivElement;
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
 
-    const isMobile = window.innerWidth < 550;
+    const body = document.querySelector('body') as HTMLElement;
 
-    body.style.height = isMobile
-      ? `${Math.max(window.innerHeight, 636) - 50}px`
-      : '100vh';
+    const isFit = window.innerHeight > 648 && window.innerWidth < 560;
 
-    root.style.minHeight = isMobile
-      ? `${Math.max(window.innerHeight, 636) - 50}px`
-      : 'none';
+    body.style.overflow = isFit ? 'hidden' : 'auto';
   };
 
   useLayoutEffect(() => {

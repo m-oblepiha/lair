@@ -15,7 +15,7 @@
   border-top: 0.5em solid colors.$main;
   border-bottom: 0.5em solid colors.$main;
 
-  overflow-y: scroll;
+  overflow-y: hidden;
   overflow-x: hidden;
 
   &::-webkit-scrollbar {
@@ -24,6 +24,10 @@
 
   @include breakpoints.landscape-s {
     border-left: 0.5em solid colors.$main;
+    overflow-y: scroll;
+  }
+  @include breakpoints.portrait-s {
+    overflow-y: scroll;
   }
 }
 

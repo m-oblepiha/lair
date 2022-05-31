@@ -2,9 +2,37 @@
 @use 'colors';
 @use 'fonts';
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Press Start 2';
+}
+
+button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
 body {
+  width: max(100vw, 20rem);
+  height: 100%;
+  height: calc(var(--vh, 1vh) * 100);
+  min-height: 40.5rem;
+
+  display: grid;
+  place-content: center;
+
   background: colors.$cover url('/assets/images/cover.png') center/cover;
   color: colors.$main;
+
+  @include breakpoints.landscape-s {
+    min-height: 0;
+  }
+  @include breakpoints.portrait-s {
+    min-height: 0;
+  }
 }
 
 .app {
@@ -12,7 +40,8 @@ body {
 
   min-width: 20rem;
   width: min(47em, 100vw);
-  height: 100vh;
+  height: 100%;
+  height: calc(var(--vh, 1vh) * 100);
   min-height: 54em;
 
   border: 1em solid colors.$main;
