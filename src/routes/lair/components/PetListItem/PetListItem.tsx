@@ -22,10 +22,10 @@ const PetListStat: React.FC<StatProps> = ({ src, value, reverse, classes }) => {
 
   return (
     <div className={classes.stat}>
+      <PetIcon src={src} extraClassname={classes.icon} />
       <span className={classes.count} ref={countRef}>
         {value}
       </span>
-      <PetIcon src={src} extraClassname={classes.icon} />
     </div>
   );
 };

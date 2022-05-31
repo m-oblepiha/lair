@@ -8,6 +8,7 @@ import lion from './lion.png';
 import platypus from './platypus.png';
 import sloth from './sloth.png';
 import walrus from './walrus.png';
+import mastahSheesh from './MASTAH_SHEESH.png';
 
 const avatars = {
   chameleon,
@@ -20,6 +21,7 @@ const avatars = {
   platypus,
   sloth,
   walrus,
+  mastahSheesh,
 };
 
 type Avatar = keyof typeof avatars;
@@ -37,4 +39,5 @@ export {
   platypus,
   sloth,
   walrus,
+  mastahSheesh,
 };
