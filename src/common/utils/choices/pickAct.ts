@@ -23,9 +23,9 @@ const pickAct = (actorID: ID, pets: IPet[]) => {
     actChoice(actor, 'pets/caress', pet),
   ]);
 
-  const choices = [...selfActChoices, ...targetActChoices];
+  const bestChoice =
+    selectBestChoice(selfActChoices) ?? selectBestChoice(targetActChoices);
 
-  const bestChoice = selectBestChoice(choices);
   if (!bestChoice) return null;
 
   switch (bestChoice.type) {

@@ -72,7 +72,7 @@ const transformResponseMessage = (
     }
     case 'pets/caressCounter': {
       return {
-        type: 'bullyCounter',
+        type: 'caressCounter',
         actor: unsafeSelectPet(pets, payload.actor).name,
         actActor: unsafeSelectPet(pets, payload.act.actor).name,
         value: payload.value,

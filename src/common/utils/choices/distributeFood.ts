@@ -1,5 +1,4 @@
 import type { IPet } from 'common/types';
-import { clipProbability } from 'common/utils';
 import { roll } from 'common/utils/rolls';
 import { selectBestChoice } from './selectBestChoice';
 
@@ -13,32 +12,20 @@ const supplyStealProbability = (
 
   const rel = actor.relations[target.id] ?? 0;
 
-  const COEFF = {
-    friendlinessWeight: -4,
-    moraleWeight: -2,
-    hungerWeight: 10,
-    relWeight: -10,
-    rollWeight: 7.5,
-    offset: -120,
-    divisor: 16,
-  };
-
-  if (foodAmount < 1 || sleep) return 0;
-
   const result =
-    (COEFF.friendlinessWeight * friendliness +
-      COEFF.moraleWeight * morale +
-      COEFF.hungerWeight * hunger +
-      COEFF.relWeight * rel +
-      COEFF.rollWeight * roll(1, 10) +
-      COEFF.offset) /
-    COEFF.divisor;
+    foodAmount > 1 &&
+    !sleep &&
+    rel < 1 &&
+    morale < 7 &&
+    hunger > 6 &&
+    friendliness < 9 &&
+    roll(1, 10) > 6;
 
-  return clipProbability(result);
+  return +result;
 };
 
 const distributeFood = (pets: IPet[], actor: IPet, value: number) => {
-  if (pets.length > 0 && roll(1, 10) > 5) return { type: 'share' as const };
+  if (pets.length > 1 && roll(1, 10) > 3) return { type: 'share' as const };
   const stealChoices = pets.map((pet) => ({
     target: pet,
     probability: supplyStealProbability(pet, actor, value),
