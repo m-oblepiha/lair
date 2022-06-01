@@ -38,4 +38,4 @@ yarn dev
 
 Питомца можно убить, если он опасен для других. Вы потеряете сердце.
 
-### :moyai: [Приятной игры!](https://m-oblepiha.github.io/lair/) :moyai:
+### [Приятной игры!](https://m-oblepiha.github.io/lair/)
